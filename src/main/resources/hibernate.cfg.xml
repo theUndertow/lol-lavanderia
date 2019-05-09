@@ -44,9 +44,8 @@ Contributor(s):
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/lol</property>
-    <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">mysql</property>
-    <mapping class="com.dac.lol.model.User"/>
-    <mapping package="com.dac.lol.model"/>
+    <property name="hibernate.connection.username">dac</property>
+    <property name="hibernate.connection.password">dac</property>
+    <mapping class="com.dac.lol.model.Usuario" file="" jar="" package="" resource=""/>
   </session-factory>
 </hibernate-configuration>
