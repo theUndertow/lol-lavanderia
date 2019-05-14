@@ -58,7 +58,7 @@ public class Estado implements Serializable{
         this.estado_sigla = estado_sigla;
     }
     
-    @OneToMany(mappedBy="estado", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="cidade_estado", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     public List<Cidade> getCidades() {
         return cidades;
     }

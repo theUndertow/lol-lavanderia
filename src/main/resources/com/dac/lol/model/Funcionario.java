@@ -8,10 +8,13 @@ package com.dac.lol.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.inject.Named;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -23,7 +26,7 @@ public class Funcionario implements Serializable{
     private long funcionario_id;
     private int funcionario_matricula;
     private Date funcionario_nascimento;
-    private Usuario funcionario_usuario = new Usuario();
+    private Usuario funcionario_usuario;
 
     public Funcionario() {
     }
@@ -54,6 +57,8 @@ public class Funcionario implements Serializable{
         this.funcionario_nascimento = funcionario_nascimento;
     }
     
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="funcionario_usuario", updatable=true)
     public Usuario getUsuario() {
         return funcionario_usuario;
     }

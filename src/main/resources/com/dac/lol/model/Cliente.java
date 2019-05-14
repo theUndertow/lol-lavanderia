@@ -6,11 +6,16 @@
 package com.dac.lol.model;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.inject.Named;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -23,8 +28,9 @@ public class Cliente implements Serializable{
     private char cliente_sexo;
     private String cliente_telefone;
     private String cliente_cpf;
-    private Usuario usuario = new Usuario();
-    private Endereco endereco = new Endereco();
+    private Usuario cliente_usuario = new Usuario();
+    private Endereco cliente_endereco = new Endereco();
+    private List<Pedido> pedidos;
 
     public Cliente() {
     }
@@ -63,21 +69,32 @@ public class Cliente implements Serializable{
         this.cliente_cpf = cliente_cpf;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    @OneToOne
+    @JoinColumn(name="cliente_usuario", updatable=true)
+    public Usuario getCliente_usuario() {
+        return cliente_usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setCliente_usuario(Usuario cliente_usuario) {
+        this.cliente_usuario = cliente_usuario;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
+    @ManyToOne
+    @JoinColumn(name="cliente_endereco",updatable=true)
+    public Endereco getCliente_endereco() {
+        return cliente_endereco;
     }
 
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
+    public void setCliente_endereco(Endereco cliente_endereco) {
+        this.cliente_endereco = cliente_endereco;
     }
-    
-    
+
+    @OneToMany(mappedBy="pedido_cliente")
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
 }

@@ -6,11 +6,15 @@
 package com.dac.lol.model;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.inject.Named;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -24,7 +28,8 @@ class Endereco implements Serializable{
     private int endereco_numero;
     private String endereco_complemento;
     private String endereco_bairro;
-    private Cidade cidade = new Cidade();
+    private Cidade endereco_cidade;
+    private List<Cliente> clientes;
 
     public Endereco() {
     }
@@ -71,13 +76,22 @@ class Endereco implements Serializable{
         this.endereco_bairro = endereco_bairro;
     }
 
-    public Cidade getCidade() {
-        return cidade;
+    @ManyToOne
+    @JoinColumn(name="endereco_cidade")
+    public Cidade getEndereco_cidade() {
+        return endereco_cidade;
     }
 
-    public void setCidade(Cidade cidade) {
-        this.cidade = cidade;
+    public void setEndereco_cidade(Cidade endereco_cidade) {
+        this.endereco_cidade = endereco_cidade;
     }
-    
-    
+
+    @OneToMany(mappedBy = "cliente_endereco")
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
+    }
 }

@@ -7,10 +7,13 @@ package com.dac.lol.model;
 
 import java.io.Serializable;
 import javax.inject.Named;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -24,7 +27,8 @@ public class Usuario implements Serializable{
     private String usuario_email;
     private String usuario_senha ;
     private char usuario_tipo;
-    private Funcionario usuario_funcionario = new Funcionario();
+    private Funcionario usuario_funcionario;
+    private Cliente usuario_cliente;
 
     public Usuario() {
     }
@@ -69,6 +73,24 @@ public class Usuario implements Serializable{
 
     public void setUsuario_tipo(char usuario_tipo) {
         this.usuario_tipo = usuario_tipo;
+    }
+    
+    @OneToOne(mappedBy = "funcionario_usuario")
+    public Funcionario getUsuario_funcionario() {
+        return usuario_funcionario;
+    }
+
+    public void setUsuario_funcionario(Funcionario usuario_funcionario) {
+        this.usuario_funcionario = usuario_funcionario;
+    }
+    
+    @OneToOne(mappedBy = "cliente_usuario")
+    public Cliente getUsuario_cliente() {
+        return usuario_cliente;
+    }
+
+    public void setUsuario_cliente(Cliente usuario_cliente) {
+        this.usuario_cliente = usuario_cliente;
     }
     
 }

@@ -6,12 +6,19 @@
 package com.dac.lol.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.inject.Named;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -23,10 +30,11 @@ public class Pedido implements Serializable{
     
     private long pedido_id;
     private Date pedido_tempo;
-    private Date pedido_prazo;
+    private int pedido_prazo;
     private String pedido_situacao;
     private float pedido_total;
-    private Cliente pedido_cliente = new Cliente();
+    private Cliente pedido_cliente;
+    private Collection<Roupa> roupas;
 
     public Pedido() {
     }
@@ -49,11 +57,11 @@ public class Pedido implements Serializable{
         this.pedido_tempo = pedido_tempo;
     }
 
-    public Date getPedido_prazo() {
+    public int getPedido_prazo() {
         return pedido_prazo;
     }
 
-    public void setPedido_prazo(Date pedido_prazo) {
+    public void setPedido_prazo(int pedido_prazo) {
         this.pedido_prazo = pedido_prazo;
     }
 
@@ -73,6 +81,8 @@ public class Pedido implements Serializable{
         this.pedido_total = pedido_total;
     }
 
+    @ManyToOne
+    @JoinColumn(name="pedido_cliente")
     public Cliente getPedido_cliente() {
         return pedido_cliente;
     }
@@ -80,6 +90,20 @@ public class Pedido implements Serializable{
     public void setPedido_cliente(Cliente pedido_cliente) {
         this.pedido_cliente = pedido_cliente;
     }
+
     
+    @ManyToMany(targetEntity=com.dac.lol.model.Roupa.class,
+            cascade={CascadeType.PERSIST, CascadeType.MERGE},
+            fetch=FetchType.EAGER)
+    @JoinTable(name="tb_pedido_roupa",
+            joinColumns={@JoinColumn(name="pedido")},
+            inverseJoinColumns={@JoinColumn(name="roupa")})
     
+    public Collection<Roupa> getRoupas() {
+        return roupas;
+    }
+
+    public void setRoupas(Collection<Roupa> roupas) {
+        this.roupas = roupas;
+    }
 }

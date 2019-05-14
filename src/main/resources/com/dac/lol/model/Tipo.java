@@ -5,11 +5,13 @@
  */
 package com.dac.lol.model;
 
+import java.util.List;
 import javax.inject.Named;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -21,6 +23,7 @@ public class Tipo {
     private long tipo_id;
     private float tipo_preco;
     private int tipo_prazo;
+    private List<Roupa> roupas;
 
     public Tipo() {
     }
@@ -50,6 +53,13 @@ public class Tipo {
     public void setTipo_prazo(int tipo_prazo) {
         this.tipo_prazo = tipo_prazo;
     }
-    
-    
+
+    @OneToMany(mappedBy="roupa_tipo")
+    public List<Roupa> getRoupas() {
+        return roupas;
+    }
+
+    public void setRoupas(List<Roupa> roupas) {
+        this.roupas = roupas;
+    }
 }

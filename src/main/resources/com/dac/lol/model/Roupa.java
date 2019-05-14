@@ -5,11 +5,17 @@
  */
 package com.dac.lol.model;
 
+import java.util.Collection;
 import javax.inject.Named;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -21,7 +27,8 @@ public class Roupa {
     
     private long roupa_id;
     private int roupa_quantidade;
-    private Tipo roupa_tipo = new Tipo();
+    private Tipo roupa_tipo;
+    private Collection<Pedido> pedidos;
 
     public Roupa() {
     }
@@ -44,6 +51,8 @@ public class Roupa {
         this.roupa_quantidade = roupa_quantidade;
     }
 
+    @ManyToOne
+    @JoinColumn(name="roupa_tipo")
     public Tipo getRoupa_tipo() {
         return roupa_tipo;
     }
@@ -51,5 +60,14 @@ public class Roupa {
     public void setRoupa_tipo(Tipo roupa_tipo) {
         this.roupa_tipo = roupa_tipo;
     }
-    
+
+    @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE},
+            mappedBy="roupas", fetch=FetchType.EAGER)
+    public Collection<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Collection<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
 }
