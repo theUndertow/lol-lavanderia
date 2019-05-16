@@ -6,91 +6,95 @@
 package com.dac.lol.model;
 
 import java.io.Serializable;
-import javax.inject.Named;
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author marco
  */
 @Entity
-@Named(value = "tb_usuario")
+@Table(name = "tb_usuario")
 public class Usuario implements Serializable{
-    private long usuario_id; 
-    private String usuario_nome;
-    private String usuario_email;
-    private String usuario_senha ;
-    private char usuario_tipo;
-    private Funcionario usuario_funcionario;
-    private Cliente usuario_cliente;
+    private long id; 
+    private String email;
+    private String senha;
+    private String nome;
+    private char tipo;
+    private Funcionario funcionario;
+    private Cliente cliente;
 
     public Usuario() {
     }
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public long getUsuario_id() {
-        return usuario_id;
+    @Column(name = "usuario_id")
+    public long getId() {
+        return id;
     }
 
-    public void setUsuario_id(long usuario_id) {
-        this.usuario_id = usuario_id;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getUsuario_nome() {
-        return usuario_nome;
+    @Column(name = "usuario_email")
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsuario_nome(String usuario_nome) {
-        this.usuario_nome = usuario_nome;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getUsuario_email() {
-        return usuario_email;
+    @Column(name = "usuario_senha_criptografada")
+    public String getSenha() {
+        return senha;
     }
 
-    public void setUsuario_email(String usuario_email) {
-        this.usuario_email = usuario_email;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
-    public String getUsuario_senha() {
-        return usuario_senha;
+    @Column(name = "usuario_nome")
+    public String getNome() {
+        return nome;
     }
 
-    public void setUsuario_senha(String usuario_senha) {
-        this.usuario_senha = usuario_senha;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public char getUsuario_tipo() {
-        return usuario_tipo;
+    @Column(name = "usuario_tipo", nullable = false)
+    public char getTipo() {
+        return tipo;
     }
 
-    public void setUsuario_tipo(char usuario_tipo) {
-        this.usuario_tipo = usuario_tipo;
+    public void setTipo(char tipo) {
+        this.tipo = tipo;
+    }
+   
+    @OneToOne(mappedBy = "usuario")
+    public Funcionario getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
     }
     
-    @OneToOne(mappedBy = "funcionario_usuario")
-    public Funcionario getUsuario_funcionario() {
-        return usuario_funcionario;
+    @OneToOne(mappedBy = "usuario")
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setUsuario_funcionario(Funcionario usuario_funcionario) {
-        this.usuario_funcionario = usuario_funcionario;
-    }
-    
-    @OneToOne(mappedBy = "cliente_usuario")
-    public Cliente getUsuario_cliente() {
-        return usuario_cliente;
-    }
-
-    public void setUsuario_cliente(Cliente usuario_cliente) {
-        this.usuario_cliente = usuario_cliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
     
 }

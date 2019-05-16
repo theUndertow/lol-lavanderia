@@ -43,9 +43,18 @@ Contributor(s):
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/lol</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/db_lol</property>
     <property name="hibernate.connection.username">dac</property>
     <property name="hibernate.connection.password">dac</property>
-    <mapping class="com.dac.lol.model.Usuario" file="" jar="" package="" resource=""/>
+    <mapping package="com.dac.lol.model"/>
+    <mapping class="com.dac.lol.model.Cidade"/>
+    <mapping class="com.dac.lol.model.Cliente"/>
+    <mapping class="com.dac.lol.model.Endereco"/>
+    <mapping class="com.dac.lol.model.Estado"/>
+    <mapping class="com.dac.lol.model.Funcionario"/>
+    <mapping class="com.dac.lol.model.Pedido"/>
+    <mapping class="com.dac.lol.model.Roupa"/>
+    <mapping class="com.dac.lol.model.Tipo"/>
+    <mapping class="com.dac.lol.model.Usuario"/>
   </session-factory>
 </hibernate-configuration>

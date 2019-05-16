@@ -5,56 +5,61 @@
  */
 package com.dac.lol.model;
 
+import java.io.Serializable;
 import java.util.List;
-import javax.inject.Named;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author marco
  */
 @Entity
-@Named(value="tb_tipo")
-public class Tipo {
-    private long tipo_id;
-    private float tipo_preco;
-    private int tipo_prazo;
+@Table(name="tb_tipo")
+public class Tipo implements Serializable {
+    private long id;
+    private float preco;
+    private int prazo;
     private List<Roupa> roupas;
 
     public Tipo() {
     }
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    public long getTipo_id() {
-        return tipo_id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "tipo_id")
+    public long getId() {
+        return id;
     }
 
-    public void setTipo_id(long tipo_id) {
-        this.tipo_id = tipo_id;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public float getTipo_preco() {
-        return tipo_preco;
+    @Column(name = "tipo_preco")
+    public float getPreco() {
+        return preco;
     }
 
-    public void setTipo_preco(float tipo_preco) {
-        this.tipo_preco = tipo_preco;
+    public void setPreco(float preco) {
+        this.preco = preco;
     }
 
-    public int getTipo_prazo() {
-        return tipo_prazo;
+    @Column(name = "tipo_prazo")
+    public int getPrazo() {
+        return prazo;
     }
 
-    public void setTipo_prazo(int tipo_prazo) {
-        this.tipo_prazo = tipo_prazo;
+    public void setPrazo(int prazo) {
+        this.prazo = prazo;
     }
 
-    @OneToMany(mappedBy="roupa_tipo")
+    @OneToMany(mappedBy="tipo")
     public List<Roupa> getRoupas() {
         return roupas;
     }

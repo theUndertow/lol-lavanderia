@@ -7,65 +7,70 @@ package com.dac.lol.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.inject.Named;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
  * @author marco
  */
 @Entity
-@Named(value="tb_funcionario")
+@Table(name="tb_funcionario")
 public class Funcionario implements Serializable{
-    private long funcionario_id;
-    private int funcionario_matricula;
-    private Date funcionario_nascimento;
-    private Usuario funcionario_usuario;
+    private long id;
+    private int matricula;
+    private Date nascimento;
+    private Usuario usuario;
 
     public Funcionario() {
     }
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public long getFuncionario_id() {
-        return funcionario_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "funcionario_id")
+    public long getId() {
+        return id;
     }
 
-    public void setFuncionario_id(long funcionario_id) {
-        this.funcionario_id = funcionario_id;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public int getFuncionario_matricula() {
-        return funcionario_matricula;
+    @Column(name = "funcionario_matricula")
+    public int getMatricula() {
+        return matricula;
     }
 
-    public void setFuncionario_matricula(int funcionario_matricula) {
-        this.funcionario_matricula = funcionario_matricula;
+    public void setMatricula(int matricula) {
+        this.matricula = matricula;
     }
 
-    public Date getFuncionario_nascimento() {
-        return funcionario_nascimento;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name = "funcionario_nascimento")
+    public Date getNascimento() {
+        return nascimento;
     }
 
-    public void setFuncionario_nascimento(Date funcionario_nascimento) {
-        this.funcionario_nascimento = funcionario_nascimento;
+    public void setNascimento(Date nascimento) {
+        this.nascimento = nascimento;
     }
     
     @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="funcionario_usuario", updatable=true)
+    @JoinColumn(name="funcionario_usuario", updatable=true, nullable = false)
     public Usuario getUsuario() {
-        return funcionario_usuario;
+        return usuario;
     }
 
-    public void setUsuario(Usuario funcionario_usuario) {
-        this.funcionario_usuario = funcionario_usuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
-    
-    
+       
 }

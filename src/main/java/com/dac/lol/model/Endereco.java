@@ -7,28 +7,32 @@ package com.dac.lol.model;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.inject.Named;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author marco
  */
 @Entity
-@Named(value="tb_endereco")
+@Table(name="tb_endereco")
 public class Endereco implements Serializable{
-    private long endereco_id;
-    private int endereco_rua;
-    private int endereco_numero;
-    private String endereco_complemento;
-    private String endereco_bairro;
-    private Cidade endereco_cidade;
+    
+    private long id;
+    private String rua;
+    private int numero;
+    private String complemento;
+    private String bairro;
+    private Cidade cidade;
     private List<Cliente> clientes;
 
     public Endereco() {
@@ -36,57 +40,63 @@ public class Endereco implements Serializable{
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    public long getEndereco_id() {
-        return endereco_id;
+    @Column(name = "endereco_id")
+    public long getId() {
+        return id;
     }
 
-    public void setEndereco_id(long endereco_id) {
-        this.endereco_id = endereco_id;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public int getEndereco_rua() {
-        return endereco_rua;
+    @Column(name = "endereco_rua")
+    public String getRua() {
+        return rua;
     }
 
-    public void setEndereco_rua(int endereco_rua) {
-        this.endereco_rua = endereco_rua;
+    public void setRua(String rua) {
+        this.rua = rua;
     }
 
-    public int getEndereco_numero() {
-        return endereco_numero;
+    @Column(name = "endereco_numero")
+    public int getNumero() {
+        return numero;
     }
 
-    public void setEndereco_numero(int endereco_numero) {
-        this.endereco_numero = endereco_numero;
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
-    public String getEndereco_complemento() {
-        return endereco_complemento;
+    @Column(name = "endereco_complemento")
+    public String getComplemento() {
+        return complemento;
     }
 
-    public void setEndereco_complemento(String endereco_complemento) {
-        this.endereco_complemento = endereco_complemento;
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+    
+    @Column(name = "endereco_bairro")
+    public String getBairro() {
+        return bairro;
     }
 
-    public String getEndereco_bairro() {
-        return endereco_bairro;
-    }
-
-    public void setEndereco_bairro(String endereco_bairro) {
-        this.endereco_bairro = endereco_bairro;
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
     }
 
     @ManyToOne
-    @JoinColumn(name="endereco_cidade")
-    public Cidade getEndereco_cidade() {
-        return endereco_cidade;
+    @JoinColumn(name="endereco_cidade", nullable = false)
+        public Cidade getCidade() {
+        return cidade;
     }
 
-    public void setEndereco_cidade(Cidade endereco_cidade) {
-        this.endereco_cidade = endereco_cidade;
+    public void setCidade(Cidade cidade) {
+        this.cidade = cidade;
     }
+    
 
-    @OneToMany(mappedBy = "cliente_endereco")
+    @OneToMany(mappedBy = "endereco", cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     public List<Cliente> getClientes() {
         return clientes;
     }

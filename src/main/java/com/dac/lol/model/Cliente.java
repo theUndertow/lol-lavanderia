@@ -7,8 +7,10 @@ package com.dac.lol.model;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.inject.Named;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,80 +18,85 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author marco
  */
 @Entity
-@Named(value = "tb_cliente")
+@Table(name = "tb_cliente")
 public class Cliente implements Serializable{
-    private long cliente_id;
-    private char cliente_sexo;
-    private String cliente_telefone;
-    private String cliente_cpf;
-    private Usuario cliente_usuario = new Usuario();
-    private Endereco cliente_endereco = new Endereco();
+    private long id;
+    private String cpf;
+    private char sexo;
+    private String telefone;
+    private Usuario usuario;
+    private Endereco endereco;
     private List<Pedido> pedidos;
 
     public Cliente() {
     }
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    public long getCliente_id() {
-        return cliente_id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "cliente_id")
+    public long getId() {
+        return id;
     }
 
-    public void setCliente_id(long cliente_id) {
-        this.cliente_id = cliente_id;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public char getCliente_sexo() {
-        return cliente_sexo;
+    @Column(name = "cliente_cpf")
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setCliente_sexo(char cliente_sexo) {
-        this.cliente_sexo = cliente_sexo;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
-    public String getCliente_telefone() {
-        return cliente_telefone;
+    @Column(name = "cliente_sexo")
+    public char getSexo() {
+        return sexo;
     }
 
-    public void setCliente_telefone(String cliente_telefone) {
-        this.cliente_telefone = cliente_telefone;
+    public void setSexo(char sexo) {
+        this.sexo = sexo;
     }
 
-    public String getCliente_cpf() {
-        return cliente_cpf;
+    @Column(name = "cliente_telefone")
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setCliente_cpf(String cliente_cpf) {
-        this.cliente_cpf = cliente_cpf;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     @OneToOne
-    @JoinColumn(name="cliente_usuario", updatable=true)
-    public Usuario getCliente_usuario() {
-        return cliente_usuario;
+    @JoinColumn(name="cliente_usuario", updatable=true, nullable = false)
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setCliente_usuario(Usuario cliente_usuario) {
-        this.cliente_usuario = cliente_usuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @ManyToOne
-    @JoinColumn(name="cliente_endereco",updatable=true)
-    public Endereco getCliente_endereco() {
-        return cliente_endereco;
+    @JoinColumn(name="cliente_endereco",updatable=true, nullable = false)
+    public Endereco getEndereco() {
+        return endereco;
     }
 
-    public void setCliente_endereco(Endereco cliente_endereco) {
-        this.cliente_endereco = cliente_endereco;
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
-    @OneToMany(mappedBy="pedido_cliente")
+    @OneToMany(mappedBy = "cliente", cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     public List<Pedido> getPedidos() {
         return pedidos;
     }
