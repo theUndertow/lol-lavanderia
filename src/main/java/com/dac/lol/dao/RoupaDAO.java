@@ -6,30 +6,93 @@
 package com.dac.lol.dao;
 
 import com.dac.lol.model.Roupa;
+import com.dac.lol.util.HibernateUtil;
 import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
  * @author marco
  */
 public class RoupaDAO {
-    public boolean insertRoupa(){
-        return false;
+    public boolean insertRoupa(Roupa endereco) {
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.save(endereco);
+            session.getTransaction().commit();
+            session.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    // Retornará um único endereco
+    public Roupa selectRoupa(int id) {
+        Roupa endereco = null;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery(
+                    "from tb_endereco where endereco_id = :id");
+            query.setInteger("id", id);
+            endereco = (Roupa) query.uniqueResult();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return endereco;
     }
     
-    public Roupa selectRoupa(){
-        return null;
+    // Retorna uma lista de todos os enderecos
+    public List<Roupa> selectListRoupa() {
+        List<Roupa> enderecos;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from tb_endereco");
+            enderecos = query.list();
+            session.getTransaction().commit();
+            session.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return enderecos;
     }
     
-    public List<Roupa> selectListRoupa(){
-        return null;
+    // Retorna um boolean em relação ao resultado do update
+    public boolean updateRoupa(Roupa endereco) {
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.update(endereco);
+            session.getTransaction().commit();
+            session.clear();
+            session.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
     
-    public boolean updateRoupa(){
-        return false;
-    }
-            
-    public boolean deleteRoupa(){
-        return false;
+    // Retorna um boolean em relação a deleção de um endereco
+    public boolean deleteRoupa(Roupa endereco) {
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            session.delete(endereco);
+            tx.commit();
+            session.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

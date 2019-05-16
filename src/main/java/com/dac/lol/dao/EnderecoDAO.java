@@ -6,7 +6,6 @@
 package com.dac.lol.dao;
 
 import com.dac.lol.model.Endereco;
-import com.dac.lol.model.Endereco;
 import com.dac.lol.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;

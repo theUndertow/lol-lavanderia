@@ -18,11 +18,11 @@ import org.hibernate.Transaction;
  * @author marco
  */
 public class CidadeDAO {
-    public boolean insertCidade(Cidade cidade) {
+    public boolean insertCidade(Cidade endereco) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(cidade);
+            session.save(endereco);
             session.getTransaction().commit();
             session.close();
         } catch (HibernateException e) {
@@ -32,45 +32,45 @@ public class CidadeDAO {
         return true;
     }
 
-    // Retornará um único cidade
+    // Retornará um único endereco
     public Cidade selectCidade(int id) {
-        Cidade cidade = null;
+        Cidade endereco = null;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
-                    "from tb_cidade where cidade_id = :id");
+                    "from tb_endereco where endereco_id = :id");
             query.setInteger("id", id);
-            cidade = (Cidade) query.uniqueResult();
+            endereco = (Cidade) query.uniqueResult();
         } catch (HibernateException e) {
             e.printStackTrace();
         }
-        return cidade;
+        return endereco;
     }
     
-    // Retorna uma lista de todos os cidades
+    // Retorna uma lista de todos os enderecos
     public List<Cidade> selectListCidade() {
-        List<Cidade> cidades;
+        List<Cidade> enderecos;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            Query query = session.createQuery("from tb_cidade");
-            cidades = query.list();
+            Query query = session.createQuery("from tb_endereco");
+            enderecos = query.list();
             session.getTransaction().commit();
             session.close();
         } catch (HibernateException e) {
             e.printStackTrace();
             return null;
         }
-        return cidades;
+        return enderecos;
     }
     
     // Retorna um boolean em relação ao resultado do update
-    public boolean updateCidade(Cidade cidade) {
+    public boolean updateCidade(Cidade endereco) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.update(cidade);
+            session.update(endereco);
             session.getTransaction().commit();
             session.clear();
             session.close();
@@ -81,12 +81,12 @@ public class CidadeDAO {
         return true;
     }
     
-    // Retorna um boolean em relação a deleção de um cidade
-    public boolean deleteCidade(Cidade cidade) {
+    // Retorna um boolean em relação a deleção de um endereco
+    public boolean deleteCidade(Cidade endereco) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
-            session.delete(cidade);
+            session.delete(endereco);
             tx.commit();
             session.close();
         } catch (HibernateException e) {
