@@ -18,11 +18,11 @@ import org.hibernate.Transaction;
  * @author marco
  */
 public class ClienteDAO {
-    public boolean insertCliente(Cliente endereco) {
+    public boolean insertCliente(Cliente cliente) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(endereco);
+            session.save(cliente);
             session.getTransaction().commit();
             session.close();
         } catch (HibernateException e) {
@@ -32,45 +32,45 @@ public class ClienteDAO {
         return true;
     }
 
-    // Retornará um único endereco
+    // Retornará um único cliente
     public Cliente selectCliente(int id) {
-        Cliente endereco = null;
+        Cliente cliente = null;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
-                    "from tb_endereco where endereco_id = :id");
+                    "from Cliente where Cliente = :id");
             query.setInteger("id", id);
-            endereco = (Cliente) query.uniqueResult();
+            cliente = (Cliente) query.uniqueResult();
         } catch (HibernateException e) {
             e.printStackTrace();
         }
-        return endereco;
+        return cliente;
     }
     
-    // Retorna uma lista de todos os enderecos
+    // Retorna uma lista de todos os clientes
     public List<Cliente> selectListCliente() {
-        List<Cliente> enderecos;
+        List<Cliente> clientes;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            Query query = session.createQuery("from tb_endereco");
-            enderecos = query.list();
+            Query query = session.createQuery("from tb_cliente");
+            clientes = query.list();
             session.getTransaction().commit();
             session.close();
         } catch (HibernateException e) {
             e.printStackTrace();
             return null;
         }
-        return enderecos;
+        return clientes;
     }
     
     // Retorna um boolean em relação ao resultado do update
-    public boolean updateCliente(Cliente endereco) {
+    public boolean updateCliente(Cliente cliente) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.update(endereco);
+            session.update(cliente);
             session.getTransaction().commit();
             session.clear();
             session.close();
@@ -81,12 +81,12 @@ public class ClienteDAO {
         return true;
     }
     
-    // Retorna um boolean em relação a deleção de um endereco
-    public boolean deleteCliente(Cliente endereco) {
+    // Retorna um boolean em relação a deleção de um cliente
+    public boolean deleteCliente(Cliente cliente) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
-            session.delete(endereco);
+            session.delete(cliente);
             tx.commit();
             session.close();
         } catch (HibernateException e) {

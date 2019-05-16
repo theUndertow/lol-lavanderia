@@ -18,11 +18,11 @@ import org.hibernate.Transaction;
  * @author marco
  */
 public class TipoDAO {
-    public boolean insertTipo(Tipo endereco) {
+    public boolean insertTipo(Tipo tipo) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(endereco);
+            session.save(tipo);
             session.getTransaction().commit();
             session.close();
         } catch (HibernateException e) {
@@ -32,45 +32,45 @@ public class TipoDAO {
         return true;
     }
 
-    // Retornará um único endereco
+    // Retornará um único tipo
     public Tipo selectTipo(int id) {
-        Tipo endereco = null;
+        Tipo tipo = null;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
-                    "from tb_endereco where endereco_id = :id");
+                    "from Tipo where Tipo.id = :id");
             query.setInteger("id", id);
-            endereco = (Tipo) query.uniqueResult();
+            tipo = (Tipo) query.uniqueResult();
         } catch (HibernateException e) {
             e.printStackTrace();
         }
-        return endereco;
+        return tipo;
     }
     
-    // Retorna uma lista de todos os enderecos
+    // Retorna uma lista de todos os tipos
     public List<Tipo> selectListTipo() {
-        List<Tipo> enderecos;
+        List<Tipo> tipos;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            Query query = session.createQuery("from tb_endereco");
-            enderecos = query.list();
+            Query query = session.createQuery("from Tipo");
+            tipos = query.list();
             session.getTransaction().commit();
             session.close();
         } catch (HibernateException e) {
             e.printStackTrace();
             return null;
         }
-        return enderecos;
+        return tipos;
     }
     
     // Retorna um boolean em relação ao resultado do update
-    public boolean updateTipo(Tipo endereco) {
+    public boolean updateTipo(Tipo tipo) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.update(endereco);
+            session.update(tipo);
             session.getTransaction().commit();
             session.clear();
             session.close();
@@ -81,12 +81,12 @@ public class TipoDAO {
         return true;
     }
     
-    // Retorna um boolean em relação a deleção de um endereco
-    public boolean deleteTipo(Tipo endereco) {
+    // Retorna um boolean em relação a deleção de um tipo
+    public boolean deleteTipo(Tipo tipo) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
-            session.delete(endereco);
+            session.delete(tipo);
             tx.commit();
             session.close();
         } catch (HibernateException e) {

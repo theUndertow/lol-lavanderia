@@ -18,11 +18,11 @@ import org.hibernate.Transaction;
  * @author marco
  */
 public class FuncionarioDAO {
-    public boolean insertFuncionario(Funcionario endereco) {
+    public boolean insertFuncionario(Funcionario funcionario) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(endereco);
+            session.save(funcionario);
             session.getTransaction().commit();
             session.close();
         } catch (HibernateException e) {
@@ -32,45 +32,45 @@ public class FuncionarioDAO {
         return true;
     }
 
-    // Retornará um único endereco
+    // Retornará um único funcionario
     public Funcionario selectFuncionario(int id) {
-        Funcionario endereco = null;
+        Funcionario funcionario = null;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
-                    "from tb_endereco where endereco_id = :id");
+                    "from Funcionario where Funcionario.id = :id");
             query.setInteger("id", id);
-            endereco = (Funcionario) query.uniqueResult();
+            funcionario = (Funcionario) query.uniqueResult();
         } catch (HibernateException e) {
             e.printStackTrace();
         }
-        return endereco;
+        return funcionario;
     }
     
-    // Retorna uma lista de todos os enderecos
+    // Retorna uma lista de todos os funcionarios
     public List<Funcionario> selectListFuncionario() {
-        List<Funcionario> enderecos;
+        List<Funcionario> funcionarios;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            Query query = session.createQuery("from tb_endereco");
-            enderecos = query.list();
+            Query query = session.createQuery("from Funcionario");
+            funcionarios = query.list();
             session.getTransaction().commit();
             session.close();
         } catch (HibernateException e) {
             e.printStackTrace();
             return null;
         }
-        return enderecos;
+        return funcionarios;
     }
     
     // Retorna um boolean em relação ao resultado do update
-    public boolean updateFuncionario(Funcionario endereco) {
+    public boolean updateFuncionario(Funcionario funcionario) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.update(endereco);
+            session.update(funcionario);
             session.getTransaction().commit();
             session.clear();
             session.close();
@@ -81,12 +81,12 @@ public class FuncionarioDAO {
         return true;
     }
     
-    // Retorna um boolean em relação a deleção de um endereco
-    public boolean deleteFuncionario(Funcionario endereco) {
+    // Retorna um boolean em relação a deleção de um funcionario
+    public boolean deleteFuncionario(Funcionario funcionario) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
-            session.delete(endereco);
+            session.delete(funcionario);
             tx.commit();
             session.close();
         } catch (HibernateException e) {

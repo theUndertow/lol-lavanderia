@@ -39,7 +39,7 @@ public class EnderecoDAO {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
-                    "from tb_endereco where endereco_id = :id");
+                    "from Endereco where Endereco.id = :id");
             query.setInteger("id", id);
             endereco = (Endereco) query.uniqueResult();
         } catch (HibernateException e) {
@@ -54,7 +54,7 @@ public class EnderecoDAO {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            Query query = session.createQuery("from tb_endereco");
+            Query query = session.createQuery("from Endereco");
             enderecos = query.list();
             session.getTransaction().commit();
             session.close();

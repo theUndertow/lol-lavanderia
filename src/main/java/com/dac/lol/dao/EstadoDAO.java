@@ -41,7 +41,7 @@ public class EstadoDAO {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
-                    "from tb_estado where estado_id = :id");
+                    "from Estado where Estado = :id");
             query.setInteger("id", id);
             estado = (Estado) query.uniqueResult();
         } catch (HibernateException e) {
@@ -56,7 +56,7 @@ public class EstadoDAO {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            Query query = session.createQuery("from tb_estado");
+            Query query = session.createQuery("from Estado");
             estados = query.list();
             session.getTransaction().commit();
             session.close();
