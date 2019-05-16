@@ -5,31 +5,31 @@
  */
 package com.dac.lol.dao;
 
-import com.dac.lol.model.Estado;
+import com.dac.lol.model.Pedido;
 import java.util.List;
 
 /**
  *
  * @author marco
  */
-public class EstadoDAO {
-    public boolean insertEstado(){
+public class PedidoDAO {
+    public boolean insertPedido(){
         return false;
     }
     
-    public Estado selectEstado(){
+    public Pedido selectPedido(){
         return null;
     }
     
-    public List<Estado> selectListEstado(){
+    public List<Pedido> selectListPedido(){
         return null;
     }
     
-    public boolean updateEstado(){
+    public boolean updatePedido(){
         return false;
     }
             
-    public boolean deleteEstado(){
+    public boolean deletePedido(){
         return false;
     }
 }

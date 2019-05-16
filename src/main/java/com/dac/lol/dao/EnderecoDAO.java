@@ -5,31 +5,31 @@
  */
 package com.dac.lol.dao;
 
-import com.dac.lol.model.Estado;
+import com.dac.lol.model.Endereco;
 import java.util.List;
 
 /**
  *
  * @author marco
  */
-public class EstadoDAO {
-    public boolean insertEstado(){
+public class EnderecoDAO {
+    public boolean insertEndereco(){
         return false;
     }
     
-    public Estado selectEstado(){
+    public Endereco selectEndereco(){
         return null;
     }
     
-    public List<Estado> selectListEstado(){
+    public List<Endereco> selectListEndereco(){
         return null;
     }
     
-    public boolean updateEstado(){
+    public boolean updateEndereco(){
         return false;
     }
             
-    public boolean deleteEstado(){
+    public boolean deleteEndereco(){
         return false;
     }
 }

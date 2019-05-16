@@ -22,7 +22,7 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @Named(value="tb_endereco")
-class Endereco implements Serializable{
+public class Endereco implements Serializable{
     private long endereco_id;
     private int endereco_rua;
     private int endereco_numero;
