@@ -39,9 +39,10 @@ public class FuncionarioDAO {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
-                    "from Funcionario where Funcionario.id = :id");
+                    "from Funcionario where id = :id");
             query.setInteger("id", id);
             funcionario = (Funcionario) query.uniqueResult();
+            session.close();
         } catch (HibernateException e) {
             e.printStackTrace();
         }

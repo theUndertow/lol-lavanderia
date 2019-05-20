@@ -39,9 +39,10 @@ public class ClienteDAO {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
-                    "from Cliente where Cliente = :id");
+                    "from Cliente where id = :id");
             query.setInteger("id", id);
             cliente = (Cliente) query.uniqueResult();
+            session.close();
         } catch (HibernateException e) {
             e.printStackTrace();
         }

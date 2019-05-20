@@ -39,9 +39,10 @@ public class TipoDAO {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
-                    "from Tipo where Tipo.id = :id");
+                    "from Tipo where id = :id");
             query.setInteger("id", id);
             tipo = (Tipo) query.uniqueResult();
+            session.close();
         } catch (HibernateException e) {
             e.printStackTrace();
         }

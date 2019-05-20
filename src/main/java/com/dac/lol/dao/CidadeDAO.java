@@ -39,9 +39,10 @@ public class CidadeDAO {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
-                    "from Cidade where Cidade.id = :id");
+                    "from Cidade where id = :id");
             query.setInteger("id", id);
             cidade = (Cidade) query.uniqueResult();
+            session.close();
         } catch (HibernateException e) {
             e.printStackTrace();
         }

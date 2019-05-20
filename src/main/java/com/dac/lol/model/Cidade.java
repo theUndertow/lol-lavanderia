@@ -66,7 +66,7 @@ public class Cidade implements Serializable{
         this.estado = estado;
     }
 
-    @OneToMany(mappedBy="cidade", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="cidade", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     public List<Endereco> getEnderecos() {
         return enderecos;
     }

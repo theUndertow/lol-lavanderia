@@ -39,9 +39,10 @@ public class RoupaDAO {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
-                    "from Roupa where Roupa.id = :id");
+                    "from Roupa where id = :id");
             query.setInteger("id", id);
             roupa = (Roupa) query.uniqueResult();
+            session.close();
         } catch (HibernateException e) {
             e.printStackTrace();
         }

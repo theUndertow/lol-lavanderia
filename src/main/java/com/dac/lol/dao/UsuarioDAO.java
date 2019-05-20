@@ -39,9 +39,10 @@ public class UsuarioDAO {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
-                    "from Usuario where Usuario.id = :id");
+                    "from Usuario where id = :id");
             query.setInteger("id", id);
             usuario = (Usuario) query.uniqueResult();
+            session.close();
         } catch (HibernateException e) {
             e.printStackTrace();
         }

@@ -39,9 +39,10 @@ public class PedidoDAO {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
-                    "from Pedido where Pedido.id = :id");
+                    "from Pedido where id = :id");
             query.setInteger("id", id);
             pedido = (Pedido) query.uniqueResult();
+            session.close();
         } catch (HibernateException e) {
             e.printStackTrace();
         }
