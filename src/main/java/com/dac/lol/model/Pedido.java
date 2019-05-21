@@ -8,8 +8,8 @@ package com.dac.lol.model;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import javax.inject.Named;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,78 +19,85 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
  * @author marco
  */
 @Entity
-@Named(value="tb_pedido")
+@Table(name="tb_pedido")
 public class Pedido implements Serializable{
     
-    private long pedido_id;
-    private Date pedido_tempo;
-    private int pedido_prazo;
-    private String pedido_situacao;
-    private float pedido_total;
-    private Cliente pedido_cliente;
+    private long id;
+    private Date tempo;
+    private int prazo;
+    private String situacao;
+    private float total;
+    private Cliente cliente;
     private Collection<Roupa> roupas;
 
     public Pedido() {
     }
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    public long getPedido_id() {
-        return pedido_id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "pedido_id")
+    public long getId() {
+        return id;
     }
 
-    public void setPedido_id(long pedido_id) {
-        this.pedido_id = pedido_id;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public Date getPedido_tempo() {
-        return pedido_tempo;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name = "pedido_tempo")
+    public Date getTempo() {
+        return tempo;
     }
 
-    public void setPedido_tempo(Date pedido_tempo) {
-        this.pedido_tempo = pedido_tempo;
+    public void setTempo(Date tempo) {
+        this.tempo = tempo;
     }
 
-    public int getPedido_prazo() {
-        return pedido_prazo;
+    @Column(name = "pedido_prazo")
+    public int getPrazo() {
+        return prazo;
     }
 
-    public void setPedido_prazo(int pedido_prazo) {
-        this.pedido_prazo = pedido_prazo;
+    public void setPrazo(int prazo) {
+        this.prazo = prazo;
     }
 
-    public String getPedido_situacao() {
-        return pedido_situacao;
+    @Column(name = "pedido_situacao")
+    public String getSituacao() {
+        return situacao;
     }
 
-    public void setPedido_situacao(String pedido_situacao) {
-        this.pedido_situacao = pedido_situacao;
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
     }
 
-    public float getPedido_total() {
-        return pedido_total;
+    @Column(name = "pedido_total")
+    public float getTotal() {
+        return total;
     }
 
-    public void setPedido_total(float pedido_total) {
-        this.pedido_total = pedido_total;
+    public void setTotal(float total) {
+        this.total = total;
     }
 
     @ManyToOne
-    @JoinColumn(name="pedido_cliente")
-    public Cliente getPedido_cliente() {
-        return pedido_cliente;
+    @JoinColumn(name="pedido_cliente", updatable=true, nullable = false)
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setPedido_cliente(Cliente pedido_cliente) {
-        this.pedido_cliente = pedido_cliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
-
     
     @ManyToMany(targetEntity=com.dac.lol.model.Roupa.class,
             cascade={CascadeType.PERSIST, CascadeType.MERGE},
@@ -98,7 +105,7 @@ public class Pedido implements Serializable{
     @JoinTable(name="tb_pedido_roupa",
             joinColumns={@JoinColumn(name="pedido")},
             inverseJoinColumns={@JoinColumn(name="roupa")})
-    
+
     public Collection<Roupa> getRoupas() {
         return roupas;
     }
@@ -106,4 +113,5 @@ public class Pedido implements Serializable{
     public void setRoupas(Collection<Roupa> roupas) {
         this.roupas = roupas;
     }
+    
 }

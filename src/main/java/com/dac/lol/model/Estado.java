@@ -7,58 +7,63 @@ package com.dac.lol.model;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.inject.Named;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author marco
  */
 @Entity
-@Named(value="tb_estado")
+@Table(name="tb_estado")
 public class Estado implements Serializable{
     
-    private long estado_id;
-    private String estado_nome;
-    private String estado_sigla;
+    private long id;
+    private String nome;
+    private String sigla;
     private List<Cidade> cidades;
 
     public Estado() {
     }
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public long getEstado_id() {
-        return estado_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "estado_id")
+    public long getId() {
+        return id;
     }
 
-    public void setEstado_id(long estado_id) {
-        this.estado_id = estado_id;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getEstado_nome() {
-        return estado_nome;
+    @Column(name = "estado_nome")
+    public String getNome() {
+        return nome;
     }
 
-    public void setEstado_nome(String estado_nome) {
-        this.estado_nome = estado_nome;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getEstado_sigla() {
-        return estado_sigla;
+    @Column(name = "estado_sigla")
+    public String getSigla() {
+        return sigla;
     }
 
-    public void setEstado_sigla(String estado_sigla) {
-        this.estado_sigla = estado_sigla;
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
     }
     
-    @OneToMany(mappedBy="cidade_estado", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    
+    @OneToMany(mappedBy="estado", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     public List<Cidade> getCidades() {
         return cidades;
     }

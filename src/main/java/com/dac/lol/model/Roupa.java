@@ -6,8 +6,8 @@
 package com.dac.lol.model;
 
 import java.util.Collection;
-import javax.inject.Named;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,51 +16,54 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author marco
  */
 @Entity
-@Named(value="tb_roupa")
+@Table(name="tb_roupa")
 public class Roupa {
     
-    private long roupa_id;
-    private int roupa_quantidade;
-    private Tipo roupa_tipo;
+    private long id;
+    private int quantidade;
+    private Tipo tipo;
     private Collection<Pedido> pedidos;
 
     public Roupa() {
     }
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    public long getRoupa_id() {
-        return roupa_id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "roupa_id")
+    public long getId() {
+        return id;
     }
 
-    public void setRoupa_id(long roupa_id) {
-        this.roupa_id = roupa_id;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public int getRoupa_quantidade() {
-        return roupa_quantidade;
+    @Column(name = "roupa_quantidade")
+    public int getQuantidade() {
+        return quantidade;
     }
 
-    public void setRoupa_quantidade(int roupa_quantidade) {
-        this.roupa_quantidade = roupa_quantidade;
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
 
     @ManyToOne
-    @JoinColumn(name="roupa_tipo")
-    public Tipo getRoupa_tipo() {
-        return roupa_tipo;
+    @JoinColumn(name="roupa_tipo", nullable = false)
+    public Tipo getTipo() {
+        return tipo;
     }
 
-    public void setRoupa_tipo(Tipo roupa_tipo) {
-        this.roupa_tipo = roupa_tipo;
+    public void setTipo(Tipo tipo) {
+        this.tipo = tipo;
     }
-
+    
     @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE},
             mappedBy="roupas", fetch=FetchType.EAGER)
     public Collection<Pedido> getPedidos() {
