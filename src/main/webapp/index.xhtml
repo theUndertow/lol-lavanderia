@@ -11,9 +11,9 @@
     </h:head>
     <h:body>
         <h:form>
-            <p>Username:<h:inputText value="#{userManagedBean.user.username}"/></p>
-            <p>Password:<h:inputSecret value="#{userManagedBean.user.password}"/></p>
-            <p><h:commandButton action="#{userManagedBean.create()}" value="Submit"/></p>
+            <p>Username:<h:inputText value="#{loginManbe.login}"/></p>
+            <p>Password:<h:inputSecret value="#{loginManbe.password}"/></p>
+            <p><h:commandButton action="#{loginManbe.verifyLogin}" value="Submiter"/></p>
         </h:form>
     </h:body>
 </html>
