@@ -5,6 +5,9 @@
  */
 package com.dac.lol.manbe;
 
+import com.dac.lol.facade.LoginFacade;
+import com.dac.lol.model.Usuario;
+import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 
@@ -17,7 +20,7 @@ import javax.enterprise.context.RequestScoped;
 public class LoginManbe {
     private String login;
     private String password;
-    
+    private Usuario usuario;
 
     /**
      * Creates a new instance of LoginManbe
@@ -41,12 +44,27 @@ public class LoginManbe {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    public Usuario getUsuario() {
+        return usuario;
+    }
 
-    public String verifyLogin(){
-        
-        //System.out.println("Login: "+this.getLogin());
-        //System.out.println("Senha: "+this.getPassword());
-        return "success";
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
     
+    public String verifyLogin(){
+        usuario = LoginFacade.FazerLogin(this.getLogin(), this.getPassword());
+        
+        if(usuario.getTipo() == 'c')
+            return "cliente";
+        else if(usuario.getTipo() == 'f')
+            return "funcinario";
+        else
+            return null;
+    }
+    @PostConstruct
+    public void init(){
+        usuario = new Usuario();
+    }
 }
