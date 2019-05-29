@@ -17,15 +17,14 @@ import org.hibernate.Session;
  */
 public class LoginDAO {
     public Usuario selectUsuario(String login, String password) {
-        Usuario usuario = null;
+        Usuario usuario = new Usuario();
+        String HQL = "from Usuario u where usuario_email = :login and"
+                            + " usuario_senha_criptografada = :password";
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            Query query = session.createQuery(
-                    "from Usuario where usuario_email = :login and"
-                            + " usuario_senha_criptografada = :password");
-            query.setString("login", login);
-            query.setString("password", password);
+            Query query = session.createQuery(HQL).
+                    setParameter("login", login).setParameter("password", password);
             usuario = (Usuario) query.uniqueResult();
             session.close();
         } catch (HibernateException e) {

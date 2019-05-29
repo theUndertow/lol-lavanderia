@@ -5,12 +5,12 @@
  */
 package com.dac.lol.manbe;
 
+import com.dac.lol.criptografia.MDFive;
 import com.dac.lol.facade.LoginFacade;
 import com.dac.lol.model.Usuario;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-
 /**
  *
  * @author marco
@@ -53,16 +53,25 @@ public class LoginManbe {
         this.usuario = usuario;
     }
     
-    public String verifyLogin(){
-        usuario = LoginFacade.FazerLogin(this.getLogin(), this.getPassword());
-        
-        if(usuario.getTipo() == 'c')
-            return "cliente";
-        else if(usuario.getTipo() == 'f')
-            return "funcinario";
-        else
-            return null;
+    public boolean isLogado(){
+        return this.getLogin() != null;
     }
+    
+    
+    public String verifyLogin(){
+        String pass = MDFive.encripta(this.getPassword());
+        System.out.println(MDFive.encripta(this.getPassword()));
+        usuario = LoginFacade.FazerLogin(this.getLogin(), pass);
+        if(usuario != null){
+            if(usuario.getTipo() == 'c')
+                return "cliente";   
+            else if(usuario.getTipo() == 'f')
+                return "funcionario";
+        }
+        
+        return "index";       
+    }
+    
     @PostConstruct
     public void init(){
         usuario = new Usuario();

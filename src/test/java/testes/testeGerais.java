@@ -5,6 +5,7 @@
  */
 package testes;
 
+import com.dac.lol.criptografia.MDFive;
 import com.dac.lol.dao.*;
 import com.dac.lol.model.*;
 import java.text.DateFormat;
@@ -13,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import com.dac.lol.criptografia.MDFive;
 
 /**
  *
@@ -47,10 +49,11 @@ public class testeGerais {
         /*
             Usuario usuario = new Usuario();
             UsuarioDAO usuarioDAO = new UsuarioDAO();
-
+            MDFive md5 = new MDFive();
+            
             usuario.setEmail("marco@gmail.com");
             usuario.setNome("Marco");
-            usuario.setSenha("123");
+            usuario.setSenha(md5.encripta("123"));
             usuario.setTipo('c');
 
             usuarioDAO.insertUsuario(usuario);
@@ -183,6 +186,18 @@ public class testeGerais {
             pedido.setRoupas(roupas);
 
             pedidoDAO.insertPedido(pedido);
+        */
+        
+        // TESTE DA MD5
+        /*
+        String senha = "123";
+        String senha2 = "minhaSenhaSuperSeguraQueNinguémEstáVendo";
+        String cript;
+        String cript2;
+        
+        cript = MDFive.encripta(senha);
+        cript2 = MDFive.encripta(senha2);
+        System.out.println(cript);
         */
     }   
 }

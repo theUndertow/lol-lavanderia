@@ -14,9 +14,7 @@ import com.dac.lol.model.Usuario;
  */
 public class LoginFacade {
     public static Usuario FazerLogin(String login, String senha){
-        LoginDAO dao = new LoginDAO();
-        Usuario usuario = new Usuario();
-        usuario = dao.selectUsuario(login, senha);
-        return usuario;
+        LoginDAO loginDAO = new LoginDAO();
+        return loginDAO.selectUsuario(login, senha);
     }
 }
