@@ -28,13 +28,15 @@ public class Autenticacao implements PhaseListener{
     
     @Override
     public void beforePhase(PhaseEvent event) {
-    
+        
     }
     
     @Override
     public void afterPhase(PhaseEvent event) {
         FacesContext context = event.getFacesContext();
         if ("/index.xhtml".equals(context.getViewRoot().getViewId()))
+            return;
+        if ("/cadastro.xhtml".equals(context.getViewRoot().getViewId()))
             return;
         LoginManbe loginManbe = context.getApplication().
         evaluateExpressionGet(context, "#{loginManbe}", LoginManbe.class);

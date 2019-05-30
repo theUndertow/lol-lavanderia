@@ -18,6 +18,6 @@ import javax.inject.Named;
 public class ClienteManbe {
     public String logout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "login?faces-redirect=true";
+        return "index?faces-redirect=true";
     }
 }
