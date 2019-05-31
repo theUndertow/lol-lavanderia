@@ -33,14 +33,14 @@ public class CidadeDAO {
     }
 
     // Retornará um único cidade
-    public Cidade selectCidade(int id) {
+    public Cidade selectCidade(long id) {
         Cidade cidade = null;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
                     "from Cidade where id = :id");
-            query.setInteger("id", id);
+            query.setLong("id", id);
             cidade = (Cidade) query.uniqueResult();
             session.close();
         } catch (HibernateException e) {

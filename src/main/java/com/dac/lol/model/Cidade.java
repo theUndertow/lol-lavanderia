@@ -7,6 +7,7 @@ package com.dac.lol.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,9 +25,9 @@ import javax.persistence.Table;
  * @author marco
  */
 @Entity
-@Table(name="tb_cidade")
-public class Cidade implements Serializable{
-    
+@Table(name = "tb_cidade")
+public class Cidade implements Serializable {
+
     private long id;
     private String nome;
     private Estado estado;
@@ -34,9 +35,9 @@ public class Cidade implements Serializable{
 
     public Cidade() {
     }
-    
+
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cidade_id")
     public long getId() {
         return id;
@@ -54,10 +55,9 @@ public class Cidade implements Serializable{
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
 
     @ManyToOne
-    @JoinColumn(name="cidade_estado", nullable = false)
+    @JoinColumn(name = "cidade_estado", nullable = false)
     public Estado getEstado() {
         return estado;
     }
@@ -66,7 +66,7 @@ public class Cidade implements Serializable{
         this.estado = estado;
     }
 
-    @OneToMany(mappedBy="cidade", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "cidade", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public List<Endereco> getEnderecos() {
         return enderecos;
     }
@@ -74,5 +74,28 @@ public class Cidade implements Serializable{
     public void setEnderecos(List<Endereco> enderecos) {
         this.enderecos = enderecos;
     }
-        
+
+    @Override
+    public int hashCode() {
+        return nome.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Cidade other = (Cidade) obj;
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        return true;
+    }
+
 }

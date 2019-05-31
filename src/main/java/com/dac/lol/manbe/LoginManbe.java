@@ -60,7 +60,6 @@ public class LoginManbe {
     
     public String verifyLogin(){
         String pass = MDFive.encripta(this.getPassword());
-        System.out.println(MDFive.encripta(this.getPassword()));
         usuario = LoginFacade.FazerLogin(this.getLogin(), pass);
         if(usuario != null){
             if(usuario.getTipo() == 'c')

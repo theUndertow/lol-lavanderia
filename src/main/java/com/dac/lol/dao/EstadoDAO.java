@@ -35,14 +35,31 @@ public class EstadoDAO {
     }
 
     // Retornará um único estado
-    public Estado selectEstado(int id) {
+    public Estado selectEstadoSigla(String sigla) {
+        Estado estado = null;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery(
+                    "from Estado where estado_sigla = :sigla");
+            query.setString("sigla", sigla);
+            estado = (Estado) query.uniqueResult();
+            session.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return estado;
+    }
+    
+    // Retornará um único estado
+    public Estado selectEstadoId(Long id) {
         Estado estado = null;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
                     "from Estado where id = :id");
-            query.setInteger("id", id);
+            query.setLong("id", id);
             estado = (Estado) query.uniqueResult();
             session.close();
         } catch (HibernateException e) {
