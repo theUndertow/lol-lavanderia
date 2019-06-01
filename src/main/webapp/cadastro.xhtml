@@ -6,13 +6,15 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
-    </h:head>
+    </h:head>  
     <h:body>
-        <h1>Cadastro Cliente</h1>
         <h:form>
+            <h1>Cadastro Geral</h1>
             <p>Nome: <h:inputText id="cliente-nome" value="#{cadastroManbe.usuario.nome}"/></p>
             <p>E-mail: <h:inputText id="cliente-email" value="#{cadastroManbe.usuario.email}"/></p>
             <p>Senha: <h:inputSecret id="cliente-senha" value="#{cadastroManbe.usuario.senha}"/></p>
+            <hr></hr>
+            <h1>Cadastro Cliente</h1>
             <p>CPF: <h:inputText id="cliente-cpf" value="#{cadastroManbe.cliente.cpf}"/></p>
             <p>Telefone: <h:inputText id="cliente-telefone" value="#{cadastroManbe.cliente.telefone}"/></p>
             <p>Sexo:
@@ -37,13 +39,8 @@
                 </h:selectOneMenu>
             </p>
             <p><h:commandButton action="#{cadastroManbe.cadastroCliente()}" value="Susbmiter"/></p>
-        </h:form>
-
-        <h1>Cadastro Funcionario</h1>
-        <h:form>
-            <p>Nome: <h:inputText id="funcionario-nome" value="#{cadastroManbe.usuario.nome}"/></p>
-            <p>E-mail: <h:inputText id="funcionario-email" value="#{cadastroManbe.usuario.email}"/></p>
-            <p>Senha: <h:inputSecret id="funcionario-senha" value="#{cadastroManbe.usuario.senha}"/></p>
+            <hr></hr>
+            <h1>Cadastro Funcionario</h1>
             <p>Matricula: <h:inputText id="funcionario-matricula" value="#{cadastroManbe.funcionario.matricula}"/></p>
             <p>Data Nascimento: 
                 <p:inputMask id="dob" mask="99/99/9999" value="#{cadastroManbe.funcionario.nascimento}" >
