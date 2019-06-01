@@ -63,5 +63,23 @@ public class CadastroFacade {
         }
         return true;
     }
+    
+    public static String registerFuncionario(Usuario user, Funcionario employee){
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+        CadastroDAO cadastroDAO = new CadastroDAO();
+        
+        if(!cadastroDAO.validateEmail(user)){
+            return "Funcionario com o mesmo email ja adicionado no banco meu bom";
+        }
+        
+        if(!cadastroDAO.validateMatricula(employee)){
+            return "Funcionario com a mesma matricula ja adicionado no banco meu bom";
+        }
+        usuarioDAO.insertUsuario(user);
+        funcionarioDAO.insertFuncionario(employee);
+        
+        return "";
+    }
         
 }

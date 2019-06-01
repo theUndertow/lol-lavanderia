@@ -199,16 +199,6 @@ public class testeGerais {
         cript2 = MDFive.encripta(senha2);
         System.out.println(cript);
         */
-        Usuario usuario = new Usuario();
-        usuario.setEmail("marco@saddsf.com");
-        
-        CadastroDAO cadastroDAO = new CadastroDAO();
-        
-        if(cadastroDAO.validateEmail(usuario)){
-            System.out.println("EMAIL NÃO EXISTE");
-        }else{
-            System.out.println("EMAIL JÁ EXISTENTE");
-        }
         
     }   
 }

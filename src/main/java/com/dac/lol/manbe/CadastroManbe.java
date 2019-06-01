@@ -11,6 +11,8 @@ import com.dac.lol.model.*;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import sun.security.provider.MD5;
 
@@ -31,6 +33,7 @@ public class CadastroManbe {
     private Cliente cliente;
     private Funcionario funcionario;
     private Endereco endereco;
+    private String error; // Quem for fazer front end arrumar isso corretamente
 
     public List<Estado> getListaEstados() {
         return listaEstados;
@@ -103,7 +106,15 @@ public class CadastroManbe {
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
-    
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
     @PostConstruct
     public void init() {
         //initiate objects
@@ -112,58 +123,62 @@ public class CadastroManbe {
         funcionario = new Funcionario();
         cadastroFacade = new CadastroFacade();
         endereco = new Endereco();
-        
+
         listaEstados = cadastroFacade.selectAllState();
         estadoSelecionado = cadastroFacade.selectStateId(Long.parseLong("10"));
         listaCidades = cadastroFacade.selectAllCityById(estadoSelecionado.getId());
     }
 
     public void buscarCidades() {
-        if(estadoSelecionado != null)
+        if (estadoSelecionado != null) {
             listaCidades = cadastroFacade.selectAllCityById(estadoSelecionado.getId());
-    }
-    
-    public void cadastroUsuario(){
-        if(usuario.getTipo() == 'c'){
-            cadastroCliente();
-        }else if(usuario.getTipo() == 'f'){
-            cadastroFuncionario();
         }
     }
-    
-    public void cadastroCliente(){
-        
-        // Set the city to address
-        endereco.setCidade(cidadeSelecionada);
-        
-        // Set client to the user
-        usuario.setCliente(cliente);
-        
-        // Set user to the client
-        cliente.setUsuario(usuario);
-        
+
+    public void cadastroUsuario() {
+        // Check the type of a user to add a database
         // encrypt the actual pass 
         String newPass = MDFive.encripta(usuario.getSenha());
         usuario.setSenha(newPass);
-        
-        // set address to the cliente
-        cliente.setEndereco(endereco);
-        
-        // Pass the user and client to facade to make the register
-        if(!cadastroFacade.registerCliente(usuario, cliente)){
-            
+        if (usuario.getTipo() == 'c') {
+            cadastroCliente();
+        } else if (usuario.getTipo() == 'f') {
+            cadastroFuncionario();
         }
     }
-    
-    public void cadastroFuncionario(){
-        System.out.println("\n\tEmail " + usuario.getEmail());
-        System.out.println("\n\tNome " + usuario.getNome());
-        System.out.println("\n\tSenha " + usuario.getSenha());
-        System.out.println("\n\tTipo " + usuario.getTipo());
-        
-        System.out.println("\n\tMatricula" + funcionario.getMatricula());
-        System.out.println("\n\tNascimento" + funcionario.getNascimento().toString());
+
+    public void cadastroCliente() {
+        if (cliente != null && usuario != null) {
+            System.out.println("\n\n\n\n\n\n\nCLIENTE");
+            // Set the city to address
+            endereco.setCidade(cidadeSelecionada);
+
+            // Set client to the user
+            usuario.setCliente(cliente);
+
+            // Set user to the client
+            cliente.setUsuario(usuario);
+
+            // set address to the cliente
+            cliente.setEndereco(endereco);
+
+            // Pass the user and client to facade to make the register
+            if (!cadastroFacade.registerCliente(usuario, cliente)) {
+                this.error = "Cliente com o mesmo email ja adicionado no banco meu bom";
+            }
+        }
+    }
+
+    public void cadastroFuncionario() {
+        if (funcionario != null && usuario != null) {
+            System.out.println("\n\n\n\n\n\n\nFUNCIONARIO");
+            // Set user to a employee 
+            usuario.setFuncionario(funcionario);
+
+            // Set employee to a user
+            funcionario.setUsuario(usuario);
+            // Pass the user and employee to facade to make the register
+            this.error = cadastroFacade.registerFuncionario(usuario, funcionario);
+        }
     }
 }
-
-
