@@ -35,7 +35,7 @@ public class CadastroDAO {
     }
     
     public boolean validateMatricula(Funcionario employee){
-        List<Usuario> employees = null;
+        List<Funcionario> employees = null;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
