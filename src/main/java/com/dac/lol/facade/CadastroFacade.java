@@ -1,11 +1,7 @@
 package com.dac.lol.facade;
 
-import com.dac.lol.dao.CidadeDAO;
-import com.dac.lol.dao.EstadoDAO;
-import com.dac.lol.dao.LoginDAO;
-import com.dac.lol.model.Cidade;
-import com.dac.lol.model.Estado;
-import com.dac.lol.model.Usuario;
+import com.dac.lol.dao.*;
+import com.dac.lol.model.*;
 import java.util.List;
 
 /*
@@ -52,6 +48,20 @@ public class CadastroFacade {
     public static Estado selectStateId(Long id){
         EstadoDAO estadoDAO = new EstadoDAO();
         return estadoDAO.selectEstadoId(id);
+    }
+    
+    public static boolean registerCliente(Usuario user, Cliente client){
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        ClienteDAO clienteDAO = new ClienteDAO();
+        CadastroDAO cadastroDAO = new CadastroDAO();
+        
+        if(cadastroDAO.validateEmail(user)){
+            usuarioDAO.insertUsuario(user);
+            clienteDAO.insertCliente(client);
+        }else{
+            return false;
+        }
+        return true;
     }
         
 }

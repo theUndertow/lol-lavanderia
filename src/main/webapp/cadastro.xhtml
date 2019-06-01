@@ -13,6 +13,12 @@
             <p>Nome: <h:inputText id="cliente-nome" value="#{cadastroManbe.usuario.nome}"/></p>
             <p>E-mail: <h:inputText id="cliente-email" value="#{cadastroManbe.usuario.email}"/></p>
             <p>Senha: <h:inputSecret id="cliente-senha" value="#{cadastroManbe.usuario.senha}"/></p>
+            <p>Tipo:
+                <h:selectOneRadio id="cliente-tipo" value="#{cadastroManbe.usuario.tipo}">
+                    <p><f:selectItem itemLabel="Cliente" itemValue="c" /></p>
+                    <p><f:selectItem itemLabel="Funcionario" itemValue="f" /></p>
+                </h:selectOneRadio>
+            </p>
             <hr></hr>
             <h1>Cadastro Cliente</h1>
             <p>CPF: <h:inputText id="cliente-cpf" value="#{cadastroManbe.cliente.cpf}"/></p>
@@ -38,7 +44,6 @@
                     <f:selectItems value="#{cadastroManbe.listaCidades}" var="cidade" itemLabel="#{cidade.nome}" itemValue="#{cidade}"/>
                 </h:selectOneMenu>
             </p>
-            <p><h:commandButton action="#{cadastroManbe.cadastroCliente()}" value="Susbmiter"/></p>
             <hr></hr>
             <h1>Cadastro Funcionario</h1>
             <p>Matricula: <h:inputText id="funcionario-matricula" value="#{cadastroManbe.funcionario.matricula}"/></p>
@@ -47,7 +52,7 @@
                     <f:convertDateTime pattern="dd/MM/yyyy" />
                 </p:inputMask>
             </p>
-            <p><h:commandButton  action="#{cadastroManbe.cadastroFuncionario()}" value="Susbmiter"/></p>
+            <p><h:commandButton  action="#{cadastroManbe.cadastroUsuario()}" value="Susbmiter"/></p>
         </h:form>
         <h:outputLink value="index">Voltar</h:outputLink>
     </h:body>

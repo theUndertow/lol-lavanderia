@@ -5,12 +5,14 @@
  */
 package com.dac.lol.manbe;
 
+import com.dac.lol.criptografia.MDFive;
 import com.dac.lol.facade.CadastroFacade;
 import com.dac.lol.model.*;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import sun.security.provider.MD5;
 
 /**
  *
@@ -121,29 +123,39 @@ public class CadastroManbe {
             listaCidades = cadastroFacade.selectAllCityById(estadoSelecionado.getId());
     }
     
+    public void cadastroUsuario(){
+        if(usuario.getTipo() == 'c'){
+            cadastroCliente();
+        }else if(usuario.getTipo() == 'f'){
+            cadastroFuncionario();
+        }
+    }
+    
     public void cadastroCliente(){
-        usuario.setTipo('c');
-        System.out.println("\n\t Email" + usuario.getEmail());
-        System.out.println("\n\t Nome" + usuario.getNome());
-        System.out.println("\n\t Senha" + usuario.getSenha());
-        System.out.println("\n\t Tipo" + usuario.getTipo());
         
-        System.out.println("\n\t CPF" + cliente.getCpf());
-        System.out.println("\n\t Telefone" + cliente.getTelefone());
-        
-        cliente.setEndereco(endereco);
+        // Set the city to address
         endereco.setCidade(cidadeSelecionada);
         
-        System.out.println("\n\t Bairro" + endereco.getBairro());
-        System.out.println("\n\t Complemento" + endereco.getComplemento());
-        System.out.println("\n\t Rua" + endereco.getRua());
-        System.out.println("\n\t Numero" + endereco.getNumero());
-        System.out.println("\n\t Cidade" + endereco.getCidade().getNome());
-        System.out.println("\n\t Estado" + cidadeSelecionada.getEstado().getNome());
+        // Set client to the user
+        usuario.setCliente(cliente);
+        
+        // Set user to the client
+        cliente.setUsuario(usuario);
+        
+        // encrypt the actual pass 
+        String newPass = MDFive.encripta(usuario.getSenha());
+        usuario.setSenha(newPass);
+        
+        // set address to the cliente
+        cliente.setEndereco(endereco);
+        
+        // Pass the user and client to facade to make the register
+        if(!cadastroFacade.registerCliente(usuario, cliente)){
+            
+        }
     }
     
     public void cadastroFuncionario(){
-        usuario.setTipo('f');
         System.out.println("\n\tEmail " + usuario.getEmail());
         System.out.println("\n\tNome " + usuario.getNome());
         System.out.println("\n\tSenha " + usuario.getSenha());
