@@ -19,8 +19,6 @@ import javax.inject.Named;
 @Named(value = "cadastroTipoRoupaManbe")
 @RequestScoped
 public class CadastroTipoRoupaManbe {
-    private List<Tipo> listaTipos;
-    private Tipo tipoSelecionado;
     private Tipo tipo;
     private CadastroTipoRoupaFacade cadastroTipoRoupaFacade;
     private String error;
@@ -48,30 +46,12 @@ public class CadastroTipoRoupaManbe {
     public void setError(String error) {
         this.error = error;
     }
-
-    public List<Tipo> getListaTipos() {
-        return listaTipos;
-    }
-
-    public void setListaTipos(List<Tipo> listaTipos) {
-        this.listaTipos = listaTipos;
-    }
-
-    public Tipo getTipoSelecionado() {
-        return tipoSelecionado;
-    }
-
-    public void setTipoSelecionado(Tipo tipoSelecionado) {
-        this.tipoSelecionado = tipoSelecionado;
-    }
+    
     
     @PostConstruct
     public void init(){
         tipo = new Tipo();
         cadastroTipoRoupaFacade = new CadastroTipoRoupaFacade();
-        
-        listaTipos = cadastroTipoRoupaFacade.selectAllType();
-        tipoSelecionado = cadastroTipoRoupaFacade.selectTypeId(Long.parseLong("1"));
     }
     
     

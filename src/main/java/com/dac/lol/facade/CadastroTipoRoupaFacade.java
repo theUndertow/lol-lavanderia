@@ -24,14 +24,4 @@ public class CadastroTipoRoupaFacade {
         }
         return false;
     }
-
-    public static Tipo selectTypeId(Long id){
-        TipoDAO tipoDAO = new TipoDAO();
-        return tipoDAO.selectTipo(id);
-    }
-
-    public static List<Tipo> selectAllType() {
-        TipoDAO tipoDAO = new TipoDAO();
-        return tipoDAO.selectListTipo();
-    }
 }

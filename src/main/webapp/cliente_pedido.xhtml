@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    
+    <h:body>
+        
+        Selecione um tipo de roupa e depois a quantidade
+        <h:form>
+            <p>
+                Tipo: <h:selectOneMenu id="comboTipo" value="#{cadastroPedido.tipoSelecionado}" converter="tipoConverter">
+                    <f:selectItems value="#{cadastroPedido.listaTipos}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}"/>
+                </h:selectOneMenu>
+                Quantidade: <h:inputText id="quantidade" value="#{cadastroPedido.roupa.quantidade}"/>
+                <h:commandButton  value="Adicionar">
+                    <f:ajax listener="#{cadastroPedido.adicionar}"  execute="quantidade"/>
+                </h:commandButton></p>
+        </h:form>
+    </h:body>
+</html>
+
