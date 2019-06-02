@@ -174,6 +174,7 @@ public class CadastroManbe {
 
             // Set employee to a user
             funcionario.setUsuario(usuario);
+            
             // Pass the user and employee to facade to make the register
             this.error = cadastroFacade.registerFuncionario(usuario, funcionario);
         }

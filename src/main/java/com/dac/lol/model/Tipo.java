@@ -7,6 +7,7 @@ package com.dac.lol.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,6 +24,7 @@ import javax.persistence.Table;
 @Table(name="tb_tipo")
 public class Tipo implements Serializable {
     private long id;
+    private String nome;
     private float preco;
     private int prazo;
     private List<Roupa> roupas;
@@ -66,5 +68,37 @@ public class Tipo implements Serializable {
 
     public void setRoupas(List<Roupa> roupas) {
         this.roupas = roupas;
+    }
+    
+    @Column(name = "tipo_nome")
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
+    @Override
+    public int hashCode() {
+        return nome.hashCode();
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Tipo other = (Tipo) obj;
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        return true;
     }
 }

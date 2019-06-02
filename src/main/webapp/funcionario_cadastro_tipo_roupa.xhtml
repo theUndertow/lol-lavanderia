@@ -7,6 +7,17 @@
     </h:head>
     <h:body>
         Cadastro Tipo Roupa
+        <h:outputText value="#{cadastroTipoRoupaManbe.error}" style="color:red"/>
+        <h:form>
+            <p><h:outputLabel for="nome">Nome: </h:outputLabel>
+                <h:inputText id="nome" value="#{cadastroTipoRoupaManbe.tipo.nome}"/></p>
+            <p><h:outputLabel for="prazo">Prazo: </h:outputLabel>
+                <h:inputText id="prazo" value="#{cadastroTipoRoupaManbe.tipo.prazo}"/></p>
+            <p><h:outputLabel for="preco">Preco: </h:outputLabel>
+                <h:inputText id="preco" value="#{cadastroTipoRoupaManbe.tipo.preco}"/></p>
+            <p><h:commandButton value="Cadastrar" action="#{cadastroTipoRoupaManbe.cadastroTipo}"/></p>
+        </h:form>
+        <h:outputLink value="funcionario.xhtml" >Voltar home</h:outputLink>
     </h:body>
 </html>
 

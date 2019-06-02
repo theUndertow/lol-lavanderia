@@ -31,7 +31,7 @@ public class CadastroDAO {
         } catch (HibernateException e) {
             e.printStackTrace();
         }
-        return (users.isEmpty()) ? true : false;
+        return (users.isEmpty());
     }
     
     public boolean validateMatricula(Funcionario employee){
@@ -46,7 +46,7 @@ public class CadastroDAO {
         } catch (HibernateException e) {
             e.printStackTrace();
         }
-        return (employees.isEmpty()) ? true : false;
+        return (employees.isEmpty());
     }
 }
 
