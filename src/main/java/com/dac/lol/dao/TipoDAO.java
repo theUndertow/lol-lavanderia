@@ -33,14 +33,14 @@ public class TipoDAO {
     }
 
     // Retornará um único tipo
-    public Tipo selectTipo(int id) {
+    public Tipo selectTipo(long id) {
         Tipo tipo = null;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
                     "from Tipo where id = :id");
-            query.setInteger("id", id);
+            query.setLong("id", id);
             tipo = (Tipo) query.uniqueResult();
             session.close();
         } catch (HibernateException e) {

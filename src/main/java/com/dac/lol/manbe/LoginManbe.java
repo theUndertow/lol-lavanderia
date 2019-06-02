@@ -16,8 +16,9 @@ import javax.inject.Named;
  *
  * @author marco
  */
-@Named(value = "loginManbe")
+
 @SessionScoped
+@Named(value = "loginManbe")
 public class LoginManbe implements Serializable{
     private String login;
     private String password;
