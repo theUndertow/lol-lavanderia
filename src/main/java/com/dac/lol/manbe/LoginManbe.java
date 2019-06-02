@@ -10,8 +10,8 @@ import com.dac.lol.facade.LoginFacade;
 import com.dac.lol.model.Usuario;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
-import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 /**
  *
  * @author marco
