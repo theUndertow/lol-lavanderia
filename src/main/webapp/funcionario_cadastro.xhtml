@@ -1,12 +1,33 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
-    </h:head>
+    </h:head>  
     <h:body>
-        Cadastro Funcionario
+        <h:outputText value="#{cadastroManbe.error}" style="color:red"/>
+        <h:form>
+            
+            <h1>Cadastro Geral</h1>
+            <p>Nome: <h:inputText id="cliente-nome" value="#{cadastroManbe.usuario.nome}"/></p>
+            <p>E-mail: <h:inputText id="cliente-email" value="#{cadastroManbe.usuario.email}"/></p>
+            <p>Senha: <h:inputSecret id="cliente-senha" value="#{cadastroManbe.usuario.senha}"/></p>
+           
+            <hr/>
+            
+            <h1>Cadastro Funcionario</h1>
+            <p>Matricula: <h:inputText id="funcionario-matricula" value="#{cadastroManbe.funcionario.matricula}"/></p>
+            <p>Data Nascimento: 
+                <p:inputMask id="dob" mask="99/99/9999" value="#{cadastroManbe.funcionario.nascimento}" >
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </p:inputMask>
+            </p>
+            <p><h:commandButton  action="#{cadastroManbe.cadastroFuncionario()}" value="Susbmiter"/></p>
+        </h:form>
+        <h:outputLink value="funcionario.xhtml">Voltar</h:outputLink>
     </h:body>
 </html>
 
