@@ -10,8 +10,10 @@
     </h:head>
 
     <h:body>
-
-        Selecione um tipo de roupa e depois a quantidade
+        <h:form>
+            <p>#{loginManbe.usuario.nome} deseja realizar o pedido?</p>
+            <p><h:commandLink  action="#{cadastroPedido.order(loginManbe.usuario.cliente)}" value="Realizar pedido"/></p>
+        </h:form>
         <h:form>
             <p>
                 Tipo: <h:selectOneMenu id="comboTipo" value="#{tipoQuantidadeManager.tipo}" converter="tipoConverter">
@@ -22,7 +24,15 @@
                     <f:ajax listener="#{tipoQuantidadeManager.addNewTipoQuantidade()}" execute="comboTipo quantidade" render="pedidos"></f:ajax>
                 </h:commandButton> </p>
         </h:form>
-
+        
+        <h:form id="calculo">
+            <h:commandButton value="Calcular total">
+                <f:ajax listener="#{cadastroPedido.calculate}" execute="calculo" render="total-prazo total-preco"></f:ajax>
+            </h:commandButton>
+            <p>Total : <h:outputText id="total-prazo" value="#{cadastroPedido.pedido.total}"/>
+            Prazo : <h:outputText id="total-preco" value="#{cadastroPedido.pedido.prazo}"/> Dias</p>
+        </h:form>
+        
         <h1>Pedidos</h1>
         <h:form id="pedidos">
             <h:dataTable value="#{cadastroPedido.listaTipoQuantidade}" var="tipoQuantidade">

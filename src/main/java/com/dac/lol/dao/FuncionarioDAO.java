@@ -33,14 +33,14 @@ public class FuncionarioDAO {
     }
 
     // Retornará um único funcionario
-    public Funcionario selectFuncionario(int id) {
+    public Funcionario selectFuncionario(Long id) {
         Funcionario funcionario = null;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
                     "from Funcionario where id = :id");
-            query.setInteger("id", id);
+            query.setLong("id", id);
             funcionario = (Funcionario) query.uniqueResult();
             session.close();
         } catch (HibernateException e) {

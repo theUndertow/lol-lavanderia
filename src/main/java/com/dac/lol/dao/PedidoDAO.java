@@ -33,14 +33,14 @@ public class PedidoDAO {
     }
 
     // Retornará um único pedido
-    public Pedido selectPedido(int id) {
+    public Pedido selectPedido(Long id) {
         Pedido pedido = null;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
                     "from Pedido where id = :id");
-            query.setInteger("id", id);
+            query.setLong("id", id);
             pedido = (Pedido) query.uniqueResult();
             session.close();
         } catch (HibernateException e) {

@@ -33,14 +33,14 @@ public class UsuarioDAO {
     }
 
     // Retornará um único usuario
-    public Usuario selectUsuario(int id) {
+    public Usuario selectUsuario(Long id) {
         Usuario usuario = null;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
                     "from Usuario where id = :id");
-            query.setInteger("id", id);
+            query.setLong("id", id);
             usuario = (Usuario) query.uniqueResult();
             session.close();
         } catch (HibernateException e) {

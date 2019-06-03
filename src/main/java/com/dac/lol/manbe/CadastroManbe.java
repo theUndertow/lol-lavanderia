@@ -152,7 +152,7 @@ public class CadastroManbe implements Serializable{
 
 
         // Pass the user and client to facade to make the register
-        if (!cadastroFacade.registerCliente(usuario, cliente)) {
+        if (!CadastroFacade.registerCliente(usuario, cliente)) {
             this.error = "Cliente com o mesmo email ja adicionado no banco meu bom";
             return "cadastro.xhtml";
         }else{

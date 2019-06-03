@@ -64,8 +64,10 @@ public class Roupa {
         this.tipo = tipo;
     }
     
-    @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE},
-            mappedBy="roupas", fetch=FetchType.EAGER)
+    @ManyToMany(
+            cascade={CascadeType.PERSIST, CascadeType.MERGE},
+            mappedBy="roupas", 
+            fetch=FetchType.EAGER)
     public Collection<Pedido> getPedidos() {
         return pedidos;
     }

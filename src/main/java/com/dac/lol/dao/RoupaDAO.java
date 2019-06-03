@@ -33,14 +33,14 @@ public class RoupaDAO {
     }
 
     // Retornará um único roupa
-    public Roupa selectRoupa(int id) {
+    public Roupa selectRoupa(Long id) {
         Roupa roupa = null;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
                     "from Roupa where id = :id");
-            query.setInteger("id", id);
+            query.setLong("id", id);
             roupa = (Roupa) query.uniqueResult();
             session.close();
         } catch (HibernateException e) {

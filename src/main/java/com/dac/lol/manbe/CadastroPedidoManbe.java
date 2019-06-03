@@ -6,15 +6,15 @@
 package com.dac.lol.manbe;
 
 import com.dac.lol.facade.CadastroPedidoFacade;
+import com.dac.lol.model.Cliente;
 import com.dac.lol.model.Pedido;
 import com.dac.lol.model.Roupa;
 import com.dac.lol.model.Tipo;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
@@ -24,14 +24,16 @@ import javax.inject.Named;
  */
 @Named(value = "cadastroPedido")
 @SessionScoped
-public class CadastroPedidoManbe implements Serializable{
+public class CadastroPedidoManbe implements Serializable {
+
     private List<Tipo> listaTipos;
-    private List<TipoQuantidade> listaTipoQuantidade = new ArrayList<>();
-    
+    private List<TipoQuantidade> listaTipoQuantidade;
+    private List<Roupa> roupas;
+
     private Pedido pedido;
     private Roupa roupa;
     private Tipo tipoSelecionado;
-    
+
     private String error;
 
     public Pedido getPedido() {
@@ -81,23 +83,64 @@ public class CadastroPedidoManbe implements Serializable{
     public void setListaTipoQuantidade(List<TipoQuantidade> listaTipoQuantidade) {
         this.listaTipoQuantidade = listaTipoQuantidade;
     }
-    
-    
+
     @PostConstruct
     public void init() {
         pedido = new Pedido();
         roupa = new Roupa();
+        listaTipoQuantidade = new ArrayList<>();
+        roupas = new ArrayList<>();
         
         listaTipos = CadastroPedidoFacade.selectAllType();
         tipoSelecionado = CadastroPedidoFacade.selectTypeId(Long.parseLong("1"));
-        listaTipoQuantidade.add(new TipoQuantidade(tipoSelecionado,10));
+        listaTipoQuantidade.add(new TipoQuantidade(tipoSelecionado, 10));
     }
 
     public void addTipoQuantidade(TipoQuantidade tipoQuantidade) {
         listaTipoQuantidade.add(tipoQuantidade);
     }
-    
-    public void deleteRow(TipoQuantidade tipoQuantidade){
+
+    public void deleteRow(TipoQuantidade tipoQuantidade) {
         listaTipoQuantidade.remove(tipoQuantidade);
+
+    }
+
+    public void calculate() {
+        int total = 0, prazo = 0, i = 0;
+        System.out.println("===================================================");
+        roupas.clear();
+        for (TipoQuantidade tq : listaTipoQuantidade) {
+            Roupa temp = new Roupa();
+            temp.setQuantidade(tq.getQuantidade());
+            temp.setTipo(tq.getTipo());
+            roupas.add(temp);
+            total += tq.getQuantidade() * tq.getTipo().getPreco();
+            if (prazo < tq.getTipo().getPrazo()) {
+                prazo = tq.getTipo().getPrazo();
+            }
+            i++;
+        }
+        pedido.setTotal(total);
+        pedido.setPrazo(prazo);
+    }
+
+    public String order(Cliente client) {
+
+        if (pedido.getTotal() != 0 && pedido.getPrazo() != 0 && !roupas.isEmpty()) {
+            System.out.println("\n PASSOU POR AQUI");
+            pedido.setCliente(client);
+            pedido.setSituacao("Em espera");
+            Calendar c = Calendar.getInstance();
+            c.add(Calendar.DATE, pedido.getPrazo());
+            pedido.setTempo(c.getTime());
+            for(Roupa r : roupas){
+                System.out.println("\t"+r.getTipo().getNome());
+                System.out.println("\t"+r.getQuantidade());
+            }
+            CadastroPedidoFacade.addOrder(pedido, roupas);
+            return "/cliente.xhtml";
+        } else {
+            return null;
+        }
     }
 }
