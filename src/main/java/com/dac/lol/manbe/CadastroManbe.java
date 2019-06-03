@@ -124,31 +124,39 @@ public class CadastroManbe implements Serializable{
         }
     }
 
-    public void cadastroCliente() {
+    public String cadastroCliente() {
         // Check the type of a user to add a database
         // encrypt the actual pass 
-        if (usuario != null && cliente != null) {
-            String newPass = MDFive.encripta(usuario.getSenha());
-            usuario.setSenha(newPass);
+        
+        
+        String newPass = MDFive.encripta(usuario.getSenha());
+        usuario.setSenha(newPass);
+        
+        usuario.setTipo('c');
+        System.out.println("\n\n\n\n\n\n\nCLIENTE");
+        
+        // set the state for the selected city
+        
+        
+        // Set the city to address
+        endereco.setCidade(cidadeSelecionada);
 
-            usuario.setTipo('c');
-            System.out.println("\n\n\n\n\n\n\nCLIENTE");
-            // Set the city to address
-            endereco.setCidade(cidadeSelecionada);
+        // set address to the cliente
+        cliente.setEndereco(endereco);
 
-            // Set client to the user
-            usuario.setCliente(cliente);
+        // Set client to the user
+        usuario.setCliente(cliente);
 
             // Set user to the client
             cliente.setUsuario(usuario);
 
-            // set address to the cliente
-            cliente.setEndereco(endereco);
 
-            // Pass the user and client to facade to make the register
-            if (!CadastroFacade.registerCliente(usuario, cliente)) {
-                this.error = "Cliente com o mesmo email ja adicionado no banco meu bom";
-            }
+        // Pass the user and client to facade to make the register
+        if (!cadastroFacade.registerCliente(usuario, cliente)) {
+            this.error = "Cliente com o mesmo email ja adicionado no banco meu bom";
+            return "cadastro.xhtml";
+        }else{
+            return "index.xhtml";
         }
 
     }
