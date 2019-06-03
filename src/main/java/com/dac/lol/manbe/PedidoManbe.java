@@ -5,7 +5,7 @@
  */
 package com.dac.lol.manbe;
 
-import com.dac.lol.facade.CadastroPedidoFacade;
+import com.dac.lol.facade.PedidoFacade;
 import com.dac.lol.model.Cliente;
 import com.dac.lol.model.Pedido;
 import com.dac.lol.model.Roupa;
@@ -22,9 +22,9 @@ import javax.inject.Named;
  *
  * @author marco
  */
-@Named(value = "cadastroPedido")
+@Named(value = "Pedido")
 @SessionScoped
-public class CadastroPedidoManbe implements Serializable {
+public class PedidoManbe implements Serializable {
 
     private List<Tipo> listaTipos;
     private List<TipoQuantidade> listaTipoQuantidade;
@@ -91,8 +91,8 @@ public class CadastroPedidoManbe implements Serializable {
         listaTipoQuantidade = new ArrayList<>();
         roupas = new ArrayList<>();
         
-        listaTipos = CadastroPedidoFacade.selectAllType();
-        tipoSelecionado = CadastroPedidoFacade.selectTypeId(Long.parseLong("1"));
+        listaTipos = PedidoFacade.selectAllType();
+        tipoSelecionado = PedidoFacade.selectTypeId(Long.parseLong("1"));
         listaTipoQuantidade.add(new TipoQuantidade(tipoSelecionado, 10));
     }
 
@@ -106,8 +106,7 @@ public class CadastroPedidoManbe implements Serializable {
     }
 
     public void calculate() {
-        int total = 0, prazo = 0, i = 0;
-        System.out.println("===================================================");
+        int total = 0, prazo = 0;
         roupas.clear();
         for (TipoQuantidade tq : listaTipoQuantidade) {
             Roupa temp = new Roupa();
@@ -118,26 +117,19 @@ public class CadastroPedidoManbe implements Serializable {
             if (prazo < tq.getTipo().getPrazo()) {
                 prazo = tq.getTipo().getPrazo();
             }
-            i++;
         }
         pedido.setTotal(total);
         pedido.setPrazo(prazo);
     }
 
     public String order(Cliente client) {
-
         if (pedido.getTotal() != 0 && pedido.getPrazo() != 0 && !roupas.isEmpty()) {
-            System.out.println("\n PASSOU POR AQUI");
             pedido.setCliente(client);
             pedido.setSituacao("Em espera");
             Calendar c = Calendar.getInstance();
             c.add(Calendar.DATE, pedido.getPrazo());
             pedido.setTempo(c.getTime());
-            for(Roupa r : roupas){
-                System.out.println("\t"+r.getTipo().getNome());
-                System.out.println("\t"+r.getQuantidade());
-            }
-            CadastroPedidoFacade.addOrder(pedido, roupas);
+            PedidoFacade.addOrder(pedido, roupas);
             return "/cliente.xhtml";
         } else {
             return null;

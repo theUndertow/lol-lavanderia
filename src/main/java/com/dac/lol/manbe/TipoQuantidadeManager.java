@@ -28,7 +28,7 @@ public class TipoQuantidadeManager implements Serializable{
     private int quantidade;
     
     @Inject
-    CadastroPedidoManbe cadastroPedidoManbe;
+    PedidoManbe cadastroPedidoManbe;
 
     public Tipo getTipo() {
         return tipo;

@@ -5,11 +5,14 @@
  */
 package com.dac.lol.dao;
 
+import com.dac.lol.model.Cliente;
 import com.dac.lol.model.Pedido;
 import com.dac.lol.model.Roupa;
 import com.dac.lol.util.HibernateUtil;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
@@ -34,5 +37,19 @@ public class CadastroPedidoDAO {
         } catch (HibernateException e) {
             e.printStackTrace();
         }
+    }
+    
+    public List<Pedido> listaAllOrders(Cliente client){
+        List<Pedido> orders = new ArrayList<>();
+        String HQL = "from Pedido where pedido_cliente = :id_client";
+        try{
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery(HQL).setParameter("id_client", client.getId());
+            orders = query.list();
+        }catch(HibernateException e){
+            e.printStackTrace();
+        }
+        return orders;
     }
 }

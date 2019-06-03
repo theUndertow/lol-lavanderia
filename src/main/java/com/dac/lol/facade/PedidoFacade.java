@@ -10,6 +10,7 @@ import com.dac.lol.dao.PedidoDAO;
 import com.dac.lol.dao.RoupaDAO;
 import com.dac.lol.dao.TipoDAO;
 import com.dac.lol.dao.UsuarioDAO;
+import com.dac.lol.model.Cliente;
 import com.dac.lol.model.Pedido;
 import com.dac.lol.model.Roupa;
 import com.dac.lol.model.Tipo;
@@ -21,7 +22,7 @@ import java.util.List;
  *
  * @author marco
  */
-public class CadastroPedidoFacade {
+public class PedidoFacade {
 
     public static Tipo selectTypeId(Long id) {
         TipoDAO tipoDAO = new TipoDAO();
@@ -49,5 +50,24 @@ public class CadastroPedidoFacade {
         pedidoDAO.insertPedido(pedido);
         
         cadastroPedidoDAO.saveOrder(pedido, roupas);
+    }
+    
+    public static List<Pedido> allOrders(Cliente cliente){
+        CadastroPedidoDAO cadastroPedidoDAO = new CadastroPedidoDAO();
+        return cadastroPedidoDAO.listaAllOrders(cliente);
+    }
+    
+    public static void removeOrder(Long orderId){
+        PedidoDAO pedidoDAO = new PedidoDAO();
+        RoupaDAO roupaDAO = new RoupaDAO();
+        Pedido pedido = pedidoDAO.selectPedido(orderId);
+        List<Roupa> roupas = (List<Roupa>) pedido.getRoupas();
+        pedidoDAO.updatePedido(pedido);
+        pedidoDAO.deletePedido(pedido);
+        for(Roupa r : roupas){
+            r.getPedidos().clear();
+            roupaDAO.updateRoupa(r);
+            roupaDAO.deleteRoupa(r);
+        }
     }
 }
