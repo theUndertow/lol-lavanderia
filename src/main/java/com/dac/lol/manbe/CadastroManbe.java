@@ -8,9 +8,11 @@ package com.dac.lol.manbe;
 import com.dac.lol.criptografia.MDFive;
 import com.dac.lol.facade.CadastroFacade;
 import com.dac.lol.model.*;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
 
 /**
@@ -19,13 +21,12 @@ import javax.inject.Named;
  */
 @Named(value = "cadastroManbe")
 @RequestScoped
-public class CadastroManbe {
+public class CadastroManbe implements Serializable{
 
     private List<Estado> listaEstados;
     private List<Cidade> listaCidades;
     private Estado estadoSelecionado;
     private Cidade cidadeSelecionada;
-    private CadastroFacade cadastroFacade;
     private Usuario usuario;
     private Cliente cliente;
     private Funcionario funcionario;
@@ -62,14 +63,6 @@ public class CadastroManbe {
 
     public void setCidadeSelecionada(Cidade cidadeSelecionada) {
         this.cidadeSelecionada = cidadeSelecionada;
-    }
-
-    public CadastroFacade getCadastroFacade() {
-        return cadastroFacade;
-    }
-
-    public void setCadastroFacade(CadastroFacade cadastroFacade) {
-        this.cadastroFacade = cadastroFacade;
     }
 
     public Usuario getUsuario() {
@@ -118,45 +111,46 @@ public class CadastroManbe {
         usuario = new Usuario();
         cliente = new Cliente();
         funcionario = new Funcionario();
-        cadastroFacade = new CadastroFacade();
         endereco = new Endereco();
 
-        listaEstados = cadastroFacade.selectAllState();
-        estadoSelecionado = cadastroFacade.selectStateId(Long.parseLong("10"));
-        listaCidades = cadastroFacade.selectAllCityById(estadoSelecionado.getId());
+        listaEstados = CadastroFacade.selectAllState();
+        estadoSelecionado = CadastroFacade.selectStateId(Long.parseLong("10"));
+        listaCidades = CadastroFacade.selectAllCityById(estadoSelecionado.getId());
     }
 
     public void buscarCidades() {
         if (estadoSelecionado != null) {
-            listaCidades = cadastroFacade.selectAllCityById(estadoSelecionado.getId());
+            listaCidades = CadastroFacade.selectAllCityById(estadoSelecionado.getId());
         }
     }
 
     public void cadastroCliente() {
         // Check the type of a user to add a database
         // encrypt the actual pass 
-        String newPass = MDFive.encripta(usuario.getSenha());
-        usuario.setSenha(newPass);
-        
-        usuario.setTipo('c');
-        System.out.println("\n\n\n\n\n\n\nCLIENTE");
-        // Set the city to address
-        endereco.setCidade(cidadeSelecionada);
+        if (usuario != null && cliente != null) {
+            String newPass = MDFive.encripta(usuario.getSenha());
+            usuario.setSenha(newPass);
 
-        // Set client to the user
-        usuario.setCliente(cliente);
+            usuario.setTipo('c');
+            System.out.println("\n\n\n\n\n\n\nCLIENTE");
+            // Set the city to address
+            endereco.setCidade(cidadeSelecionada);
 
-        // Set user to the client
-        cliente.setUsuario(usuario);
+            // Set client to the user
+            usuario.setCliente(cliente);
 
-        // set address to the cliente
-        cliente.setEndereco(endereco);
+            // Set user to the client
+            cliente.setUsuario(usuario);
 
-        // Pass the user and client to facade to make the register
-        if (!cadastroFacade.registerCliente(usuario, cliente)) {
-            this.error = "Cliente com o mesmo email ja adicionado no banco meu bom";
+            // set address to the cliente
+            cliente.setEndereco(endereco);
+
+            // Pass the user and client to facade to make the register
+            if (!CadastroFacade.registerCliente(usuario, cliente)) {
+                this.error = "Cliente com o mesmo email ja adicionado no banco meu bom";
+            }
         }
-        
+
     }
 
     public void cadastroFuncionario() {
@@ -164,7 +158,7 @@ public class CadastroManbe {
         // encrypt the actual pass 
         String newPass = MDFive.encripta(usuario.getSenha());
         usuario.setSenha(newPass);
-        
+
         usuario.setTipo('f');
         System.out.println("\n\n\n\n\n\n\nFUNCIONARIO");
         // Set user to a employee 
@@ -173,6 +167,6 @@ public class CadastroManbe {
         // Set employee to a user
         funcionario.setUsuario(usuario);
         // Pass the user and employee to facade to make the register
-        this.error = cadastroFacade.registerFuncionario(usuario, funcionario);
+        this.error = CadastroFacade.registerFuncionario(usuario, funcionario);
     }
 }

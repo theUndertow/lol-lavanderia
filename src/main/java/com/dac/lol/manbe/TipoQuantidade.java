@@ -3,19 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dac.lol.util;
+package com.dac.lol.manbe;
 
-import com.dac.lol.facade.CadastroPedidoFacade;
 import com.dac.lol.model.Tipo;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
  * @author marco
  */
 public class TipoQuantidade {
-
     private Tipo tipo;
     private int quantidade;
 
@@ -23,7 +19,7 @@ public class TipoQuantidade {
         this.tipo = tipo;
         this.quantidade = quantidade;
     }
-
+    
     public Tipo getTipo() {
         return tipo;
     }
@@ -32,6 +28,7 @@ public class TipoQuantidade {
         this.tipo = tipo;
     }
 
+
     public int getQuantidade() {
         return quantidade;
     }
@@ -39,4 +36,6 @@ public class TipoQuantidade {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
+    
+    
 }

@@ -9,14 +9,13 @@ import com.dac.lol.facade.CadastroPedidoFacade;
 import com.dac.lol.model.Pedido;
 import com.dac.lol.model.Roupa;
 import com.dac.lol.model.Tipo;
-import com.dac.lol.util.TipoQuantidade;
-import java.util.Calendar;
-import java.util.Date;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.component.UICommand;
-import javax.faces.event.ActionEvent;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /**
@@ -24,16 +23,15 @@ import javax.inject.Named;
  * @author marco
  */
 @Named(value = "cadastroPedido")
-@RequestScoped
-public class CadastroPedidoManbe {
-
+@SessionScoped
+public class CadastroPedidoManbe implements Serializable{
+    private List<Tipo> listaTipos;
+    private List<TipoQuantidade> listaTipoQuantidade = new ArrayList<>();
+    
     private Pedido pedido;
     private Roupa roupa;
-    private CadastroPedidoFacade cadastroPedidoFacade;
-    private List<Tipo> listaTipos;
     private Tipo tipoSelecionado;
-    private TipoQuantidade tipoQuantidade;
-    private List<TipoQuantidade> listaTipoQuantidade;
+    
     private String error;
 
     public Pedido getPedido() {
@@ -42,14 +40,6 @@ public class CadastroPedidoManbe {
 
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
-    }
-
-    public CadastroPedidoFacade getCadastroPedidoFacade() {
-        return cadastroPedidoFacade;
-    }
-
-    public void setCadastroPedidoFacade(CadastroPedidoFacade cadastroPedidoFacade) {
-        this.cadastroPedidoFacade = cadastroPedidoFacade;
     }
 
     public String getError() {
@@ -91,32 +81,23 @@ public class CadastroPedidoManbe {
     public void setListaTipoQuantidade(List<TipoQuantidade> listaTipoQuantidade) {
         this.listaTipoQuantidade = listaTipoQuantidade;
     }
-
-    public TipoQuantidade getTipoQuantidade() {
-        return tipoQuantidade;
-    }
-
-    public void setTipoQuantidade(TipoQuantidade tipoQuantidade) {
-        this.tipoQuantidade = tipoQuantidade;
-    }
-
+    
+    
     @PostConstruct
     public void init() {
-        cadastroPedidoFacade = new CadastroPedidoFacade();
         pedido = new Pedido();
         roupa = new Roupa();
         
-        listaTipos = cadastroPedidoFacade.selectAllType();
-        tipoSelecionado = cadastroPedidoFacade.selectTypeId(Long.parseLong("1"));
+        listaTipos = CadastroPedidoFacade.selectAllType();
+        tipoSelecionado = CadastroPedidoFacade.selectTypeId(Long.parseLong("1"));
+        listaTipoQuantidade.add(new TipoQuantidade(tipoSelecionado,10));
     }
 
-    public void adicionar() {
-        tipoQuantidade = new TipoQuantidade(tipoSelecionado,roupa.getQuantidade());
-        listaTipoQuantidade = cadastroPedidoFacade.addTypeQuantity(this.listaTipoQuantidade, tipoQuantidade);
-        if (!listaTipoQuantidade.isEmpty()) {
-            for (TipoQuantidade tipoQuantidade : listaTipoQuantidade) {
-                System.out.println(tipoQuantidade.getTipo().getNome() + "\t quantidade" + tipoQuantidade.getQuantidade());
-            }
-        }
+    public void addTipoQuantidade(TipoQuantidade tipoQuantidade) {
+        listaTipoQuantidade.add(tipoQuantidade);
+    }
+    
+    public void deleteRow(TipoQuantidade tipoQuantidade){
+        listaTipoQuantidade.remove(tipoQuantidade);
     }
 }

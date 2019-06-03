@@ -18,8 +18,7 @@ public class TipoConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component,
             String value) {
-        CadastroPedidoFacade cadastroPedidoFacade = new CadastroPedidoFacade();
-        return cadastroPedidoFacade.selectTypeId(Long.parseLong(value));
+        return CadastroPedidoFacade.selectTypeId(Long.parseLong(value));
     }
 
     @Override

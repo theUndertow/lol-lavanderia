@@ -4,23 +4,41 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    
+
     <h:head>
         <title>Facelet Title</title>
     </h:head>
-    
+
     <h:body>
-        
+
         Selecione um tipo de roupa e depois a quantidade
         <h:form>
             <p>
-                Tipo: <h:selectOneMenu id="comboTipo" value="#{cadastroPedido.tipoSelecionado}" converter="tipoConverter">
+                Tipo: <h:selectOneMenu id="comboTipo" value="#{tipoQuantidadeManager.tipo}" converter="tipoConverter">
                     <f:selectItems value="#{cadastroPedido.listaTipos}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}"/>
                 </h:selectOneMenu>
-                Quantidade: <h:inputText id="quantidade" value="#{cadastroPedido.roupa.quantidade}"/>
+                Quantidade: <h:inputText id="quantidade" value="#{tipoQuantidadeManager.quantidade}"/>
                 <h:commandButton  value="Adicionar">
-                    <f:ajax listener="#{cadastroPedido.adicionar}"  execute="quantidade"/>
-                </h:commandButton></p>
+                    <f:ajax listener="#{tipoQuantidadeManager.addNewTipoQuantidade()}" execute="comboTipo quantidade" render="pedidos"></f:ajax>
+                </h:commandButton> </p>
+        </h:form>
+
+        <h1>Pedidos</h1>
+        <h:form id="pedidos">
+            <h:dataTable value="#{cadastroPedido.listaTipoQuantidade}" var="tipoQuantidade">
+                <h:column>
+                    <f:facet name="header">Tipo: </f:facet>
+                    #{tipoQuantidade.tipo.nome}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Quantidade: </f:facet>
+                    #{tipoQuantidade.quantidade}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Action</f:facet>
+                    <h:commandLink action="#{tipoQuantidadeManager.deleteRow(tipoQuantidade)}" value="Delete"/>
+                </h:column>
+            </h:dataTable>
         </h:form>
     </h:body>
 </html>
