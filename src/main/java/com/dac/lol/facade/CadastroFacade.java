@@ -50,18 +50,24 @@ public class CadastroFacade {
         return estadoDAO.selectEstadoId(id);
     }
     
-    public static boolean registerCliente(Usuario user, Cliente client){
+    public static String registerCliente(Usuario user, Cliente client){
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         ClienteDAO clienteDAO = new ClienteDAO();
         CadastroDAO cadastroDAO = new CadastroDAO();
         
-        if(cadastroDAO.validateEmail(user)){
-            usuarioDAO.insertUsuario(user);
-            clienteDAO.insertCliente(client);
-        }else{
-            return false;
+        if(!cadastroDAO.validateEmail(user)){
+            return "Cliente com o mesmo email ja adicionado no banco meu bom";
         }
-        return true;
+        
+        if(!cadastroDAO.validateCPF(client)){
+            return "Cliente com o mesmo cpf ja adicionado no banco meu bom";
+        }
+        
+        
+        usuarioDAO.insertUsuario(user);
+        clienteDAO.insertCliente(client);
+        
+        return "";
     }
     
     public static String registerFuncionario(Usuario user, Funcionario employee){

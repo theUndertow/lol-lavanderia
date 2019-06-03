@@ -33,14 +33,14 @@ public class ClienteDAO {
     }
 
     // Retornará um único cliente
-    public Cliente selectCliente(int id) {
+    public Cliente selectCliente(Long id) {
         Cliente cliente = null;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
                     "from Cliente where id = :id");
-            query.setInteger("id", id);
+            query.setLong("id", id);
             cliente = (Cliente) query.uniqueResult();
             session.close();
         } catch (HibernateException e) {

@@ -11,21 +11,33 @@
 
     <h:body>
 
-        Selecione um tipo de roupa e depois a quantidade
+        lista de pedidos do usuario #{loginManbe.usuario.nome}
+        <h:form>
+            <p>#{loginManbe.usuario.nome} deseja realizar o pedido?</p>
+            <p><h:commandLink  action="#{Pedido.order(loginManbe.usuario.cliente)}" value="Realizar pedido"/></p>
+        </h:form>
         <h:form>
             <p>
                 Tipo: <h:selectOneMenu id="comboTipo" value="#{tipoQuantidadeManager.tipo}" converter="tipoConverter">
-                    <f:selectItems value="#{cadastroPedido.listaTipos}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}"/>
+                    <f:selectItems value="#{Pedido.listaTipos}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}"/>
                 </h:selectOneMenu>
                 Quantidade: <h:inputText id="quantidade" value="#{tipoQuantidadeManager.quantidade}"/>
                 <h:commandButton  value="Adicionar">
                     <f:ajax listener="#{tipoQuantidadeManager.addNewTipoQuantidade()}" execute="comboTipo quantidade" render="pedidos"></f:ajax>
                 </h:commandButton> </p>
         </h:form>
-
+        
+        <h:form id="calculo">
+            <h:commandButton value="Calcular total">
+                <f:ajax listener="#{Pedido.calculate}" execute="calculo" render="total-prazo total-preco"></f:ajax>
+            </h:commandButton>
+            <p>Total : <h:outputText id="total-prazo" value="#{Pedido.pedido.total}"/>
+            Prazo : <h:outputText id="total-preco" value="#{Pedido.pedido.prazo}"/> Dias</p>
+        </h:form>
+        
         <h1>Pedidos</h1>
         <h:form id="pedidos">
-            <h:dataTable value="#{cadastroPedido.listaTipoQuantidade}" var="tipoQuantidade">
+            <h:dataTable value="#{Pedido.listaTipoQuantidade}" var="tipoQuantidade">
                 <h:column>
                     <f:facet name="header">Tipo: </f:facet>
                     #{tipoQuantidade.tipo.nome}

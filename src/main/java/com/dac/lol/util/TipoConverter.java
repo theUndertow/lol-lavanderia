@@ -5,7 +5,7 @@
  */
 package com.dac.lol.util;
 
-import com.dac.lol.facade.CadastroPedidoFacade;
+import com.dac.lol.facade.PedidoFacade;
 import com.dac.lol.model.Tipo;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -18,7 +18,7 @@ public class TipoConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component,
             String value) {
-        return CadastroPedidoFacade.selectTypeId(Long.parseLong(value));
+        return PedidoFacade.selectTypeId(Long.parseLong(value));
     }
 
     @Override

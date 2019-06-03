@@ -33,14 +33,14 @@ public class EnderecoDAO {
     }
 
     // Retornará um único endereco
-    public Endereco selectEndereco(int id) {
+    public Endereco selectEndereco(Long id) {
         Endereco endereco = null;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(
                     "from Endereco where id = :id");
-            query.setInteger("id", id);
+            query.setLong("id", id);
             endereco = (Endereco) query.uniqueResult();
             session.close();
         } catch (HibernateException e) {
