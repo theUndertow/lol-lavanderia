@@ -5,6 +5,7 @@
  */
 package com.dac.lol.dao;
 
+import com.dac.lol.model.Cliente;
 import com.dac.lol.model.Funcionario;
 import com.dac.lol.model.Usuario;
 import com.dac.lol.util.HibernateUtil;
@@ -47,6 +48,20 @@ public class CadastroDAO {
             e.printStackTrace();
         }
         return (employees.isEmpty());
+    }
+    public boolean validateCPF(Cliente client){
+        List<Cliente> clients = null;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery(
+                    "from Cliente where cliente_cpf = :cpf").setParameter("cpf", client.getCpf());
+            clients =  query.list();
+            session.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return (clients.isEmpty());
     }
 }
 

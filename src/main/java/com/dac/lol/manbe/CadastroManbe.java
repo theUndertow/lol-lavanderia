@@ -12,7 +12,6 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
 
 /**
@@ -124,12 +123,13 @@ public class CadastroManbe implements Serializable{
         }
     }
 
-    public String cadastroCliente() {
+    public void cadastroCliente() {
         // Check the type of a user to add a database
         // encrypt the actual pass 
         
         
         String newPass = MDFive.encripta(usuario.getSenha());
+        System.out.println("\t SENHA :" + usuario.getSenha());
         usuario.setSenha(newPass);
         
         usuario.setTipo('c');
@@ -147,17 +147,11 @@ public class CadastroManbe implements Serializable{
         // Set client to the user
         usuario.setCliente(cliente);
 
-            // Set user to the client
-            cliente.setUsuario(usuario);
-
+        // Set user to the client
+        cliente.setUsuario(usuario);
 
         // Pass the user and client to facade to make the register
-        if (!CadastroFacade.registerCliente(usuario, cliente)) {
-            this.error = "Cliente com o mesmo email ja adicionado no banco meu bom";
-            return "cadastro.xhtml";
-        }else{
-            return "index.xhtml";
-        }
+        this.error = CadastroFacade.registerCliente(usuario, cliente);
 
     }
 
