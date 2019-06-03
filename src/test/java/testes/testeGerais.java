@@ -199,6 +199,7 @@ public class testeGerais {
         cript2 = MDFive.encripta(senha2);
         System.out.println(cript);
         */
-        
+        Date data = new Date();
+        System.out.println("\n\n\n\n\t "+data.toString());
     }   
 }

@@ -5,23 +5,23 @@
  */
 package com.dac.lol.facade;
 
-import com.dac.lol.dao.CadastroTipoRoupaDAO;
 import com.dac.lol.dao.TipoDAO;
 import com.dac.lol.model.Tipo;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author marco
  */
-public class CadastroTipoRoupaFacade {
-    public static boolean registerType(Tipo type){
+public class CadastroPedidoFacade {
+    public static Tipo selectTypeId(Long id){
         TipoDAO tipoDAO = new TipoDAO();
-        CadastroTipoRoupaDAO cadastroTipoRoupaDAO = new CadastroTipoRoupaDAO();
-        if(cadastroTipoRoupaDAO.verifyName(type)){
-            tipoDAO.insertTipo(type);
-            return true;
-        }
-        return false;
+        return tipoDAO.selectTipo(id);
+    }
+
+    public static List<Tipo> selectAllType() {
+        TipoDAO tipoDAO = new TipoDAO();
+        return tipoDAO.selectListTipo();
     }
 }

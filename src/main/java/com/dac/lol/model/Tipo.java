@@ -31,7 +31,7 @@ public class Tipo implements Serializable {
 
     public Tipo() {
     }
-
+    
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "tipo_id")
