@@ -18,14 +18,12 @@ public class EstadoConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component,
             String value) {
-        CadastroFacade cadastroFacade = new CadastroFacade();
-        return cadastroFacade.selectStateSigla(value);
+        return CadastroFacade.selectStateSigla(value);
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component,
             Object value) {
-        CadastroFacade cadastroFacade = new CadastroFacade();
         return ((Estado) value).getSigla();
     }
     

@@ -8,16 +8,18 @@ package com.dac.lol.manbe;
 import com.dac.lol.criptografia.MDFive;
 import com.dac.lol.facade.LoginFacade;
 import com.dac.lol.model.Usuario;
+import java.io.Serializable;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 /**
  *
  * @author marco
  */
+
+@SessionScoped
 @Named(value = "loginManbe")
-@RequestScoped
-public class LoginManbe {
+public class LoginManbe implements Serializable{
     private String login;
     private String password;
     private Usuario usuario;
