@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
@@ -19,7 +20,7 @@ import javax.inject.Named;
  * @author marco
  */
 @Named(value = "cadastroManbe")
-@RequestScoped
+@ViewScoped
 public class CadastroManbe implements Serializable{
 
     private List<Estado> listaEstados;

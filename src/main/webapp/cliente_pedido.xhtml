@@ -18,12 +18,12 @@
         </h:form>
         <h:form>
             <p>
-                Tipo: <h:selectOneMenu id="comboTipo" value="#{tipoQuantidadeManager.tipo}" converter="tipoConverter">
+                Tipo: <h:selectOneMenu id="comboTipo" value="#{Pedido.roupa.tipo}" converter="tipoConverter">
                     <f:selectItems value="#{Pedido.listaTipos}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}"/>
                 </h:selectOneMenu>
-                Quantidade: <h:inputText id="quantidade" value="#{tipoQuantidadeManager.quantidade}"/>
+                Quantidade: <h:inputText id="quantidade" value="#{Pedido.roupa.quantidade}"/>
                 <h:commandButton  value="Adicionar">
-                    <f:ajax listener="#{tipoQuantidadeManager.addNewTipoQuantidade()}" execute="comboTipo quantidade" render="pedidos"></f:ajax>
+                    <f:ajax listener="#{Pedido.addTipoQuantidade()}" execute="comboTipo quantidade" render="pedidos"></f:ajax>
                 </h:commandButton> </p>
         </h:form>
         
@@ -37,18 +37,18 @@
         
         <h1>Pedidos</h1>
         <h:form id="pedidos">
-            <h:dataTable value="#{Pedido.listaTipoQuantidade}" var="tipoQuantidade">
+            <h:dataTable value="#{Pedido.listaRoupas}" var="roupa">
                 <h:column>
                     <f:facet name="header">Tipo: </f:facet>
-                    #{tipoQuantidade.tipo.nome}
+                    #{roupa.tipo.nome}
                 </h:column>
                 <h:column>
                     <f:facet name="header">Quantidade: </f:facet>
-                    #{tipoQuantidade.quantidade}
+                    #{roupa.quantidade}
                 </h:column>
                 <h:column>
                     <f:facet name="header">Action</f:facet>
-                    <h:commandLink action="#{tipoQuantidadeManager.deleteRow(tipoQuantidade)}" value="Delete"/>
+                    <h:commandLink action="#{Pedido.deleteRow(roupa)}" value="Delete"/>
                 </h:column>
             </h:dataTable>
         </h:form>

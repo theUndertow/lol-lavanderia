@@ -15,7 +15,6 @@ import com.dac.lol.model.Pedido;
 import com.dac.lol.model.Roupa;
 import com.dac.lol.model.Tipo;
 import com.dac.lol.model.Usuario;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,6 +54,16 @@ public class PedidoFacade {
     public static List<Pedido> allOrders(Cliente cliente){
         CadastroPedidoDAO cadastroPedidoDAO = new CadastroPedidoDAO();
         return cadastroPedidoDAO.listaAllOrders(cliente);
+    }
+    
+    public static List<Pedido> allOpenOrders(Cliente client){
+        CadastroPedidoDAO cadastroPedidoDAO = new CadastroPedidoDAO();
+        return cadastroPedidoDAO.listaAllOpenOrders(client);
+    }
+    
+    public static Pedido selectOrder(long id){
+        CadastroPedidoDAO cadastroPedidoDAO = new CadastroPedidoDAO();
+        return cadastroPedidoDAO.selectOrder(id);
     }
     
     public static void removeOrder(Long orderId){

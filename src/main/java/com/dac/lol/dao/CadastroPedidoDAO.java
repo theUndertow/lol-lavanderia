@@ -52,4 +52,35 @@ public class CadastroPedidoDAO {
         }
         return orders;
     }
+    
+    public List<Pedido> listaAllOpenOrders(Cliente client){
+        List<Pedido> orders = new ArrayList<>();
+        String HQL = "from Pedido where pedido_situacao = :situation and pedido_cliente = :id_client";
+        try{
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery(HQL).
+                    setParameter("situation", "Em aberto").
+                    setParameter("id_client", client.getId());
+            orders = query.list();
+        }catch(HibernateException e){
+            e.printStackTrace();
+        }
+        return orders;
+    }
+    
+    public Pedido selectOrder(long id){
+        Pedido order = null;
+        String HQL = "from Pedido where pedido_id = :id";
+        try{
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery(HQL).
+                    setParameter("id", id);
+            order = (Pedido) query.uniqueResult();
+        }catch(HibernateException e){
+            e.printStackTrace();
+        }
+        return order;
+    }
 }

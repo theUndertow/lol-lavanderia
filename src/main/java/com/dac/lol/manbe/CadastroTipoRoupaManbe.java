@@ -7,6 +7,7 @@ package com.dac.lol.manbe;
 
 import com.dac.lol.facade.CadastroTipoRoupaFacade;
 import com.dac.lol.model.Tipo;
+import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -17,7 +18,7 @@ import javax.inject.Named;
  */
 @Named(value = "cadastroTipoRoupa")
 @RequestScoped
-public class CadastroTipoRoupaManbe {
+public class CadastroTipoRoupaManbe implements Serializable{
     private Tipo tipo;
     private String error;
 
