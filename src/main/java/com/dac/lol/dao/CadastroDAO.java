@@ -49,6 +49,7 @@ public class CadastroDAO {
         }
         return (employees.isEmpty());
     }
+    
     public boolean validateCPF(Cliente client){
         List<Cliente> clients = null;
         try {
@@ -56,6 +57,51 @@ public class CadastroDAO {
             session.beginTransaction();
             Query query = session.createQuery(
                     "from Cliente where cliente_cpf = :cpf").setParameter("cpf", client.getCpf());
+            clients =  query.list();
+            session.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return (clients.isEmpty());
+    }
+    
+    public boolean validateEmailUpdate(String email){
+        List<Usuario> users = null;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery(
+                    "from Usuario where usuario_email = :email").setParameter("email", email);
+            users =  query.list();
+            session.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return (users.isEmpty());
+    }
+    
+    public boolean validateMatriculaUpdate(int matricula){
+        List<Funcionario> employees = null;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery(
+                    "from Funcionario where funcionario_matricula = :matricula").setParameter("matricula", matricula);
+            employees =  query.list();
+            session.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return (employees.isEmpty());
+    }
+
+    public boolean validateCPFUpdate(String cpf){
+        List<Cliente> clients = null;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery(
+                    "from Cliente where cliente_cpf = :cpf").setParameter("cpf", cpf);
             clients =  query.list();
             session.close();
         } catch (HibernateException e) {
