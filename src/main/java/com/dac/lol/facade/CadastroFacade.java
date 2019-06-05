@@ -87,5 +87,27 @@ public class CadastroFacade {
         
         return "";
     }
-        
+    
+    public static String updateCliente(Usuario user, Cliente client, String email, String cpf) {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        ClienteDAO clienteDAO = new ClienteDAO();
+        CadastroDAO cadastroDAO = new CadastroDAO();
+
+        if (!client.getCpf().equals(cpf)) {
+            if (!cadastroDAO.validateCPF(client)) {
+                return "Cliente com o mesmo cpf ja adicionado no banco meu bom";
+            }
+        }
+
+        if (!user.getEmail().equals(email)) {
+            if (!cadastroDAO.validateEmail(user)) {
+                return "Cliente com o mesmo email ja adicionado no banco meu bom";
+            }
+        }
+
+        usuarioDAO.updateUsuario(user);
+        clienteDAO.updateCliente(client);
+
+        return "";
+    }
 }

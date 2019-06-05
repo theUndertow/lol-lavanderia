@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>  
+    <h:body>
+        <h:outputText value="#{alteracaoManbe.error}" style="color:red"/>
+        <h:form>
+            <h1>Cadastro Cliente</h1>
+            <p>Nome: <h:inputText id="cliente-nome" value="#{alteracaoManbe.usuario.nome}"/></p>
+            <p>E-mail: <h:inputText id="cliente-email" value="#{alteracaoManbe.email}"/></p>
+            <p>Senha: <h:inputSecret id="cliente-senha" value="#{alteracaoManbe.usuario.senha}"/></p>
+            <hr/>
+            <p>CPF: <h:inputText id="cliente-cpf" value="#{alteracaoManbe.cpf}"/></p>
+            <p>Telefone: <h:inputText id="cliente-telefone" value="#{alteracaoManbe.cliente.telefone}"/></p>
+            <p>Sexo:
+                <h:selectOneRadio id="cliente-sexo" value="#{alteracaoManbe.cliente.sexo}" >
+                    <p><f:selectItem itemLabel="Masculino" itemValue="M"/></p>
+                    <p><f:selectItem itemLabel="Feminino" itemValue="F"/></p>
+                </h:selectOneRadio>
+            </p>
+            <h3>Endereço cliente</h3>
+            <p>Rua: <h:inputText id="cliente-rua" value="#{alteracaoManbe.endereco.rua}"/></p>
+            <p>Numero: <h:inputText id="cliente-numero" value="#{alteracaoManbe.endereco.numero}"/></p>
+            <p>Complemento: <h:inputText id="cliente-complemento" value="#{alteracaoManbe.endereco.complemento}"/></p>
+            <p>Bairro: <h:inputText id="cliente-bairro" value="#{alteracaoManbe.endereco.bairro}"/></p>
+            <p>Estado
+                <h:selectOneMenu id="comboEstado" value="#{alteracaoManbe.estadoSelecionado}" converter="estadoConverter">
+                    <f:selectItems value="#{alteracaoManbe.listaEstados}" var="estado" itemLabel="#{estado.nome}" itemValue="#{estado}"/>
+                    <f:ajax event="change" execute="comboEstado" render="comboCidade" listener="#{alteracaoManbe.buscarCidades}" />
+                </h:selectOneMenu>
+                Cidade
+                <h:selectOneMenu id="comboCidade" value="#{alteracaoManbe.cidadeSelecionada}" converter="cidadeConverter">
+                    <f:selectItems value="#{alteracaoManbe.listaCidades}" var="cidade" itemLabel="#{cidade.nome}" itemValue="#{cidade}"/>
+                </h:selectOneMenu>
+            </p>
+            <p><h:commandButton  action="#{alteracaoManbe.atualizarDados()}" value="Susbmiter"/></p>
+        </h:form>
+        <h:outputLink value="cliente.xhtml">Voltar</h:outputLink>
+    </h:body>
+</html>
