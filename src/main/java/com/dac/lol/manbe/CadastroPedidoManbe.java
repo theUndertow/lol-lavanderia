@@ -24,14 +24,15 @@ import javax.inject.Named;
  */
 @Named(value = "cadastroPedido")
 @SessionScoped
-public class CadastroPedidoManbe implements Serializable{
+public class CadastroPedidoManbe implements Serializable {
+
     private List<Tipo> listaTipos;
     private List<TipoQuantidade> listaTipoQuantidade = new ArrayList<>();
-    
+
     private Pedido pedido;
     private Roupa roupa;
     private Tipo tipoSelecionado;
-    
+
     private String error;
 
     public Pedido getPedido() {
@@ -81,23 +82,22 @@ public class CadastroPedidoManbe implements Serializable{
     public void setListaTipoQuantidade(List<TipoQuantidade> listaTipoQuantidade) {
         this.listaTipoQuantidade = listaTipoQuantidade;
     }
-    
-    
+
     @PostConstruct
     public void init() {
         pedido = new Pedido();
         roupa = new Roupa();
-        
+
         listaTipos = CadastroPedidoFacade.selectAllType();
         tipoSelecionado = CadastroPedidoFacade.selectTypeId(Long.parseLong("1"));
-        listaTipoQuantidade.add(new TipoQuantidade(tipoSelecionado,10));
+        listaTipoQuantidade.add(new TipoQuantidade(tipoSelecionado, 10));
     }
 
     public void addTipoQuantidade(TipoQuantidade tipoQuantidade) {
         listaTipoQuantidade.add(tipoQuantidade);
     }
-    
-    public void deleteRow(TipoQuantidade tipoQuantidade){
+
+    public void deleteRow(TipoQuantidade tipoQuantidade) {
         listaTipoQuantidade.remove(tipoQuantidade);
     }
 }
