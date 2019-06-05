@@ -51,9 +51,14 @@ public class PedidoFacade {
         cadastroPedidoDAO.saveOrder(pedido, roupas);
     }
     
-    public static List<Pedido> allOrders(Cliente cliente){
+    public static List<Pedido> allOrdersByClients(Cliente cliente){
         CadastroPedidoDAO cadastroPedidoDAO = new CadastroPedidoDAO();
         return cadastroPedidoDAO.listaAllOrders(cliente);
+    }
+    
+    public static List<Pedido> allOrders(){
+        PedidoDAO pedidoDAO = new PedidoDAO();
+        return pedidoDAO.selectListPedido();
     }
     
     public static List<Pedido> allOpenOrders(Cliente client){

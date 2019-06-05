@@ -5,6 +5,7 @@
  */
 package com.dac.lol.manbe;
 
+import com.dac.lol.criptografia.MDFive;
 import com.dac.lol.facade.CadastroFacade;
 import com.dac.lol.model.Cidade;
 import com.dac.lol.model.Cliente;
@@ -132,7 +133,7 @@ public class AlteracaoManbe implements Serializable{
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-
+    
     @Inject
     LoginManbe loginManbe;
     
@@ -163,6 +164,11 @@ public class AlteracaoManbe implements Serializable{
     }
     
     public void atualizarDados(){  
+        String newPass = MDFive.encripta(usuario.getSenha());
+        usuario.setSenha(newPass);
+        cidadeSelecionada.setEstado(estadoSelecionado);
+        endereco.setCidade(cidadeSelecionada);
+        cliente.setEndereco(endereco);
         this.error = CadastroFacade.updateCliente(usuario, cliente, email, cpf);
     }
 }

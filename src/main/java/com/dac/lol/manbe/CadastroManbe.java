@@ -130,11 +130,9 @@ public class CadastroManbe implements Serializable{
         
         
         String newPass = MDFive.encripta(usuario.getSenha());
-        System.out.println("\t SENHA :" + usuario.getSenha());
         usuario.setSenha(newPass);
         
         usuario.setTipo('c');
-        System.out.println("\n\n\n\n\n\n\nCLIENTE");
         
         // set the state for the selected city
         
@@ -163,7 +161,6 @@ public class CadastroManbe implements Serializable{
         usuario.setSenha(newPass);
 
         usuario.setTipo('f');
-        System.out.println("\n\n\n\n\n\n\nFUNCIONARIO");
         // Set user to a employee 
         usuario.setFuncionario(funcionario);
 

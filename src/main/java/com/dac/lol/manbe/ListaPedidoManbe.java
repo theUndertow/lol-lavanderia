@@ -56,12 +56,16 @@ public class ListaPedidoManbe implements Serializable{
 
     @PostConstruct
     public void init() {
-        listaPedidos = PedidoFacade.allOrders(loginManbe.getUsuario().getCliente());
+        if(loginManbe.getUsuario().getTipo() == 'c'){
+            listaPedidos = PedidoFacade.allOrdersByClients(loginManbe.getUsuario().getCliente());
+        }else if (loginManbe.getUsuario().getTipo() == 'f'){
+            listaPedidos = PedidoFacade.allOrders();
+        }
     }
 
     public String removeOrder(Pedido order) {
         PedidoFacade.removeOrder(order.getId());
-        listaPedidos = PedidoFacade.allOrders(loginManbe.getUsuario().getCliente());
+        listaPedidos = PedidoFacade.allOrdersByClients(loginManbe.getUsuario().getCliente());
         return null;
     }
 
