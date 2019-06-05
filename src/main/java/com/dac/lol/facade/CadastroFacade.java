@@ -88,25 +88,51 @@ public class CadastroFacade {
         return "";
     }
     
-    public static String updateCliente(Usuario user, Cliente client, String email, String cpf) {
+    public static String updateClient(Usuario user, Cliente client, String email, String cpf) {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         ClienteDAO clienteDAO = new ClienteDAO();
         CadastroDAO cadastroDAO = new CadastroDAO();
 
         if (!client.getCpf().equals(cpf)) {
-            if (!cadastroDAO.validateCPF(client)) {
+            if (!cadastroDAO.validateCPFUpdate(cpf)) {
                 return "Cliente com o mesmo cpf ja adicionado no banco meu bom";
             }
         }
 
         if (!user.getEmail().equals(email)) {
-            if (!cadastroDAO.validateEmail(user)) {
+            if (!cadastroDAO.validateEmailUpdate(email)) {
                 return "Cliente com o mesmo email ja adicionado no banco meu bom";
             }
         }
-
+        client.setCpf(cpf);
+        user.setEmail(email);
         usuarioDAO.updateUsuario(user);
         clienteDAO.updateCliente(client);
+
+        return "";
+    }
+    
+    public static String updateEmployee(Usuario user, Funcionario employee, String email, int matricula) {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+        CadastroDAO cadastroDAO = new CadastroDAO();
+
+        if (!(employee.getMatricula() == matricula)) {
+            if (!cadastroDAO.validateMatriculaUpdate(matricula)) {
+                return "Funcionario com a mesma matricula ja adicionado no banco meu bom";
+            }
+        }
+
+        if (!user.getEmail().equals(email)) {
+            if (!cadastroDAO.validateEmailUpdate(email)) {
+                return "Funcionario com o mesmo email ja adicionado no banco meu bom";
+            }
+        }
+        
+        employee.setMatricula(matricula);
+        user.setEmail(email);
+        usuarioDAO.updateUsuario(user);
+        funcionarioDAO.updateFuncionario(employee);
 
         return "";
     }
