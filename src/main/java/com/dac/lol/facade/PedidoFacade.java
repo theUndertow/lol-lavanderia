@@ -84,4 +84,9 @@ public class PedidoFacade {
             roupaDAO.deleteRoupa(r);
         }
     }
+    
+    public static void updateOrder(Pedido pedido){
+        PedidoDAO pedidoDAO = new PedidoDAO();
+        pedidoDAO.updatePedido(pedido);
+    }
 }

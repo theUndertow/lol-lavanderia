@@ -103,4 +103,8 @@ public class ListaPedidoManbe implements Serializable {
             }
         }
     }
+    
+    public void changeSituation(Pedido pedido){
+        PedidoFacade.updateOrder(pedido);
+    }
 }
