@@ -7,11 +7,11 @@ package com.dac.lol.manbe;
 
 import com.dac.lol.facade.PedidoFacade;
 import com.dac.lol.model.Pedido;
+import com.dac.lol.model.Usuario;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 
@@ -21,11 +21,12 @@ import javax.inject.Inject;
  */
 @Named(value = "listaPedidoManbe")
 @ViewScoped
-public class ListaPedidoManbe implements Serializable{
+public class ListaPedidoManbe implements Serializable {
 
     private String nome;
     private List<Pedido> listaPedidos;
     private Long id;
+    private Usuario usuario;
 
     public String getNome() {
         return nome;
@@ -51,26 +52,41 @@ public class ListaPedidoManbe implements Serializable{
         this.id = id;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    
+    
     @Inject
     LoginManbe loginManbe;
 
     @PostConstruct
     public void init() {
-        if(loginManbe.getUsuario().getTipo() == 'c'){
-            listaPedidos = PedidoFacade.allOrdersByClients(loginManbe.getUsuario().getCliente());
-        }else if (loginManbe.getUsuario().getTipo() == 'f'){
+        usuario = loginManbe.getUsuario();
+        
+        if (usuario.getTipo() == 'c') {
+            listaPedidos = PedidoFacade.allOrdersByClients(usuario.getCliente());
+        } else if (usuario.getTipo() == 'f') {
             listaPedidos = PedidoFacade.allOrders();
         }
     }
 
     public String removeOrder(Pedido order) {
         PedidoFacade.removeOrder(order.getId());
-        listaPedidos = PedidoFacade.allOrdersByClients(loginManbe.getUsuario().getCliente());
+        if (usuario.getTipo() == 'c') {
+            listaPedidos = PedidoFacade.allOrdersByClients(usuario.getCliente());
+        } else if (usuario.getTipo() == 'f') {
+            listaPedidos = PedidoFacade.allOrders();
+        }
         return null;
     }
 
     public void pedidosEmAberto() {
-        listaPedidos = PedidoFacade.allOpenOrders(loginManbe.getUsuario().getCliente());
+        listaPedidos = PedidoFacade.allOpenOrders(usuario.getCliente());
     }
 
     public void buscaPedido() {

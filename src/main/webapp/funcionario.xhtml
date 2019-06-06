@@ -8,14 +8,16 @@
     </h:head>
     <h:body>
         Portal do Funcionario
+
         <h:form>
             <h:commandLink action="funcionario_cadastro.xhtml">Cadastro Funcionario</h:commandLink><br/>
             <h:commandLink action="alteracao_funcionario.xhtml">Alteração funcionario</h:commandLink><br/>
             <h:commandLink action="funcionario_cadastro_roupa.xhtml">Cadastro Roupas</h:commandLink><br/>
             <h:commandLink action="funcionario_cadastro_tipo_roupa.xhtml">Cadastro Tipo de Roupas</h:commandLink><br/>
             <h:commandButton value="Logout" action="#{funcionarioManbe.logout()}"/>
-            
-            <h:form id="form">
+        </h:form>
+        
+        <h:form id="form">
             Pesquisar por id <h:inputText id="id_pedido" value="#{listaPedidoManbe.id}"/>
             <h:commandButton value="Pesquisar">
                 <f:ajax listener="#{listaPedidoManbe.buscaPedido()}" execute="id_pedido" render=":form:pedido"/>
@@ -42,7 +44,6 @@
                     <h:commandLink action="#{listaPedidoManbe.removeOrder(pedido)}" value="Delete"/>
                 </h:column>
             </h:dataTable>
-        </h:form>
         </h:form>
     </h:body>
 </html>
