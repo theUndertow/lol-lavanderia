@@ -16,7 +16,7 @@
             <h:commandLink action="funcionario_cadastro_tipo_roupa.xhtml">Cadastro Tipo de Roupas</h:commandLink><br/>
             <h:commandButton value="Logout" action="#{funcionarioManbe.logout()}"/>
         </h:form>
-        
+
         <h:form id="form">
             Pesquisar por id <h:inputText id="id_pedido" value="#{listaPedidoManbe.id}"/>
             <h:commandButton value="Pesquisar">
@@ -26,6 +26,10 @@
                 <h:column>
                     <f:facet name="header">Pedido: </f:facet>
                         #{pedido.id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Nome Cliente: </f:facet>
+                        #{pedido.cliente.usuario.nome}
                 </h:column>
                 <h:column>
                     <f:facet name="header">Situacao </f:facet>
@@ -38,6 +42,14 @@
                 <h:column>
                     <f:facet name="header">Total </f:facet>
                         #{pedido.total}
+                </h:column>
+                <h:column>
+                    <h:selectOneRadio id="cliente-sexo" value="#{pedido.situacao}" >
+                        <p><f:selectItem itemLabel="Em aberto" itemValue="Em aberto"/></p>
+                        <p><f:selectItem itemLabel="Lavado" itemValue="Lavado"/></p>
+                        <p><f:selectItem itemLabel="Pago" itemValue="Pago"/></p>
+                        <f:ajax listener="#{listaPedidoManbe.changeSituation(pedido)}" />
+                    </h:selectOneRadio>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Action</f:facet>
