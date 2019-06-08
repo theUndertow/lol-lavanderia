@@ -18,7 +18,7 @@
         </h:form>
 
         <h:form id="form">
-            Pesquisar por id <h:inputText id="id_pedido" value="#{listaPedidoManbe.id}"/>
+            Pesquisar por id <h:inputText id="id_pedido" value="#{listaPedidoManbe.idInput}"/>
             <h:commandButton value="Pesquisar">
                 <f:ajax listener="#{listaPedidoManbe.buscaPedido()}" execute="id_pedido" render=":form:pedido"/>
             </h:commandButton>

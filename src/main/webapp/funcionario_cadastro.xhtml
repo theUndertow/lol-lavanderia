@@ -8,6 +8,12 @@
         <title>Facelet Title</title>
     </h:head>  
     <h:body>
+        <h:form>
+            <h:commandButton value="Logout" action="#{loginManbe.logout()}"/><br></br>
+            <br></br>
+            <br></br>
+            <h:outputLink value="./funcionario.xhtml">Home</h:outputLink>
+        </h:form>
         <h:outputText value="#{cadastroManbe.error}" style="color:red"/>
         <h:form>
             

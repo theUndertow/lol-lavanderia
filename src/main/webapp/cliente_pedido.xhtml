@@ -10,7 +10,12 @@
     </h:head>
 
     <h:body>
-
+        <h:form>
+            <h:commandButton value="Logout" action="#{loginManbe.logout()}"/><br></br>
+            <br></br>
+            <br></br>
+            <h:outputLink value="./cliente.xhtml">Home</h:outputLink>
+        </h:form>
         lista de pedidos do usuario #{loginManbe.usuario.nome}
         <h:form>
             <p>#{loginManbe.usuario.nome} deseja realizar o pedido?</p>

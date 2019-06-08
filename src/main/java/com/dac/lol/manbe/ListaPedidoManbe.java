@@ -7,10 +7,14 @@ package com.dac.lol.manbe;
 
 import com.dac.lol.facade.PedidoFacade;
 import com.dac.lol.model.Pedido;
+import com.dac.lol.model.Roupa;
 import com.dac.lol.model.Usuario;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -20,12 +24,14 @@ import javax.inject.Inject;
  * @author marco
  */
 @Named(value = "listaPedidoManbe")
-@ViewScoped
+@SessionScoped
 public class ListaPedidoManbe implements Serializable {
 
     private String nome;
     private List<Pedido> listaPedidos;
-    private Long id;
+    private Pedido pedidoDetails;
+    private Long idInput;
+    private String idCommand;
     private Usuario usuario;
 
     public String getNome() {
@@ -44,12 +50,20 @@ public class ListaPedidoManbe implements Serializable {
         this.listaPedidos = listaPedidos;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdInput() {
+        return idInput;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdInput(Long idInput) {
+        this.idInput = idInput;
+    }
+
+    public String getIdCommand() {
+        return idCommand;
+    }
+
+    public void setIdCommand(String idCommand) {
+        this.idCommand = idCommand;
     }
 
     public Usuario getUsuario() {
@@ -59,15 +73,22 @@ public class ListaPedidoManbe implements Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
-    
+
+    public Pedido getPedidoDetails() {
+        return pedidoDetails;
+    }
+
+    public void setPedidoDetails(Pedido pedidoDetails) {
+        this.pedidoDetails = pedidoDetails;
+    }
+
     @Inject
     LoginManbe loginManbe;
 
     @PostConstruct
     public void init() {
         usuario = loginManbe.getUsuario();
-        
+
         if (usuario.getTipo() == 'c') {
             listaPedidos = PedidoFacade.allOrdersByClients(usuario.getCliente());
         } else if (usuario.getTipo() == 'f') {
@@ -76,11 +97,13 @@ public class ListaPedidoManbe implements Serializable {
     }
 
     public String removeOrder(Pedido order) {
-        PedidoFacade.removeOrder(order.getId());
-        if (usuario.getTipo() == 'c') {
-            listaPedidos = PedidoFacade.allOrdersByClients(usuario.getCliente());
-        } else if (usuario.getTipo() == 'f') {
-            listaPedidos = PedidoFacade.allOrders();
+        if (order.getSituacao().equals("Em aberto")) {
+            PedidoFacade.removeOrder(order.getId());
+            if (usuario.getTipo() == 'c') {
+                listaPedidos = PedidoFacade.allOrdersByClients(usuario.getCliente());
+            } else if (usuario.getTipo() == 'f') {
+                listaPedidos = PedidoFacade.allOrders();
+            }
         }
         return null;
     }
@@ -90,7 +113,7 @@ public class ListaPedidoManbe implements Serializable {
     }
 
     public void buscaPedido() {
-        Pedido temp = PedidoFacade.selectOrder(id);
+        Pedido temp = PedidoFacade.selectOrder(idInput);
         if (temp != null) {
             int i = 0;
             for (Pedido p : listaPedidos) {
@@ -103,8 +126,21 @@ public class ListaPedidoManbe implements Serializable {
             }
         }
     }
-    
-    public void changeSituation(Pedido pedido){
+
+    public void changeSituation(Pedido pedido) {
         PedidoFacade.updateOrder(pedido);
+    }
+
+    public String details() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        pedidoDetails = PedidoFacade.selectOrder(Long.parseLong(getOrderParam(fc)));
+        return "alteracao_pedido";
+    }
+
+    public String getOrderParam(FacesContext fc) {
+
+        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+        return params.get("id");
+
     }
 }

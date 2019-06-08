@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:commandButton value="Logout" action="#{loginManbe.logout()}"/><br></br>
+            <br></br>
+            <br></br>
+            <h:outputLink value="./cliente.xhtml">Home</h:outputLink>
+        </h:form>
+        Número do pedido: <h:outputText value="#{listaPedidoManbe.pedidoDetails.id}" /><br></br>
+        Nome do cliente: <h:outputText value="#{listaPedidoManbe.pedidoDetails.cliente.usuario.nome}" /><br></br>
+        Prazo para entrega : <h:outputText value="#{listaPedidoManbe.pedidoDetails.tempo}" /><br></br>
+        Situação da entrega: <h:outputText value="#{listaPedidoManbe.pedidoDetails.situacao}" /><br></br>
+        Total a pagar: <h:outputText value="#{listaPedidoManbe.pedidoDetails.total}" /><br></br>
+               
+        <hr></hr> 
+        <h3>Listagem das roupas</h3>
+        <h:dataTable id="pedido" value="#{listaPedidoManbe.pedidoDetails.roupas}" var="roupa">
+            <h:column>
+                <f:facet name="header">Tipo: </f:facet>
+                    #{roupa.tipo.nome}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Quantidade: </f:facet>
+                    #{roupa.quantidade}
+            </h:column>
+        </h:dataTable>
+    </h:body>
+</html>
+

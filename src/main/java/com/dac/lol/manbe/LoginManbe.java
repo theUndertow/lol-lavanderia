@@ -11,6 +11,7 @@ import com.dac.lol.model.Usuario;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 /**
  *
@@ -76,5 +77,10 @@ public class LoginManbe implements Serializable{
     @PostConstruct
     public void init(){
         usuario = new Usuario();
+    }
+    
+    public String logout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "index?faces-redirect=true";
     }
 }
