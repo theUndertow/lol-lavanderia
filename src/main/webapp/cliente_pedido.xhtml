@@ -18,33 +18,33 @@
         </h:form>
         <h:form>
             <p>
-                Tipo: <h:selectOneMenu id="comboTipo" value="#{Pedido.roupa.tipo}" converter="tipoConverter">
+                Tipo: <h:selectOneMenu id="comboTipo" value="#{Pedido.tipoSelecionado}" converter="tipoConverter">
                     <f:selectItems value="#{Pedido.listaTipos}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}"/>
                 </h:selectOneMenu>
-                Quantidade: <h:inputText id="quantidade" value="#{Pedido.roupa.quantidade}"/>
+                Quantidade: <h:inputText id="quantidade" value="#{Pedido.quantidade}"/>
                 <h:commandButton  value="Adicionar">
-                    <f:ajax listener="#{Pedido.addTipoQuantidade()}" execute="comboTipo quantidade" render="pedidos"></f:ajax>
+                    <f:ajax listener="#{Pedido.addRoupa()}" execute="comboTipo quantidade" render=":form:pedido"></f:ajax>
                 </h:commandButton> </p>
         </h:form>
-        
+
         <h:form id="calculo">
             <h:commandButton value="Calcular total">
                 <f:ajax listener="#{Pedido.calculate}" execute="calculo" render="total-prazo total-preco"></f:ajax>
             </h:commandButton>
             <p>Total : <h:outputText id="total-prazo" value="#{Pedido.pedido.total}"/>
-            Prazo : <h:outputText id="total-preco" value="#{Pedido.pedido.prazo}"/> Dias</p>
+                Prazo : <h:outputText id="total-preco" value="#{Pedido.pedido.prazo}"/> Dias</p>
         </h:form>
-        
+
         <h1>Pedidos</h1>
-        <h:form id="pedidos">
-            <h:dataTable value="#{Pedido.listaRoupas}" var="roupa">
+        <h:form id="form">
+            <h:dataTable id="pedido" value="#{Pedido.listaRoupas}" var="roupa">
                 <h:column>
                     <f:facet name="header">Tipo: </f:facet>
-                    #{roupa.tipo.nome}
+                        #{roupa.tipo.nome}
                 </h:column>
                 <h:column>
                     <f:facet name="header">Quantidade: </f:facet>
-                    #{roupa.quantidade}
+                        #{roupa.quantidade}
                 </h:column>
                 <h:column>
                     <f:facet name="header">Action</f:facet>

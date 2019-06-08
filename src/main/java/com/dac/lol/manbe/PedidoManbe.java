@@ -5,7 +5,6 @@
  */
 package com.dac.lol.manbe;
 
-
 import com.dac.lol.facade.PedidoFacade;
 import com.dac.lol.model.Cliente;
 import com.dac.lol.model.Pedido;
@@ -32,9 +31,9 @@ public class PedidoManbe implements Serializable {
     private List<Roupa> roupas;
 
     private Pedido pedido;
-    private Roupa roupa;
     private Tipo tipoSelecionado;
-
+    private int quantidade;
+    
     private String error;
 
     public Pedido getPedido() {
@@ -68,15 +67,7 @@ public class PedidoManbe implements Serializable {
     public void setTipoSelecionado(Tipo tipoSelecionado) {
         this.tipoSelecionado = tipoSelecionado;
     }
-
-    public Roupa getRoupa() {
-        return roupa;
-    }
-
-    public void setRoupa(Roupa roupa) {
-        this.roupa = roupa;
-    }
-
+    
     public List<Roupa> getListaRoupas() {
         return listaRoupas;
     }
@@ -93,18 +84,30 @@ public class PedidoManbe implements Serializable {
         this.roupas = roupas;
     }
 
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+    
+    
+    
     @PostConstruct
     public void init() {
         pedido = new Pedido();
-        roupa = new Roupa();
         listaRoupas = new ArrayList<>();
         roupas = new ArrayList<>();
-        
+
         listaTipos = PedidoFacade.selectAllType();
         tipoSelecionado = PedidoFacade.selectTypeId(Long.parseLong("1"));
     }
 
-    public void addTipoQuantidade() {
+    public void addRoupa() {
+        Roupa roupa = new Roupa();
+        roupa.setTipo(tipoSelecionado);
+        roupa.setQuantidade(quantidade);
         listaRoupas.add(roupa);
     }
 
