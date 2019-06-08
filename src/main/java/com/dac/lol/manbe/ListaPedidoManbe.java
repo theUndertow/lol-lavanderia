@@ -7,16 +7,17 @@ package com.dac.lol.manbe;
 
 import com.dac.lol.facade.PedidoFacade;
 import com.dac.lol.model.Pedido;
-import com.dac.lol.model.Roupa;
 import com.dac.lol.model.Usuario;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import javax.inject.Inject;
 
 /**
@@ -24,11 +25,12 @@ import javax.inject.Inject;
  * @author marco
  */
 @Named(value = "listaPedidoManbe")
-@SessionScoped
+@ViewScoped
 public class ListaPedidoManbe implements Serializable {
 
     private String nome;
     private List<Pedido> listaPedidos;
+
     private Pedido pedidoDetails;
     private Long idInput;
     private String idCommand;
@@ -131,16 +133,10 @@ public class ListaPedidoManbe implements Serializable {
         PedidoFacade.updateOrder(pedido);
     }
 
-    public String details() {
-        FacesContext fc = FacesContext.getCurrentInstance();
-        pedidoDetails = PedidoFacade.selectOrder(Long.parseLong(getOrderParam(fc)));
-        return "alteracao_pedido";
-    }
+    public String details(Long id) {
 
-    public String getOrderParam(FacesContext fc) {
-
-        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-        return params.get("id");
-
+        pedidoDetails = PedidoFacade.selectOrder(id);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("pedidoDetails", pedidoDetails);
+        return "visualizacao_pedido";
     }
 }

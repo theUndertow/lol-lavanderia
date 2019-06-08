@@ -13,15 +13,15 @@
             <br></br>
             <h:outputLink value="./cliente.xhtml">Home</h:outputLink>
         </h:form>
-        Número do pedido: <h:outputText value="#{listaPedidoManbe.pedidoDetails.id}" /><br></br>
-        Nome do cliente: <h:outputText value="#{listaPedidoManbe.pedidoDetails.cliente.usuario.nome}" /><br></br>
-        Prazo para entrega : <h:outputText value="#{listaPedidoManbe.pedidoDetails.tempo}" /><br></br>
-        Situação da entrega: <h:outputText value="#{listaPedidoManbe.pedidoDetails.situacao}" /><br></br>
-        Total a pagar: <h:outputText value="#{listaPedidoManbe.pedidoDetails.total}" /><br></br>
+        Número do pedido: <h:outputText value="#{pedidoDetails.pedido.id}" /><br></br>
+        Nome do cliente: <h:outputText value="#{pedidoDetails.pedido.cliente.usuario.nome}" /><br></br>
+        Prazo para entrega : <h:outputText value="#{pedidoDetails.pedido.tempo}" /><br></br>
+        Situação da entrega: <h:outputText value="#{pedidoDetails.pedido.situacao}" /><br></br>
+        Total a pagar: <h:outputText value="#{pedidoDetails.pedido.total}" /><br></br>
                
         <hr></hr> 
         <h3>Listagem das roupas</h3>
-        <h:dataTable id="pedido" value="#{listaPedidoManbe.pedidoDetails.roupas}" var="roupa">
+        <h:dataTable id="pedido" value="#{pedidoDetails.pedido.roupas}" var="roupa">
             <h:column>
                 <f:facet name="header">Tipo: </f:facet>
                     #{roupa.tipo.nome}
