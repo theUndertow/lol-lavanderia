@@ -4,11 +4,20 @@
  * and open the template in the editor.
  */
 package com.dac.lol.util;
+import com.dac.lol.criptografia.MDFive;
+import com.dac.lol.dao.ClienteDAO;
+import com.dac.lol.dao.FuncionarioDAO;
 import com.dac.lol.dao.PedidoDAO;
 import com.dac.lol.dao.RoupaDAO;
+import com.dac.lol.dao.UsuarioDAO;
+import com.dac.lol.model.Cliente;
+import com.dac.lol.model.Funcionario;
 import com.dac.lol.model.Pedido;
 import com.dac.lol.model.Roupa;
+import com.dac.lol.model.Usuario;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -19,18 +28,6 @@ import org.hibernate.Session;
  */
 public class teste {
     public static void main(String args[]){
-//        
-//        PedidoDAO pedidoDAO = new PedidoDAO();
-//        RoupaDAO roupaDAO = new RoupaDAO();
-//        Pedido pedido = pedidoDAO.selectPedido(Long.parseLong("12"));
-//        List<Roupa> roupas = (List<Roupa>) pedido.getRoupas();
-//        pedidoDAO.updatePedido(pedido);
-//        pedidoDAO.deletePedido(pedido);
-//        for(Roupa r : roupas){
-//            r.getPedidos().clear();
-//            roupaDAO.updateRoupa(r);
-//            roupaDAO.deleteRoupa(r);
-//        }
-//        
+
     }
 }

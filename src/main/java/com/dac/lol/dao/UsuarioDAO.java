@@ -96,4 +96,21 @@ public class UsuarioDAO {
         }
         return true;
     }
+    
+    public List<Usuario> selectListUsuarioCliente() {
+        List<Usuario> usuarios;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Usuario where usuario_tipo = :tipo").setParameter("tipo", "c");
+            usuarios = query.list();
+            session.getTransaction().commit();
+            session.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return usuarios;
+    }
+    
 }

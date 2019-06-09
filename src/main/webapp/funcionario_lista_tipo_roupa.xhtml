@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:commandButton value="Logout" action="#{loginManbe.logout()}"/><br></br>
+            <br></br>
+            <br></br>
+            <h:outputLink value="./funcionario.xhtml">Home</h:outputLink>
+        </h:form>
+        <h:form id="form">
+            Pesquisar por id <h:inputText id="id_tipo" value="#{tipoRoupaDetails.idInput}"/>
+            <h:commandButton value="Pesquisar">
+                <f:ajax listener="#{tipoRoupaDetails.buscaTipo()}" execute="id_tipo" render=":form:tipo"/>
+            </h:commandButton>
+            <h:dataTable id="tipo" value="#{tipoRoupaDetails.listaTipos}" var="tipo">
+                <h:column>
+                    <f:facet name="header">Id </f:facet>
+                        #{tipo.id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Nome </f:facet>
+                        #{tipo.nome}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Prazo </f:facet>
+                        #{tipo.prazo}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Preço </f:facet>
+                        #{tipo.preco}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Actions</f:facet>
+                    <h:commandLink action="#{tipoRoupaDetails.removeTipo(tipo)}" value="Delete"/>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

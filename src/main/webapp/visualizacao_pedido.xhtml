@@ -11,7 +11,7 @@
             <h:commandButton value="Logout" action="#{loginManbe.logout()}"/><br></br>
             <br></br>
             <br></br>
-            <h:outputLink value="./cliente.xhtml">Home</h:outputLink>
+            <h:commandButton value="Home" action="#{pedidoDetails.home()}"/>
         </h:form>
         Número do pedido: <h:outputText value="#{pedidoDetails.pedido.id}" /><br></br>
         Nome do cliente: <h:outputText value="#{pedidoDetails.pedido.cliente.usuario.nome}" /><br></br>

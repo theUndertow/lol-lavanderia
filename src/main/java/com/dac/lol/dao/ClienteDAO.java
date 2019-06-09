@@ -55,7 +55,7 @@ public class ClienteDAO {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            Query query = session.createQuery("from tb_cliente");
+            Query query = session.createQuery("from Cliente");
             clientes = query.list();
             session.getTransaction().commit();
             session.close();

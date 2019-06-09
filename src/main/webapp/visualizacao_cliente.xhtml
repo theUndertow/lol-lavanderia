@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:commandButton value="Logout" action="#{loginManbe.logout()}"/><br></br>
+            <br></br>
+            <br></br>
+            <h:outputLink value="./funcionario.xhtml">Home</h:outputLink>
+        </h:form>
+        Nome do cliente: <h:outputText value="#{clienteDetail.usuario.nome}" /><br></br>
+        Email do cliente: <h:outputText value="#{clienteDetail.usuario.email}" /><br></br>
+        CPF do cliente: <h:outputText value="#{clienteDetail.usuario.cliente.cpf}" /><br></br>
+        Sexo do cliente: <h:outputText value="#{clienteDetail.usuario.cliente.sexo}" /><br></br>
+        telefone do cliente: <h:outputText value="#{clienteDetail.usuario.cliente.telefone}" /><br></br>
+        Bairro do cliente: <h:outputText value="#{clienteDetail.usuario.cliente.endereco.bairro}" /><br></br>
+        Cidade do cliente: <h:outputText value="#{clienteDetail.usuario.cliente.endereco.cidade.nome}" /><br></br>
+        Estado do cliente: <h:outputText value="#{clienteDetail.usuario.cliente.endereco.cidade.estado.nome}" /><br></br>
+        Rua do cliente: <h:outputText value="#{clienteDetail.usuario.cliente.endereco.rua}" /><br></br>
+        Numero casa do cliente: <h:outputText value="#{clienteDetail.usuario.cliente.endereco.numero}" /><br></br>
+        
+    </h:body>
+</html>
+

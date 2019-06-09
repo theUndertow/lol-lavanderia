@@ -6,6 +6,7 @@
 package com.dac.lol.dao;
 
 import com.dac.lol.model.Roupa;
+import com.dac.lol.model.Tipo;
 import com.dac.lol.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -18,6 +19,7 @@ import org.hibernate.Transaction;
  * @author marco
  */
 public class RoupaDAO {
+
     public boolean insertRoupa(Roupa roupa) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
@@ -48,7 +50,7 @@ public class RoupaDAO {
         }
         return roupa;
     }
-    
+
     // Retorna uma lista de todos os roupas
     public List<Roupa> selectListRoupa() {
         List<Roupa> roupas;
@@ -65,7 +67,7 @@ public class RoupaDAO {
         }
         return roupas;
     }
-    
+
     // Retorna um boolean em relação ao resultado do update
     public boolean updateRoupa(Roupa roupa) {
         try {
@@ -81,7 +83,7 @@ public class RoupaDAO {
         }
         return true;
     }
-    
+
     // Retorna um boolean em relação a deleção de um roupa
     public boolean deleteRoupa(Roupa roupa) {
         try {
@@ -95,5 +97,22 @@ public class RoupaDAO {
             return false;
         }
         return true;
+    }
+
+    public boolean selectSpecificType(Tipo tipo) {
+        List<Roupa> roupas;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Roupa where roupa_tipo = :tipo").
+                    setParameter("tipo", tipo.getId());
+            roupas = query.list();
+            session.getTransaction().commit();
+            session.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return (roupas.isEmpty());
     }
 }
