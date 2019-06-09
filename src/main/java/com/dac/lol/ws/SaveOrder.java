@@ -7,6 +7,7 @@ package com.dac.lol.ws;
 
 import com.dac.lol.model.Pedido;
 import com.dac.lol.util.Coisa;
+import java.io.IOException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
@@ -15,19 +16,24 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.container.ContainerResponseContext;
+import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.glassfish.jersey.jackson.JacksonFeature;
 
 /**
  *
  * @author marco
  */
-
 public class SaveOrder {
+
     public static boolean saveOrder(Coisa coisa) {
 
         //criação do cliente que realiza a requisição
-        Client client = ClientBuilder.newClient();
+        Client client = ClientBuilder.newClient().register(RestObjectMapperProvider.class).register(JacksonFeature.class);
         WebTarget webTarget = client.target("http://localhost:8080/tads-delivery-system/webresources/pedido");
         Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 
@@ -42,4 +48,5 @@ public class SaveOrder {
         return false;
 
     }
+    
 }
