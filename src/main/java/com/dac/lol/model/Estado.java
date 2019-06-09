@@ -5,6 +5,7 @@
  */
 package com.dac.lol.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -65,6 +66,7 @@ public class Estado implements Serializable{
     
     
     @OneToMany(mappedBy="estado", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @JsonIgnore
     public List<Cidade> getCidades() {
         return cidades;
     }

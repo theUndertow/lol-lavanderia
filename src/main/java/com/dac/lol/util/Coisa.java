@@ -5,8 +5,10 @@
  */
 package com.dac.lol.util;
 
+import com.dac.lol.model.Cidade;
 import com.dac.lol.model.Cliente;
 import com.dac.lol.model.Endereco;
+import com.dac.lol.model.Estado;
 import com.dac.lol.model.Pedido;
 import java.io.Serializable;
 import javax.ws.rs.Produces;
@@ -17,20 +19,24 @@ import javax.ws.rs.ext.Provider;
  *
  * @author marco
  */
-public class Coisa implements Serializable{
+public class Coisa implements Serializable {
 
     private Pedido pedido;
     private Cliente cliente;
     private Endereco endereco;
-    
-    public Coisa(){
-        
+    private Estado estado;
+    private Cidade cidade;
+
+    public Coisa() {
+
     }
-    
-    public Coisa(Pedido pedido, Cliente cliente, Endereco endereco) {
+
+    public Coisa(Pedido pedido, Cliente cliente, Endereco endereco, Cidade cidade, Estado estado) {
         this.pedido = pedido;
         this.cliente = cliente;
         this.endereco = endereco;
+        this.cidade = cidade;
+        this.estado = estado;
     }
 
     public Pedido getPedido() {
@@ -55,6 +61,22 @@ public class Coisa implements Serializable{
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+    public Cidade getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(Cidade cidade) {
+        this.cidade = cidade;
     }
 
 }

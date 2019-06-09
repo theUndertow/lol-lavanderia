@@ -5,6 +5,7 @@
  */
 package com.dac.lol.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -58,6 +59,7 @@ public class Cidade implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "cidade_estado", nullable = false)
+    @JsonIgnore
     public Estado getEstado() {
         return estado;
     }
@@ -67,6 +69,7 @@ public class Cidade implements Serializable {
     }
 
     @OneToMany(mappedBy = "cidade", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     public List<Endereco> getEnderecos() {
         return enderecos;
     }

@@ -10,8 +10,10 @@ import com.dac.lol.dao.PedidoDAO;
 import com.dac.lol.dao.RoupaDAO;
 import com.dac.lol.dao.TipoDAO;
 import com.dac.lol.dao.UsuarioDAO;
+import com.dac.lol.model.Cidade;
 import com.dac.lol.model.Cliente;
 import com.dac.lol.model.Endereco;
+import com.dac.lol.model.Estado;
 import com.dac.lol.model.Pedido;
 import com.dac.lol.model.Roupa;
 import com.dac.lol.model.Tipo;
@@ -96,7 +98,9 @@ public class PedidoFacade {
             SaveOrder save = new SaveOrder();
             Cliente cliente = pedido.getCliente();
             Endereco endereco = cliente.getEndereco();
-            Coisa coisa = new Coisa(pedido, cliente, endereco);
+            Cidade cidade = endereco.getCidade();
+            Estado estado = endereco.getCidade().getEstado();
+            Coisa coisa = new Coisa(pedido, cliente, endereco, cidade, estado);
             save.saveOrder(coisa);
         }
     }
