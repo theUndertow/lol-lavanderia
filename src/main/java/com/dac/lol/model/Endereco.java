@@ -5,6 +5,7 @@
  */
 package com.dac.lol.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -84,6 +85,7 @@ public class Endereco implements Serializable{
 
     @ManyToOne
     @JoinColumn(name="endereco_cidade", nullable = false)
+    @JsonIgnore
     public Cidade getCidade() {
         return cidade;
     }
@@ -91,7 +93,9 @@ public class Endereco implements Serializable{
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
+    
     @OneToOne(mappedBy = "endereco")
+    @JsonIgnore
     public Cliente getCliente() {
         return cliente;
     }

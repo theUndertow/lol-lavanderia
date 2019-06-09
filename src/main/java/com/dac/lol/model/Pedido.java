@@ -5,6 +5,7 @@
  */
 package com.dac.lol.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -91,6 +92,7 @@ public class Pedido implements Serializable{
 
     @ManyToOne
     @JoinColumn(name="pedido_cliente", updatable=true, nullable = false)
+    @JsonIgnore
     public Cliente getCliente() {
         return cliente;
     }
@@ -106,6 +108,7 @@ public class Pedido implements Serializable{
             joinColumns={@JoinColumn(name="pedido")},
             inverseJoinColumns={@JoinColumn(name="roupa")})
 
+    @JsonIgnore
     public Collection<Roupa> getRoupas() {
         return roupas;
     }
