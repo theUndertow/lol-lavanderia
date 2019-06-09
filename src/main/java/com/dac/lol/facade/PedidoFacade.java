@@ -11,10 +11,13 @@ import com.dac.lol.dao.RoupaDAO;
 import com.dac.lol.dao.TipoDAO;
 import com.dac.lol.dao.UsuarioDAO;
 import com.dac.lol.model.Cliente;
+import com.dac.lol.model.Endereco;
 import com.dac.lol.model.Pedido;
 import com.dac.lol.model.Roupa;
 import com.dac.lol.model.Tipo;
 import com.dac.lol.model.Usuario;
+import com.dac.lol.util.Coisa;
+import com.dac.lol.ws.SaveOrder;
 import java.util.List;
 
 /**
@@ -41,54 +44,61 @@ public class PedidoFacade {
     public static void addOrder(Pedido pedido, List<Roupa> roupas) {
         PedidoDAO pedidoDAO = new PedidoDAO();
         RoupaDAO roupaDAO = new RoupaDAO();
-        CadastroPedidoDAO cadastroPedidoDAO  = new CadastroPedidoDAO();
-        
-        for(Roupa r : roupas){
+        CadastroPedidoDAO cadastroPedidoDAO = new CadastroPedidoDAO();
+
+        for (Roupa r : roupas) {
             roupaDAO.insertRoupa(r);
         }
         pedidoDAO.insertPedido(pedido);
-        
+
         cadastroPedidoDAO.saveOrder(pedido, roupas);
     }
-    
-    public static List<Pedido> allOrdersByClients(Cliente cliente){
+
+    public static List<Pedido> allOrdersByClients(Cliente cliente) {
         CadastroPedidoDAO cadastroPedidoDAO = new CadastroPedidoDAO();
         return cadastroPedidoDAO.listaAllOrders(cliente);
     }
-    
-    public static List<Pedido> allOrders(){
+
+    public static List<Pedido> allOrders() {
         PedidoDAO pedidoDAO = new PedidoDAO();
         return pedidoDAO.selectListPedido();
     }
-    
-    public static List<Pedido> allOpenOrders(Cliente client){
+
+    public static List<Pedido> allOpenOrders(Cliente client) {
         CadastroPedidoDAO cadastroPedidoDAO = new CadastroPedidoDAO();
         return cadastroPedidoDAO.listaAllOpenOrders(client);
     }
-    
-    public static Pedido selectOrder(long id){
+
+    public static Pedido selectOrder(long id) {
         CadastroPedidoDAO cadastroPedidoDAO = new CadastroPedidoDAO();
         return cadastroPedidoDAO.selectOrder(id);
     }
-    
-    public static void removeOrder(Long orderId){
+
+    public static void removeOrder(Long orderId) {
         PedidoDAO pedidoDAO = new PedidoDAO();
         RoupaDAO roupaDAO = new RoupaDAO();
         Pedido pedido = pedidoDAO.selectPedido(orderId);
         List<Roupa> roupas = (List<Roupa>) pedido.getRoupas();
         pedidoDAO.updatePedido(pedido);
         pedidoDAO.deletePedido(pedido);
-        for(Roupa r : roupas){
+        for (Roupa r : roupas) {
             r.getPedidos().clear();
             roupaDAO.updateRoupa(r);
             roupaDAO.deleteRoupa(r);
         }
     }
-    
-    public static void updateOrder(Pedido pedido){
+
+    public static void updateOrder(Pedido pedido) {
         PedidoDAO pedidoDAO = new PedidoDAO();
         pedidoDAO.updatePedido(pedido);
+
+        if (pedido.getSituacao().equals("Pago")) {
+            SaveOrder save = new SaveOrder();
+            Cliente cliente = pedido.getCliente();
+            Endereco endereco = cliente.getEndereco();
+            Coisa coisa = new Coisa(pedido, cliente, endereco);
+            save.saveOrder(coisa);
+        }
     }
-    
-    
+
 }

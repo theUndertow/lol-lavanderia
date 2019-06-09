@@ -31,11 +31,11 @@ import org.hibernate.Session;
  */
 public class teste {
     public static void main(String args[]){
-        SaveOrder save = new SaveOrder();
-        Pedido pedido = PedidoFacade.selectOrder(Long.parseLong("1"));
-        Cliente cliente = pedido.getCliente();
-        Endereco endereco = cliente.getEndereco();
-        Coisa coisa = new Coisa(pedido, cliente, endereco);
-        save.saveOrder(coisa);
+//        SaveOrder save = new SaveOrder();
+//        Pedido pedido = PedidoFacade.selectOrder(Long.parseLong("1"));
+//        Cliente cliente = pedido.getCliente();
+//        Endereco endereco = cliente.getEndereco();
+//        Coisa coisa = new Coisa(pedido, cliente, endereco);
+//        save.saveOrder(coisa);
     }
 }
