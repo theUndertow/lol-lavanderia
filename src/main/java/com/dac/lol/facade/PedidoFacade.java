@@ -97,10 +97,11 @@ public class PedidoFacade {
         if (pedido.getSituacao().equals("Pago")) {
             SaveOrder save = new SaveOrder();
             Cliente cliente = pedido.getCliente();
+            Usuario usuario = cliente.getUsuario();
             Endereco endereco = cliente.getEndereco();
             Cidade cidade = endereco.getCidade();
             Estado estado = endereco.getCidade().getEstado();
-            Coisa coisa = new Coisa(pedido, cliente, endereco, cidade, estado);
+            Coisa coisa = new Coisa(pedido, cliente, usuario, endereco, cidade, estado);
             save.saveOrder(coisa);
         }
     }

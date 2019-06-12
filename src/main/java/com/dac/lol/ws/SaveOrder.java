@@ -33,7 +33,10 @@ public class SaveOrder {
     public static boolean saveOrder(Coisa coisa) {
 
         //criação do cliente que realiza a requisição
-        Client client = ClientBuilder.newClient().register(RestObjectMapperProvider.class).register(JacksonFeature.class);
+        Client client = ClientBuilder.newClient()
+                .register(RestObjectMapperProvider.class)
+                .register(JacksonFeature.class);
+        
         WebTarget webTarget = client.target("http://localhost:8080/tads-delivery-system/webresources/pedido");
         Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 

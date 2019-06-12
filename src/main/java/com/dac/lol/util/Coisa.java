@@ -10,10 +10,8 @@ import com.dac.lol.model.Cliente;
 import com.dac.lol.model.Endereco;
 import com.dac.lol.model.Estado;
 import com.dac.lol.model.Pedido;
+import com.dac.lol.model.Usuario;
 import java.io.Serializable;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.ext.Provider;
 
 /**
  *
@@ -26,14 +24,16 @@ public class Coisa implements Serializable {
     private Endereco endereco;
     private Estado estado;
     private Cidade cidade;
+    private Usuario usuario;
 
     public Coisa() {
 
     }
 
-    public Coisa(Pedido pedido, Cliente cliente, Endereco endereco, Cidade cidade, Estado estado) {
+    public Coisa(Pedido pedido, Cliente cliente, Usuario usuario, Endereco endereco, Cidade cidade, Estado estado) {
         this.pedido = pedido;
         this.cliente = cliente;
+        this.usuario = usuario;
         this.endereco = endereco;
         this.cidade = cidade;
         this.estado = estado;
@@ -77,6 +77,14 @@ public class Coisa implements Serializable {
 
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
 }

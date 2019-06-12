@@ -46,12 +46,13 @@
                         #{pedido.total}
                 </h:column>
                 <h:column>
-                    <h:selectOneRadio id="cliente-sexo" value="#{pedido.situacao}" >
+                    <h:selectOneRadio id="cliente-pagamento" value="#{pedido.situacao}" rendered="#{pedido.situacao!='Pago'}" >
                         <p><f:selectItem itemLabel="Em aberto" itemValue="Em aberto"/></p>
                         <p><f:selectItem itemLabel="Lavado" itemValue="Lavado"/></p>
                         <p><f:selectItem itemLabel="Pago" itemValue="Pago"/></p>
-                        <f:ajax listener="#{listaPedidoManbe.changeSituation(pedido)}" />
+                        <f:ajax listener="#{listaPedidoManbe.changeSituation(pedido)}" execute="cliente-pagamento" render=":form:pedido :form:teste"/>
                     </h:selectOneRadio>
+                    <h:outputText id="teste" value="#{pedido.situacao}" rendered="#{pedido.situacao=='Pago'}"></h:outputText>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Action</f:facet>
