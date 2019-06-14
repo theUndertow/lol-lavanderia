@@ -3,20 +3,43 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <title>Lavanderia</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     </h:head>
+
     <h:body>
-        <h:form>
-            <p>Username:<h:inputText id="login" value="#{loginManbe.login}" required="true" requiredMessage="Usuário precisa estar preenchido"/></p>
-            <p>Password:<h:inputSecret id="password" value="#{loginManbe.password}" required="true" requiredMessage="Senha precisa estar preenchida"/></p>
-            <p><h:commandButton action="#{loginManbe.verifyLogin}" value="Submiter"/></p>
-        </h:form>
-        <h:message style="color:red" for="login" showSummary="true"/><br/>
-        <h:message  style="color:red" for="password" showSummary="true"/>
+        <div class="container-fluid mt-5" style="width: 50%">
+        <div class="card text-center">
+            <div class="card-header">
+                <h5>Login</h5>
+            </div>
+            <div class="card-body">
+                <h:form class="needs-validation">
+                    <div class="form-row">
+                        <h:outputLabel value="Usuario: " for="login"/>
+                        <h:inputText id="login" value="#{loginManbe.login}" required="true" requiredMessage="Usuário precisa estar preenchido" styleClass="form-control is-invalid" />
+                        <div class="invalid-feedback">
+                            Usuário deve ser preenchido
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <h:outputLabel value="Senha: " for="password" />
+                        <h:inputSecret id="password" value="#{loginManbe.password}" required="true" requiredMessage="Senha precisa estar preenchida" styleClass="form-control is-invalid"/>
+                        <div class="invalid-feedback">
+                            Senha deve ser preenchido
+                        </div>
+                    </div>
+                    <div class="mx-auto">
+                        <h:commandButton action="#{loginManbe.verifyLogin}" value="Entrar" style="center" styleClass="btn btn-primary m-3"/>
+                        <h:commandButton action="cadastro.xhtml" value="Cadastro" style="center" styleClass="btn btn-primary m-3" />
+                    </div>
+                </h:form>
+            </div>
+        </div>
+        </div>
     </h:body>
-    
-    <h:outputLink value="cadastro.xhtml">Cadastro</h:outputLink>
 </html>
