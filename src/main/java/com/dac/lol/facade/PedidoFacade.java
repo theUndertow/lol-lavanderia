@@ -19,6 +19,7 @@ import com.dac.lol.model.Roupa;
 import com.dac.lol.model.Tipo;
 import com.dac.lol.model.Usuario;
 import com.dac.lol.util.Coisa;
+import com.dac.lol.util.StrangerCoisa;
 import com.dac.lol.ws.SaveOrder;
 import java.util.List;
 
@@ -104,6 +105,16 @@ public class PedidoFacade {
             Coisa coisa = new Coisa(pedido, cliente, usuario, endereco, cidade, estado);
             save.saveOrder(coisa);
         }
+    }
+
+    public static void updateOrderDelivery(StrangerCoisa strangerCoisa) {
+        PedidoDAO pedidoDAO = new PedidoDAO();
+        
+        Pedido pedido = pedidoDAO.selectPedido(strangerCoisa.getId_pedido());
+        pedido.setSituacao(strangerCoisa.getEstado());
+        pedido.setMotivo(strangerCoisa.getMotivo());
+        
+        pedidoDAO.updatePedido(pedido);
     }
 
 }

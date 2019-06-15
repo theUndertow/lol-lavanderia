@@ -5,6 +5,10 @@
  */
 package com.dac.lol.ws;
 
+import com.dac.lol.facade.PedidoFacade;
+import com.dac.lol.util.StrangerCoisa;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -20,7 +24,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author marco
  */
-@Path("pedido")
+@Path("delivery")
 public class PedidoWebService {
 
     @Context
@@ -55,8 +59,16 @@ public class PedidoWebService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void postJson(String content){
-        
+    public String postDelivery(String delivery){
+        if(delivery!=null){
+            Gson gson = new Gson();
+            StrangerCoisa strangerCoisa = gson.fromJson(delivery, StrangerCoisa.class);
+            //fazer a inserção da entrega com endereço e historico
+            PedidoFacade.updateOrderDelivery(strangerCoisa);
+            return delivery;
+        }else{
+            return "NAO DEU";
+        }
     }
     
     

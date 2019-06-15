@@ -18,7 +18,12 @@
         Prazo para entrega : <h:outputText value="#{pedidoDetails.pedido.tempo}" /><br></br>
         Situação da entrega: <h:outputText value="#{pedidoDetails.pedido.situacao}" /><br></br>
         Total a pagar: <h:outputText value="#{pedidoDetails.pedido.total}" /><br></br>
-               
+        <f:view >
+            <h:form rendered="#{pedidoDetails.pedido.motivo!= null}">
+                Motivo da não entrega <h:outputText value="#{pedidoDetails.pedido.motivo}" />
+                <br></br>
+            </h:form>
+        </f:view>
         <hr></hr> 
         <h3>Listagem das roupas</h3>
         <h:dataTable id="pedido" value="#{pedidoDetails.pedido.roupas}" var="roupa">
