@@ -20,7 +20,9 @@
                     <h:outputLink value="alteracao_cliente.xhtml" styleClass="nav-item nav-link">Alterar Cadastro</h:outputLink>
                 </div>
                 <div class="navbar-nav ml-auto">
-                    <h:commandButton value="Logout" action="#{loginManbe.logout()}" style="center" styleClass="btn btn-primary m-3 nav-item"/>
+                    <h:form>
+                        <h:commandButton value="Logout" action="#{loginManbe.logout()}" style="center" styleClass="btn btn-primary m-3 nav-item"/>
+                    </h:form>
                 </div>
             </div>
         </nav>
@@ -28,11 +30,11 @@
         <h3>Lista de pedidos de #{loginManbe.usuario.nome}</h3><br/>
         <h:form>
             <div class="form-group row">
-            <div class="col-sm-3">
-            <h6>#{loginManbe.usuario.nome} deseja realizar o pedido?</h6>
-            </div>
-            
-            <h:commandLink action="#{Pedido.order(loginManbe.usuario.cliente)}" value="Realizar pedido" styleClass="btn btn-primary col-sm-1"/>
+                <div class="col-sm-3">
+                    <h6>#{loginManbe.usuario.nome} deseja realizar o pedido?</h6>
+                </div>
+
+                <h:commandLink action="#{Pedido.order(loginManbe.usuario.cliente)}" value="Realizar pedido" styleClass="btn btn-primary col-sm-1"/>
             </div>
         </h:form><br/>
         <h:form>

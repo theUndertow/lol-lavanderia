@@ -16,12 +16,16 @@
                     <h:outputLink value="cliente.xhtml" styleClass="nav-item nav-link active" style="font-weight: bold">Portal do Cliente</h:outputLink>
                     <h:outputLink value="cliente_pedido.xhtml" styleClass="nav-item nav-link">Cadastrar Pedido</h:outputLink>
                     <h:outputLink value="alteracao_cliente.xhtml" styleClass="nav-item nav-link">Alterar Cadastro</h:outputLink>
-                    <h:commandButton value="Pedido em aberto" style="center" styleClass="btn btn-primary nav-item">
+                    <h:form>
+                    <h:commandButton value="Pedidos em aberto" style="center" styleClass="btn btn-primary nav-item">
                         <f:ajax listener="#{listaPedidoManbe.pedidosEmAberto()}" render=":form:pedido"/>
                     </h:commandButton>
+                    </h:form>
                 </div>
                 <div class="navbar-nav ml-auto">
+                    <h:form>
                     <h:commandButton value="Logout" action="#{loginManbe.logout()}" style="center" styleClass="btn btn-primary m-3 nav-item"/>
+                    </h:form>
                 </div>
             </div>
         </nav>

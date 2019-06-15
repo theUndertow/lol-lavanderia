@@ -19,7 +19,9 @@
                     <h:outputLink value="alteracao_cliente.xhtml" styleClass="nav-item nav-link active" style="font-weight: bold">Alterar Cadastro</h:outputLink>
                 </div>
                 <div class="navbar-nav ml-auto">
-                    <h:commandButton value="Logout" action="#{loginManbe.logout()}" style="center" styleClass="btn btn-primary m-3 nav-item"/>
+                    <h:form>
+                        <h:commandButton value="Logout" action="#{loginManbe.logout()}" style="center" styleClass="btn btn-primary m-3 nav-item"/>
+                    </h:form>
                 </div>
             </div>
         </nav>
@@ -94,7 +96,7 @@
                         <h:commandButton action="#{alteracaoManbe.cadastroCliente()}" value="Cadastrar" style="center" styleClass="btn btn-primary m-3"/>
                         <h:outputLink value="cliente.xhtml" style="center" styleClass="btn btn-primary m-3">Voltar</h:outputLink>
                     </h:form>
-                    
+
                 </div>
             </div>
         </div>
