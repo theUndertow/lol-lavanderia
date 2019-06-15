@@ -5,47 +5,98 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
-    </h:head>  
+        <title>Alterar Cadastro</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    </h:head>
+
     <h:body>
-        <h:form>
-            <h:commandButton value="Logout" action="#{loginManbe.logout()}"/><br></br>
-            <br></br>
-            <br></br>
-            <h:outputLink value="./cliente.xhtml">Home</h:outputLink>
-        </h:form>
+        <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
+            <span class="navbar-brand mb-0 h1">Lavanderia LoL</span>
+            <div class="collapse navbar-collapse" id="navbarCliente">
+                <div class="navbar-nav">
+                    <h:outputLink value="cliente.xhtml" styleClass="nav-item nav-link">Portal do Cliente</h:outputLink>
+                    <h:outputLink value="cliente_pedido.xhtml" styleClass="nav-item nav-link">Cadastrar Pedido</h:outputLink>
+                    <h:outputLink value="alteracao_cliente.xhtml" styleClass="nav-item nav-link active" style="font-weight: bold">Alterar Cadastro</h:outputLink>
+                </div>
+                <div class="navbar-nav ml-auto">
+                    <h:commandButton value="Logout" action="#{loginManbe.logout()}" style="center" styleClass="btn btn-primary m-3 nav-item"/>
+                </div>
+            </div>
+        </nav>
+        <hr></hr>
         <h:outputText value="#{alteracaoManbe.error}" style="color:red"/>
-        <h:form>
-            <h1>Cadastro Cliente</h1>
-            <p>Nome: <h:inputText id="cliente-nome" value="#{alteracaoManbe.usuario.nome}"/></p>
-            <p>E-mail: <h:inputText id="cliente-email" value="#{alteracaoManbe.email}"/></p>
-            <p>Senha: <h:inputSecret id="cliente-senha" value="#{alteracaoManbe.usuario.senha}"/></p>
-            <hr/>
-            <p>CPF: <h:inputText id="cliente-cpf" value="#{alteracaoManbe.cpf}"/></p>
-            <p>Telefone: <h:inputText id="cliente-telefone" value="#{alteracaoManbe.cliente.telefone}"/></p>
-            <p>Sexo:
-                <h:selectOneRadio id="cliente-sexo" value="#{alteracaoManbe.cliente.sexo}" >
-                    <p><f:selectItem itemLabel="Masculino" itemValue="M"/></p>
-                    <p><f:selectItem itemLabel="Feminino" itemValue="F"/></p>
-                </h:selectOneRadio>
-            </p>
-            <h3>Endereço cliente</h3>
-            <p>Rua: <h:inputText id="cliente-rua" value="#{alteracaoManbe.endereco.rua}"/></p>
-            <p>Numero: <h:inputText id="cliente-numero" value="#{alteracaoManbe.endereco.numero}"/></p>
-            <p>Complemento: <h:inputText id="cliente-complemento" value="#{alteracaoManbe.endereco.complemento}"/></p>
-            <p>Bairro: <h:inputText id="cliente-bairro" value="#{alteracaoManbe.endereco.bairro}"/></p>
-            <p>Estado
-                <h:selectOneMenu id="comboEstado" value="#{alteracaoManbe.estadoSelecionado}" converter="estadoConverter">
-                    <f:selectItems value="#{alteracaoManbe.listaEstados}" var="estado" itemLabel="#{estado.nome}" itemValue="#{estado}"/>
-                    <f:ajax event="change" execute="comboEstado" render="comboCidade" listener="#{alteracaoManbe.buscarCidades}" />
-                </h:selectOneMenu>
-                Cidade
-                <h:selectOneMenu id="comboCidade" value="#{alteracaoManbe.cidadeSelecionada}" converter="cidadeConverter">
-                    <f:selectItems value="#{alteracaoManbe.listaCidades}" var="cidade" itemLabel="#{cidade.nome}" itemValue="#{cidade}"/>
-                </h:selectOneMenu>
-            </p>
-            <p><h:commandButton  action="#{alteracaoManbe.atualizarDados()}" value="Susbmiter"/></p>
-        </h:form>
-        <h:outputLink value="cliente.xhtml">Voltar</h:outputLink>
+        <div class="container-fluid mt-5" style="width: 50%">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h1>Cadastro Cliente</h1>
+                </div>
+                <div class="card-body">
+                    <h:form class="form-horizontal">
+                        <div class="form-group row">
+                            <h:outputLabel value="Nome: " for="cliente-nome" styleClass="col-sm-2 col-label col"/>
+                            <h:inputText id="cliente-nome" value="#{alteracaoManbe.usuario.nome}" styleClass="form-control col-sm-10"/>
+                        </div>
+                        <div class="form-group row">
+                            <h:outputLabel value="E-mail: " for="cliente-email" styleClass="col-sm-2"/>
+                            <h:inputText id="cliente-email" value="#{alteracaoManbe.usuario.email}" styleClass="form-control col-sm-10"/>
+                        </div>
+                        <div class="form-group row">
+                            <h:outputLabel value="Senha: " for="cliente-senha" styleClass="col-sm-2" />
+                            <h:inputSecret id="cliente-senha" value="#{alteracaoManbe.usuario.senha}" styleClass="form-control col-sm-10"/>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="form-group row">
+                            <h:outputLabel value="CPF:  " for="cliente-cpf" styleClass="col-sm-2" />
+                            <h:inputText id="cliente-cpf" value="#{alteracaoManbe.cliente.cpf}" styleClass="form-control col-sm-10"/>
+                        </div>
+                        <div class="form-group row">
+                            <h:outputLabel value="Telefone: " for="cliente-telefone" styleClass="col-sm-2" />
+                            <h:inputText id="cliente-telefone" value="#{alteracaoManbe.cliente.telefone}" styleClass="form-control col-sm-10"/>
+                        </div>
+                        <div class="form-group row">
+                            <h:outputLabel value="Sexo: " for="cliente-sexo" styleClass="col-sm-2" />
+                            <h:selectOneRadio id="cliente-sexo" value="#{alteracaoManbe.cliente.sexo}" styleClass="col-sm-10">
+                                <f:selectItem itemLabel="Masculino" itemValue="M"/>
+                                <f:selectItem itemLabel="Feminino" itemValue="F"/>
+                            </h:selectOneRadio>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <h3>Endereço Cliente</h3>
+                        <div class="form-group row">
+                            <h:outputLabel value="Rua: " for="cliente-rua" styleClass="col-sm-2" />
+                            <h:inputText id="cliente-rua" value="#{alteracaoManbe.endereco.rua}" styleClass="form-control col-sm-10"/>
+                        </div>
+                        <div class="form-group row">
+                            <h:outputLabel value="Número: " for="cliente-numero" styleClass="col-sm-2" />
+                            <h:inputText id="cliente-numero" value="#{alteracaoManbe.endereco.numero}" styleClass="form-control col-sm-10"/>
+                        </div>
+                        <div class="form-group row">
+                            <h:outputLabel value="Complemento: " for="cliente-complemento" styleClass="col-sm-2" />
+                            <h:inputText id="cliente-complemento" value="#{alteracaoManbe.endereco.complemento}" styleClass="form-control col-sm-10"/>
+                        </div>
+                        <div class="form-group row">
+                            <h:outputLabel value="Bairro: " for="cliente-bairro" styleClass="col-sm-2" />
+                            <h:inputText id="cliente-bairro" value="#{alteracaoManbe.endereco.bairro}" styleClass="form-control col-sm-10"/>
+                        </div>
+                        <div class="form-group row">
+                            <h:outputLabel value="Estado: " for="comboEstado" styleClass="col-sm-2" />
+                            <h:selectOneMenu id="comboEstado" value="#{alteracaoManbe.estadoSelecionado}" converter="estadoConverter" styleClass="custom-select col-sm-10">
+                                <f:selectItems value="#{alteracaoManbe.listaEstados}" var="estado" itemLabel="#{estado.nome}" itemValue="#{estado}"/>
+                                <f:ajax event="change" execute="comboEstado" render="comboCidade" listener="#{alteracaoManbe.buscarCidades}" />
+                            </h:selectOneMenu>
+                        </div>
+                        <div class="form-group row">
+                            <h:outputLabel value="Cidade: " for="comboCidade" styleClass="col-sm-2" />
+                            <h:selectOneMenu id="comboCidade" value="#{alteracaoManbe.cidadeSelecionada}" converter="cidadeConverter" styleClass="custom-select col-sm-10">
+                                <f:selectItems value="#{alteracaoManbe.listaCidades}" var="cidade" itemLabel="#{cidade.nome}" itemValue="#{cidade}"/>
+                            </h:selectOneMenu>
+                        </div>
+                        <h:commandButton action="#{alteracaoManbe.cadastroCliente()}" value="Cadastrar" style="center" styleClass="btn btn-primary m-3"/>
+                        <h:outputLink value="index.xhtml" style="center" styleClass="btn btn-primary m-3">Voltar</h:outputLink>
+                    </h:form>
+                    
+                </div>
+            </div>
+        </div>
     </h:body>
 </html>
