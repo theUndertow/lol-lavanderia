@@ -5,34 +5,72 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Alteração de Funcionário</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     </h:head>
     <h:body>
+        <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
+            <span class="navbar-brand mb-0 h1">Lavanderia LoL</span>
+            <div class="collapse navbar-collapse" id="navbarCliente">
+                <div class="navbar-nav">
+                    <h:outputLink value="funcionario.xhtml" styleClass="nav-item nav-link">Portal do Funcionário</h:outputLink>
+                    <h:outputLink value="funcionario_cadastro.xhtml" styleClass="nav-item nav-link">Cadastrar Funcionário</h:outputLink>
+                    <h:outputLink value="alteracao_funcionario.xhtml" styleClass="nav-item nav-link active" style="font-weight: bold">Alterar Funcionário</h:outputLink>
+                    <h:outputLink value="./funcionario_lista_tipo_roupa.xhtml" styleClass="nav-item nav-link">Tipos de Roupas</h:outputLink>
+                    <h:outputLink value="./funcionario_lista_cliente.xhtml" styleClass="nav-item nav-link">Lista de Clientes</h:outputLink>
+                    <h:outputLink value="funcionario_cadastro_tipo_roupa.xhtml" styleClass="nav-item nav-link">Cadastrar Tipo de Roupa</h:outputLink>
+                </div>
+                <div class="navbar-nav nav ml-auto">
+                    <h:form>
+                        <h:commandButton value="Logout" action="#{loginManbe.logout()}" styleClass="btn btn-primary btn-nav"/>
+                    </h:form>
+                </div>
+            </div>
+        </nav>
+        <hr></hr>
         <h:outputText value="#{alteracaoManbe.error}" style="color:red"/>
-        <h:form>
-            <h:form>
-            <h:commandButton value="Logout" action="#{loginManbe.logout()}"/><br></br>
-            <br></br>
-            <br></br>
-            <h:outputLink value="./funcionario.xhtml">Home</h:outputLink>
-        </h:form>
-            <h1>Cadastro Geral</h1>
-            <p>Nome: <h:inputText id="cliente-nome" value="#{alteracaoManbe.usuario.nome}"/></p>
-            <p>E-mail: <h:inputText id="cliente-email" value="#{alteracaoManbe.email}"/></p>
-            <p>Senha: <h:inputSecret id="cliente-senha" value="#{alteracaoManbe.usuario.senha}"/></p>
-           
-            <hr/>
-            
-            <h1>Cadastro Funcionario</h1>
-            <p>Matricula: <h:inputText id="funcionario-matricula" value="#{alteracaoManbe.matricula}"/></p>
-            <p>Data Nascimento: 
-                <p:inputMask id="dob" mask="99/99/9999" value="#{alteracaoManbe.funcionario.nascimento}" >
-                    <f:convertDateTime pattern="dd/MM/yyyy" />
-                </p:inputMask>
-            </p>
-            <p><h:commandButton  action="#{alteracaoManbe.atualizarDados()}" value="Susbmiter"/></p>
-        </h:form>
-        <h:outputLink value="funcionario.xhtml">Voltar</h:outputLink>
+
+        <div class="container-fluid mt-5" style="width: 50%">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h1>Cadastro Funcionário</h1>
+                </div>
+                <div class="card-body">
+                    <h:form class="form-horizontal">
+                        <h2>Cadastro Geral</h2>
+                        <div class="form-group row">
+                            <h:outputLabel value="Nome: " for="cliente-nome" styleClass="col-sm-2 col-label col"/>
+                            <h:inputText id="cliente-nome" value="#{alteracaoManbe.usuario.nome}" styleClass="form-control col-sm-10"/>
+                        </div>
+                        <div class="form-group row">
+                            <h:outputLabel value="E-mail: " for="cliente-email" styleClass="col-sm-2 col-label col"/>
+                            <h:inputText id="cliente-email" value="#{alteracaoManbe.email}" styleClass="form-control col-sm-10"/>
+                        </div>
+                        <div class="form-group row">
+                            <h:outputLabel value="Senha: " for="cliente-senha" styleClass="col-sm-2 col-label col"/>
+                            <h:inputSecret id="cliente-senha" value="#{alteracaoManbe.usuario.senha}" styleClass="form-control col-sm-10"/>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <h2>Dados do Funcionário</h2>
+                        <div class="form-group row">
+                            <h:outputLabel value="Matricula: " for="funcionario-matricula" styleClass="col-sm-2 col-label col"/>
+                            <h:inputText id="funcionario-matricula" value="#{alteracaoManbe.matricula}" styleClass="form-control col-sm-10"/>
+                        </div>
+                        <div class="form-group row">
+                            <h:outputLabel value="Data de Nascimento: " for="dob" styleClass="col-sm-2 col-label col"/>
+                            <h:inputText id="dob" value="#{alteracaoManbe.funcionario.nascimento}" styleClass="form-control col-sm-10">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:inputText>
+                        </div>
+                        <div class="mx-auto">
+                            <h:commandButton  action="#{alteracaoManbe.atualizarDados()}" value="Salvar" styleClass="btn btn-primary m-3"/>
+                            <h:outputLink value="funcionario.xhtml" styleClass="btn btn-primary m-3">Voltar</h:outputLink>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+
     </h:body>
 </html>
 

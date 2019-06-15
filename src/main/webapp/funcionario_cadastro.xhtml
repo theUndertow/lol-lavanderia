@@ -5,7 +5,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Cadastro Funcionário</title>
+        <title>Cadastro de Funcionário</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     </h:head>
     <h:body>
@@ -36,7 +36,7 @@
                 </div>
                 <div class="card-body">
                     <h:form class="form-horizontal">
-                        <h1>Cadastro Geral</h1>
+                        <h2>Cadastro Geral</h2>
                         <div class="form-group row">
                             <h:outputLabel value="Nome: " for="cliente-nome" styleClass="col-sm-2 col-label col"/>
                             <h:inputText id="cliente-nome" value="#{cadastroManbe.usuario.nome}" styleClass="form-control col-sm-10"/>
@@ -50,14 +50,16 @@
                             <h:inputSecret id="cliente-senha" value="#{cadastroManbe.usuario.senha}" styleClass="form-control col-sm-10"/>
                         </div>
                         <div class="dropdown-divider"></div>
-                        <h1>Dados Funcionário</h1>
+                        <h2>Dados do Funcionário</h2>
                         <div class="form-group row">
                             <h:outputLabel value="Matricula: " for="funcionario-matricula" styleClass="col-sm-2 col-label col"/>
                             <h:inputText id="funcionario-matricula" value="#{cadastroManbe.funcionario.matricula}" styleClass="form-control col-sm-10"/>
                         </div>
                         <div class="form-group row">
-                        <h:outputLabel value="Data de Nascimento: " for="dob" styleClass="col-sm-2 col-label col"/>
-                        <h:inputText id="dob" value="#{cadastroManbe.funcionario.nascimento}" styleClass="form-control col-sm-10" />
+                            <h:outputLabel value="Data de Nascimento: " for="dob" styleClass="col-sm-2 col-label col"/>
+                            <h:inputText id="dob" value="#{cadastroManbe.funcionario.nascimento}" styleClass="form-control col-sm-10" >
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:inputText>
                         </div>
                         <div class="mx-auto">
                             <h:commandButton  action="#{cadastroManbe.cadastroFuncionario()}" value="Cadastrar" styleClass="btn btn-primary m-3"/>
