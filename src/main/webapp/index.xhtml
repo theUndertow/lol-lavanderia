@@ -13,33 +13,29 @@
 
     <h:body>
         <div class="container-fluid mt-5" style="width: 50%">
-        <div class="card text-center">
-            <div class="card-header">
-                <h5>Login</h5>
-            </div>
-            <div class="card-body">
-                <h:form class="needs-validation">
-                    <div class="form-row">
-                        <h:outputLabel value="Usuario: " for="login"/>
-                        <h:inputText id="login" value="#{loginManbe.login}" required="true" requiredMessage="Usuário precisa estar preenchido" styleClass="form-control is-invalid" />
-                        <div class="invalid-feedback">
-                            Usuário deve ser preenchido
+            <div class="card text-center">
+                <div class="card-header">
+                    <h5>Login</h5>
+                </div>
+                <div class="card-body">
+                    <h:form>
+                        <div class="form-group">
+                            <h:outputLabel value="Usuario: " for="login"/>
+                            <h:inputText id="login" value="#{loginManbe.login}" requiredMessage="Usuário precisa estar preenchido" styleClass="form-control" required="true"/>
+                            <h:message for="login" style="color: red" />
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <h:outputLabel value="Senha: " for="password" />
-                        <h:inputSecret id="password" value="#{loginManbe.password}" required="true" requiredMessage="Senha precisa estar preenchida" styleClass="form-control is-invalid"/>
-                        <div class="invalid-feedback">
-                            Senha deve ser preenchido
+                        <div class="form-group">                        
+                            <h:outputLabel value="Senha: " for="password" />
+                            <h:inputSecret id="password" value="#{loginManbe.password}" requiredMessage="Senha precisa estar preenchida" styleClass="form-control" required="true"/>
+                            <h:message for="password" style="color: red" role="alert"/>
                         </div>
-                    </div>
-                    <div class="mx-auto">
-                        <h:commandButton action="#{loginManbe.verifyLogin}" value="Entrar" style="center" styleClass="btn btn-primary m-3"/>
-                        <h:commandButton action="cadastro.xhtml" value="Cadastro" style="center" styleClass="btn btn-primary m-3" />
-                    </div>
-                </h:form>
+                        <div class="mx-auto">
+                            <h:commandButton action="#{loginManbe.verifyLogin}" value="Entrar" style="center" styleClass="btn btn-primary m-3"/>
+                            <h:outputLink value="cadastro.xhtml" style="center" styleClass="btn btn-primary m-3">Cadastro</h:outputLink>
+                        </div>
+                    </h:form>
+                </div>
             </div>
-        </div>
-        </div>
+        </div>        
     </h:body>
 </html>
