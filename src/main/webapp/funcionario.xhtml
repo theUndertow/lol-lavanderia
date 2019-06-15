@@ -5,6 +5,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
+
         <title>Portal do Cliente</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     </h:head>
@@ -17,12 +18,12 @@
                     <h:outputLink value="funcionario_cadastro.xhtml" styleClass="nav-item nav-link">Cadastrar Funcionário</h:outputLink>
                     <h:outputLink value="alteracao_funcionario.xhtml" styleClass="nav-item nav-link">Alterar Funcionário</h:outputLink>
                     <h:outputLink value="./funcionario_lista_tipo_roupa.xhtml" styleClass="nav-item nav-link">Tipos de Roupas</h:outputLink>
-                    <h:outputLink value="./funcionario_lista_cliente.xhtml" styleClass="nav-item nav-link">Lista de Clientes</h:outputLink>
                     <h:outputLink value="funcionario_cadastro_tipo_roupa.xhtml" styleClass="nav-item nav-link">Cadastrar Tipo de Roupa</h:outputLink>
+                    <h:outputLink value="./funcionario_lista_cliente.xhtml" styleClass="nav-item nav-link">Lista de Clientes</h:outputLink>
                 </div>
                 <div class="navbar-nav nav ml-auto">
                     <h:form>
-                    <h:commandButton value="Logout" action="#{loginManbe.logout()}" styleClass="btn btn-primary btn-nav"/>
+                        <h:commandButton value="Logout" action="#{loginManbe.logout()}" styleClass="btn btn-primary btn-nav"/>
                     </h:form>
                 </div>
             </div>
@@ -70,11 +71,11 @@
                     <f:facet name="header">Total </f:facet>
                         #{pedido.total}
                 </h:column>
-                <h:column>
-                    <h:selectOneRadio id="cliente-pagamento" value="#{pedido.situacao}" rendered="#{pedido.situacao!='Pago'}" >
-                        <p><f:selectItem itemLabel="Em aberto" itemValue="Em aberto"/></p>
-                        <p><f:selectItem itemLabel="Lavado" itemValue="Lavado"/></p>
-                        <p><f:selectItem itemLabel="Pago" itemValue="Pago"/></p>
+                <h:column class="qualquercoisa">
+                    <h:selectOneRadio id="cliente-pagamento" value="#{pedido.situacao}" rendered="#{pedido.situacao=='Em aberto' or pedido.situacao=='Lavado'}" styleClass="radio">
+                        <f:selectItem itemLabel="Em aberto" itemValue="Em aberto"/>
+                        <f:selectItem itemLabel="Lavado" itemValue="Lavado"/>
+                        <f:selectItem itemLabel="Pago" itemValue="Pago"/>
                         <f:ajax listener="#{listaPedidoManbe.changeSituation(pedido)}" execute="cliente-pagamento" render=":form:pedido :form:teste"/>
                     </h:selectOneRadio>
                     <h:outputText id="teste" value="#{pedido.situacao}" rendered="#{pedido.situacao=='Pago'}"></h:outputText>
@@ -85,7 +86,7 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">Detalhes </f:facet>
-                    <h:commandButton action="#{listaPedidoManbe.details(pedido.id)}" value="Details"/>
+                    <h:commandButton action="#{listaPedidoManbe.details(pedido.id)}" value="Detalhes"/>
                 </h:column>
             </h:dataTable>
         </h:form>

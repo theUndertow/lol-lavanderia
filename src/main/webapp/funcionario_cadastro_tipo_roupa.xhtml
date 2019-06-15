@@ -1,29 +1,62 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Cadastro Tipo de Roupas</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     </h:head>
     <h:body>
-        <h:form>
-            <h:commandButton value="Logout" action="#{loginManbe.logout()}"/><br></br>
-            <br></br>
-            <br></br>
-            <h:outputLink value="./funcionario.xhtml">Home</h:outputLink>
-        </h:form>
-        Cadastro Tipo Roupa
+        <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
+            <span class="navbar-brand mb-0 h1">Lavanderia LoL</span>
+            <div class="collapse navbar-collapse" id="navbarCliente">
+                <div class="navbar-nav">
+                    <h:outputLink value="funcionario.xhtml" styleClass="nav-item nav-link">Portal do Funcionário</h:outputLink>
+                    <h:outputLink value="funcionario_cadastro.xhtml" styleClass="nav-item nav-link">Cadastrar Funcionário</h:outputLink>
+                    <h:outputLink value="alteracao_funcionario.xhtml" styleClass="nav-item nav-link">Alterar Funcionário</h:outputLink>
+                    <h:outputLink value="./funcionario_lista_tipo_roupa.xhtml" styleClass="nav-item nav-link">Tipos de Roupas</h:outputLink>
+                    <h:outputLink value="funcionario_cadastro_tipo_roupa.xhtml" styleClass="nav-item nav-link active" style="font-weight: bold">Cadastrar Tipo de Roupa</h:outputLink>
+                    <h:outputLink value="./funcionario_lista_cliente.xhtml" styleClass="nav-item nav-link">Lista de Clientes</h:outputLink>
+                </div>
+                <div class="navbar-nav nav ml-auto">
+                    <h:form>
+                        <h:commandButton value="Logout" action="#{loginManbe.logout()}" styleClass="btn btn-primary btn-nav"/>
+                    </h:form>
+                </div>
+            </div>
+        </nav>
+        <hr></hr>
         <h:outputText value="#{cadastroTipoRoupa.error}" style="color:red"/>
-        <h:form>
-            <p><h:outputLabel for="nome">Nome: </h:outputLabel>
-                <h:inputText id="nome" value="#{cadastroTipoRoupa.tipo.nome}"/></p>
-            <p><h:outputLabel for="prazo">Prazo: </h:outputLabel>
-                <h:inputText id="prazo" value="#{cadastroTipoRoupa.tipo.prazo}"/></p>
-            <p><h:outputLabel for="preco">Preco: </h:outputLabel>
-                <h:inputText id="preco" value="#{cadastroTipoRoupa.tipo.preco}"/></p>
-            <p><h:commandButton value="Cadastrar" action="#{cadastroTipoRoupa.cadastroTipo}"/></p>
-        </h:form>
-        <h:outputLink value="funcionario.xhtml" >Voltar home</h:outputLink>
+        <div class="container-fluid mt-5" style="width: 50%">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h1>Cadastro Tipo de Roupa</h1>
+                </div>
+                <div class="card-body">
+                    <h:form class="form-horizontal">
+                        <div class="form-group row">
+                            <h:outputLabel for="nome" value="Nome: " styleClass="col-sm-2 col-label col"/>
+                            <h:inputText id="nome" value="#{cadastroTipoRoupa.tipo.nome}" styleClass="form-control col-sm-10"/>
+                        </div>
+                        <div class="form-group row">
+                            <h:outputLabel for="prazo" value="Prazo: " styleClass="col-sm-2 col-label col" />
+                            <h:inputText id="prazo" value="#{cadastroTipoRoupa.tipo.prazo}" styleClass="form-control col-sm-10"/>
+                        </div>
+                        <div class="form-group row">
+                            <h:outputLabel for="preco" value="Preço: R$" styleClass="col-sm-2 col-label col" />
+                            <h:inputText id="preco" value="#{cadastroTipoRoupa.tipo.preco}" styleClass="form-control col-sm-10" />
+                        </div>
+                        <div class="mx-auto">
+                            <h:commandButton value="Cadastrar" action="#{cadastroTipoRoupa.cadastroTipo}" styleClass="btn btn-primary m-3"/>
+                            <h:outputLink value="funcionario.xhtml" styleClass="btn btn-primary m-3">Voltar</h:outputLink>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+
     </h:body>
 </html>
 

@@ -26,61 +26,62 @@
                 </div>
             </div>
         </nav>
-        <hr></hr>
-        <h3>Lista de pedidos de #{loginManbe.usuario.nome}</h3><br/>
-        <h:form>
-            <div class="form-group row">
-                <div class="col-sm-3">
-                    <h6>#{loginManbe.usuario.nome} deseja realizar o pedido?</h6>
-                </div>
+        <div class="container-fluid" style="margin: 0.5% 5% 15% 5%; font-size: 1.15em;">
+            <h3>Lista de pedidos de #{loginManbe.usuario.nome}</h3><br/>
+            <h:form>
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <h6>#{loginManbe.usuario.nome} deseja realizar o pedido?</h6>
+                    </div>
 
-                <h:commandLink action="#{Pedido.order(loginManbe.usuario.cliente)}" value="Realizar pedido" styleClass="btn btn-primary col-sm-1"/>
-            </div>
-        </h:form><br/>
-        <h:form>
-            <div class="form-group row">
-                <h:outputLabel value="Tipo: " for="comboTipo" styleClass="col-sm-2" />
-                <h:selectOneMenu id="comboTipo" value="#{Pedido.tipoSelecionado}" converter="tipoConverter" styleClass="custom-select col-sm-2">
-                    <f:selectItems value="#{Pedido.listaTipos}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}"/>
-                </h:selectOneMenu>
-                <h:outputLabel value="Quantidade: " for="quantidade" styleClass="col-sm-2" />
-                <h:inputText id="quantidade" value="#{Pedido.quantidade}" styleClass="form-control col-sm-2"/>
-                <h:commandButton  value="Adicionar" styleClass="col-sm-1 btn btn-primary">
-                    <f:ajax listener="#{Pedido.addRoupa()}" execute="comboTipo quantidade" render=":form:pedido"></f:ajax>
-                </h:commandButton>
-            </div>
-        </h:form><br/>
-        <h:form id="calculo">
-            <div class="form-group row">
-                <h:commandButton value="Calcular total" styleClass="btn btn-primary col-sm-1">
-                    <f:ajax listener="#{Pedido.calculate}" execute="calculo" render="total-prazo total-preco"></f:ajax>
-                </h:commandButton>
-                <div class="col-sm-3">
-                    <h6>Total: </h6><h:outputText id="total-prazo" value="#{Pedido.pedido.total}" />
+                    <h:commandLink action="#{Pedido.order(loginManbe.usuario.cliente)}" value="Realizar pedido" styleClass="btn btn-primary col-sm-1"/>
                 </div>
-                <div class="col-sm-3">
-                    <h6>Prazo: </h6><h:outputText id="total-preco" value="#{Pedido.pedido.prazo}"/> Dias
+            </h:form><br/>
+            <h:form>
+                <div class="form-group row">
+                    <h:outputLabel value="Tipo: " for="comboTipo" styleClass="col-sm-2" />
+                    <h:selectOneMenu id="comboTipo" value="#{Pedido.tipoSelecionado}" converter="tipoConverter" styleClass="custom-select col-sm-2">
+                        <f:selectItems value="#{Pedido.listaTipos}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Quantidade: " for="quantidade" styleClass="col-sm-2" />
+                    <h:inputText id="quantidade" value="#{Pedido.quantidade}" styleClass="form-control col-sm-2"/>
+                    <h:commandButton  value="Adicionar" styleClass="col-sm-1 btn btn-primary">
+                        <f:ajax listener="#{Pedido.addRoupa()}" execute="comboTipo quantidade" render=":form:pedido"></f:ajax>
+                    </h:commandButton>
                 </div>
-            </div>
-        </h:form>
+            </h:form><br/>
+            <h:form id="calculo">
+                <div class="form-group row">
+                    <h:commandButton value="Calcular total" styleClass="btn btn-primary col-sm-1">
+                        <f:ajax listener="#{Pedido.calculate}" execute="calculo" render="total-prazo total-preco"></f:ajax>
+                    </h:commandButton>
+                    <div class="col-sm-3">
+                        <h6>Total: </h6><h:outputText id="total-prazo" value="#{Pedido.pedido.total}" />
+                    </div>
+                    <div class="col-sm-3">
+                        <h6>Prazo: </h6><h:outputText id="total-preco" value="#{Pedido.pedido.prazo}"/> Dias
+                    </div>
+                </div>
+            </h:form>
 
-        <h2>Pedidos</h2>
-        <h:form id="form">
-            <h:dataTable id="pedido" value="#{Pedido.listaRoupas}" var="roupa" styleClass="table">
-                <h:column>
-                    <f:facet name="header">Tipo </f:facet>
-                        #{roupa.tipo.nome}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Quantidade </f:facet>
-                        #{roupa.quantidade}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Ação </f:facet>
-                    <h:commandLink action="#{Pedido.deleteRow(roupa)}" value="Delete"/>
-                </h:column>
-            </h:dataTable>
-        </h:form>
+            <h2>Pedidos</h2>
+            <h:form id="form">
+                <h:dataTable id="pedido" value="#{Pedido.listaRoupas}" var="roupa" styleClass="table" style="width: 85%">
+                    <h:column>
+                        <f:facet name="header">Tipo </f:facet>
+                            #{roupa.tipo.nome}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Quantidade </f:facet>
+                            #{roupa.quantidade}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Ação </f:facet>
+                        <h:commandLink action="#{Pedido.deleteRow(roupa)}" value="Delete"/>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </div>
     </h:body>
 </html>
 

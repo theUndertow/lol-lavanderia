@@ -17,8 +17,8 @@
                     <h:outputLink value="funcionario_cadastro.xhtml" styleClass="nav-item nav-link active" style="font-weight: bold">Cadastrar Funcionário</h:outputLink>
                     <h:outputLink value="alteracao_funcionario.xhtml" styleClass="nav-item nav-link">Alterar Funcionário</h:outputLink>
                     <h:outputLink value="./funcionario_lista_tipo_roupa.xhtml" styleClass="nav-item nav-link">Tipos de Roupas</h:outputLink>
-                    <h:outputLink value="./funcionario_lista_cliente.xhtml" styleClass="nav-item nav-link">Lista de Clientes</h:outputLink>
                     <h:outputLink value="funcionario_cadastro_tipo_roupa.xhtml" styleClass="nav-item nav-link">Cadastrar Tipo de Roupa</h:outputLink>
+                    <h:outputLink value="./funcionario_lista_cliente.xhtml" styleClass="nav-item nav-link">Lista de Clientes</h:outputLink>
                 </div>
                 <div class="navbar-nav nav ml-auto">
                     <h:form>
@@ -57,9 +57,9 @@
                         </div>
                         <div class="form-group row">
                             <h:outputLabel value="Data de Nascimento: " for="dob" styleClass="col-sm-2 col-label col"/>
-                            <h:inputText id="dob" value="#{cadastroManbe.funcionario.nascimento}" styleClass="form-control col-sm-10" >
+                            <p:inputMask id="dob" mask="99/99/9999" value="#{cadastroManbe.funcionario.nascimento}" styleClass="form-control col-sm-10" >
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
-                            </h:inputText>
+                            </p:inputMask>
                         </div>
                         <div class="mx-auto">
                             <h:commandButton  action="#{cadastroManbe.cadastroFuncionario()}" value="Cadastrar" styleClass="btn btn-primary m-3"/>
