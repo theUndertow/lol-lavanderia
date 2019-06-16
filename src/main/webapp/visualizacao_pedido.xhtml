@@ -19,8 +19,13 @@
         Situação da entrega: <h:outputText value="#{pedidoDetails.pedido.situacao}" /><br></br>
         Total a pagar: <h:outputText value="#{pedidoDetails.pedido.total}" /><br></br>
         <f:view >
-            <h:form rendered="#{pedidoDetails.pedido.motivo!= null}">
+            <h:form rendered="#{pedidoDetails.pedido.situacao eq 'Não Entregue'}">
                 Motivo da não entrega <h:outputText value="#{pedidoDetails.pedido.motivo}" />
+                <br></br>
+            </h:form>
+            
+            <h:form rendered="#{pedidoDetails.pedido.situacao eq 'Cancelado'}">
+                Motivo do cancelamento <h:outputText value="#{pedidoDetails.pedido.motivo}" />
                 <br></br>
             </h:form>
         </f:view>

@@ -20,9 +20,14 @@ public class CadastroTipoRoupaFacade {
     public static boolean registerType(Tipo type) {
         TipoDAO tipoDAO = new TipoDAO();
         CadastroTipoRoupaDAO cadastroTipoRoupaDAO = new CadastroTipoRoupaDAO();
-        if (cadastroTipoRoupaDAO.verifyName(type)) {
+        if (tipoDAO.selectListTipo().isEmpty()) {
             tipoDAO.insertTipo(type);
             return true;
+        } else {
+            if (cadastroTipoRoupaDAO.verifyName(type)) {
+                tipoDAO.insertTipo(type);
+                return true;
+            }
         }
         return false;
     }
