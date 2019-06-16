@@ -35,7 +35,16 @@
                 <p class="card-text">Prazo para entrega : <h:outputText value="#{pedidoDetails.pedido.tempo}" >
                         <f:convertDateTime pattern="dd/MM/yyyy" />
                     </h:outputText></p>
-                <p class="card-text">Situação da entrega: <h:outputText value="#{pedidoDetails.pedido.situacao}" /></p>
+                    <f:view >
+                      <h:form rendered="#{pedidoDetails.pedido.situacao eq 'Não Entregue'}">
+                          Motivo da não entrega <h:outputText value="#{pedidoDetails.pedido.motivo}" />
+                          <br></br>
+                      </h:form>
+                      <h:form rendered="#{pedidoDetails.pedido.situacao eq 'Cancelado'}">
+                          Motivo do cancelamento <h:outputText value="#{pedidoDetails.pedido.motivo}" />
+                          <br></br>
+                      </h:form>
+                    </f:view>
                 <p class="card-text">Total a pagar: R$ <h:outputText value="#{pedidoDetails.pedido.total}" /></p>
             </div>
         </div>  

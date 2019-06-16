@@ -29,17 +29,6 @@
             </div>
         </nav>
         <hr></hr>
-
-        <!--<h:form>
-            <h:commandLink action="funcionario_cadastro.xhtml">Cadastro Funcionario</h:commandLink><br/>
-            <h:commandLink action="alteracao_funcionario.xhtml">Alteração funcionario</h:commandLink><br/>
-            <h:outputLink value="./funcionario_lista_tipo_roupa.xhtml">Listagem tipos de roupa</h:outputLink><br/>
-            <h:outputLink value="./funcionario_lista_cliente.xhtml">Listagem Clientes</h:outputLink><br/>
-            <h:commandLink action="funcionario_cadastro_tipo_roupa.xhtml">Cadastro Tipo de Roupas</h:commandLink><br/>
-            <h:commandLink action="funcionario_lista_cliente.xhtml">Listagem cliente</h:commandLink><br/>
-            <h:commandButton value="Logout" action="#{funcionarioManbe.logout()}"/>
-        </h:form>-->
-
         <h:form id="form">
             <div class="form-group row">
                 <h:outputLabel value="Pesquisar: " for="id_pedido" styleClass="col-sm-2" />
@@ -71,14 +60,13 @@
                     <f:facet name="header">Total </f:facet>
                         #{pedido.total}
                 </h:column>
-                <h:column class="qualquercoisa">
-                    <h:selectOneRadio id="cliente-pagamento" value="#{pedido.situacao}" rendered="#{pedido.situacao=='Em aberto' or pedido.situacao=='Lavado'}" styleClass="radio">
-                        <f:selectItem itemLabel="Em aberto" itemValue="Em aberto"/>
-                        <f:selectItem itemLabel="Lavado" itemValue="Lavado"/>
-                        <f:selectItem itemLabel="Pago" itemValue="Pago"/>
+                <h:column>
+                    <h:selectOneRadio id="cliente-pagamento" value="#{pedido.situacao}" rendered="#{pedido.situacao=='Em aberto' or pedido.situacao=='Lavado'}" >
+                        <p><f:selectItem itemLabel="Em aberto" itemValue="Em aberto"/></p>
+                        <p><f:selectItem itemLabel="Lavado" itemValue="Lavado"/></p>
+                        <p><f:selectItem itemLabel="Pago" itemValue="Pago"/></p>
                         <f:ajax listener="#{listaPedidoManbe.changeSituation(pedido)}" execute="cliente-pagamento" render=":form:pedido :form:teste"/>
-                    </h:selectOneRadio>
-                    <h:outputText id="teste" value="#{pedido.situacao}" rendered="#{pedido.situacao=='Pago'}"></h:outputText>
+                    </h:selectOneRadio> 
                 </h:column>
                 <h:column>
                     <f:facet name="header">Ação </f:facet>
