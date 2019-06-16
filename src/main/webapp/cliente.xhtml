@@ -25,18 +25,15 @@
             </div>
         </nav>
         <hr></hr>
-        <!--<h:form>
-            <h:commandButton value="Pedido em aberto">
-                <f:ajax listener="#{listaPedidoManbe.pedidosEmAberto()}" render=":form:pedido"/>
-            </h:commandButton>
-        </h:form>-->
-        <h3>Lista de pedidos de #{loginManbe.usuario.nome}</h3><br/>
-        <h:form id="form">
-            <div class="form-group row">
+        <div class="form-group row">
+            <h:form>
                 <h:commandButton value="Pedidos em aberto" style="center" styleClass="btn btn-primary nav-item">
                     <f:ajax listener="#{listaPedidoManbe.pedidosEmAberto()}" render=":form:pedido"/>
                 </h:commandButton>
-            </div>
+            </h:form>
+        </div>
+        <h3>Lista de pedidos de #{loginManbe.usuario.nome}</h3><br/>
+        <h:form id="form">
             <div class="form-group row">
                 <h:outputLabel value="Pesquisar: " for="id_pedido" styleClass="col-sm-2" />
                 <h:inputText id="id_pedido" value="#{listaPedidoManbe.idInput}" styleClass="form-control col-sm-7"/>

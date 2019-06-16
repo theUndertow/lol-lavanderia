@@ -10,6 +10,7 @@ import com.dac.lol.model.Usuario;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.NavigationHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -34,8 +35,18 @@ public class ClienteDetailManbe implements Serializable {
         this.usuario = usuario;
     }
     
+    @Inject
+    LoginManbe loginManbe;
+    
     @PostConstruct
     public void init() {
         usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuarioDetail");
+        if(loginManbe.getUsuario().getTipo()!= 'f'){
+            NavigationHandler handler = FacesContext.getCurrentInstance().getApplication().
+                    getNavigationHandler();
+            handler.handleNavigation(FacesContext.getCurrentInstance(), null, "cliente?faces-redirect=true");
+            // renderiza a tela
+            FacesContext.getCurrentInstance().renderResponse();
+        }
     }
 }

@@ -28,24 +28,29 @@
             </div>
         </nav>
         <hr></hr>
+        <h:form>
+            <h:commandButton action="#{pedidoDetails.home}" styleClass="btn btn-primary m-3" value="Voltar"/>
+        </h:form>
         <div class="card">
             <div class="card-body">
                 <p class="card-text">Número do pedido: <h:outputText value="#{pedidoDetails.pedido.id}" /></p>
+                <p class="card-text">Situação do pedido: <h:outputText value="#{pedidoDetails.pedido.situacao}" /></p>
                 <p class="card-text">Nome do cliente: <h:outputText value="#{pedidoDetails.pedido.cliente.usuario.nome}" /></p>
-                <p class="card-text">Prazo para entrega : <h:outputText value="#{pedidoDetails.pedido.tempo}" >
+                <p class="card-text">Prazo para entrega : 
+                    <h:outputText value="#{pedidoDetails.pedido.tempo}" >
                         <f:convertDateTime pattern="dd/MM/yyyy" />
                     </h:outputText></p>
-                    <f:view >
-                      <h:form rendered="#{pedidoDetails.pedido.situacao eq 'Não Entregue'}">
-                          Motivo da não entrega <h:outputText value="#{pedidoDetails.pedido.motivo}" />
-                          <br></br>
-                      </h:form>
-                      <h:form rendered="#{pedidoDetails.pedido.situacao eq 'Cancelado'}">
-                          Motivo do cancelamento <h:outputText value="#{pedidoDetails.pedido.motivo}" />
-                          <br></br>
-                      </h:form>
-                    </f:view>
                 <p class="card-text">Total a pagar: R$ <h:outputText value="#{pedidoDetails.pedido.total}" /></p>
+                <f:view>
+                    <h:form rendered="#{pedidoDetails.pedido.situacao eq 'Não Entregue'}">
+                        Motivo da não entrega <h:outputText value="#{pedidoDetails.pedido.motivo}" />
+                        <br></br>
+                    </h:form>
+                    <h:form rendered="#{pedidoDetails.pedido.situacao eq 'Cancelado'}">
+                        Motivo do cancelamento <h:outputText value="#{pedidoDetails.pedido.motivo}" />
+                        <br></br>
+                    </h:form>
+                </f:view>
             </div>
         </div>  
         <hr></hr> 
@@ -60,9 +65,6 @@
                     #{roupa.quantidade}
             </h:column>
         </h:dataTable>
-        <h:form>
-            <h:commandButton action="#{pedidoDetails.home}" styleClass="btn btn-primary m-3" value="Voltar"/>
-        </h:form>
     </h:body>
 </html>
 
