@@ -2,28 +2,46 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Detalhes Pedido #{clienteDetail.usuario.nome}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     </h:head>
     <h:body>
-        <h:form>
-            <h:commandButton value="Logout" action="#{loginManbe.logout()}"/><br></br>
-            <br></br>
-            <br></br>
-            <h:outputLink value="./funcionario.xhtml">Home</h:outputLink>
-        </h:form>
-        Nome do cliente: <h:outputText value="#{clienteDetail.usuario.nome}" /><br></br>
-        Email do cliente: <h:outputText value="#{clienteDetail.usuario.email}" /><br></br>
-        CPF do cliente: <h:outputText value="#{clienteDetail.usuario.cliente.cpf}" /><br></br>
-        Sexo do cliente: <h:outputText value="#{clienteDetail.usuario.cliente.sexo}" /><br></br>
-        telefone do cliente: <h:outputText value="#{clienteDetail.usuario.cliente.telefone}" /><br></br>
-        Bairro do cliente: <h:outputText value="#{clienteDetail.usuario.cliente.endereco.bairro}" /><br></br>
-        Cidade do cliente: <h:outputText value="#{clienteDetail.usuario.cliente.endereco.cidade.nome}" /><br></br>
-        Estado do cliente: <h:outputText value="#{clienteDetail.usuario.cliente.endereco.cidade.estado.nome}" /><br></br>
-        Rua do cliente: <h:outputText value="#{clienteDetail.usuario.cliente.endereco.rua}" /><br></br>
-        Numero casa do cliente: <h:outputText value="#{clienteDetail.usuario.cliente.endereco.numero}" /><br></br>
-        
+        <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
+            <span class="navbar-brand mb-0 h1">Lavanderia LoL</span>
+            <div class="collapse navbar-collapse" id="navbarCliente">
+                <div class="navbar-nav">
+                    <h:outputLink value="funcionario.xhtml" styleClass="nav-item nav-link">Portal do Funcionário</h:outputLink>
+                    <h:outputLink value="funcionario_cadastro.xhtml" styleClass="nav-item nav-link">Cadastrar Funcionário</h:outputLink>
+                    <h:outputLink value="alteracao_funcionario.xhtml" styleClass="nav-item nav-link">Alterar Funcionário</h:outputLink>
+                    <h:outputLink value="./funcionario_lista_tipo_roupa.xhtml" styleClass="nav-item nav-link">Tipos de Roupas</h:outputLink>
+                    <h:outputLink value="funcionario_cadastro_tipo_roupa.xhtml" styleClass="nav-item nav-link">Cadastrar Tipo de Roupa</h:outputLink>
+                    <h:outputLink value="./funcionario_lista_cliente.xhtml" styleClass="nav-item nav-link">Lista de Clientes</h:outputLink>
+                </div>
+                <div class="navbar-nav nav ml-auto">
+                    <h:form>
+                        <h:commandButton value="Logout" action="#{loginManbe.logout()}" styleClass="btn btn-primary btn-nav"/>
+                    </h:form>
+                </div>
+            </div>
+        </nav>
+        <hr></hr>
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text">Nome: <h:outputText value="#{clienteDetail.usuario.nome}" /></p>
+                <p class="card-text">E-mail: <h:outputText value="#{clienteDetail.usuario.email}" /></p>
+                <p class="card-text">CPF: <h:outputText value="#{clienteDetail.usuario.cliente.cpf}" /></p>
+                <p class="card-text">Sexo: <h:outputText value="#{clienteDetail.usuario.cliente.sexo}" /></p>
+                <p class="card-text">Telefone: <h:outputText value="#{clienteDetail.usuario.cliente.telefone}" /></p>
+                <p class="card-text">Bairro: <h:outputText value="#{clienteDetail.usuario.cliente.endereco.bairro}" /></p>
+                <p class="card-text">Cidade: <h:outputText value="#{clienteDetail.usuario.cliente.endereco.cidade.nome}" /></p>
+                <p class="card-text">Estado: <h:outputText value="#{clienteDetail.usuario.cliente.endereco.cidade.estado.nome}" /></p>
+                <p class="card-text">Rua: <h:outputText value="#{clienteDetail.usuario.cliente.endereco.rua}" /></p>
+                <p class="card-text">Número: <h:outputText value="#{clienteDetail.usuario.cliente.endereco.numero}" /></p>
+            </div>
+        </div>
     </h:body>
 </html>
 
