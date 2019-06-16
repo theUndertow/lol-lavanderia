@@ -2,37 +2,57 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Portal do Cliente</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     </h:head>
     <h:body>
-        Portal do Cliente
-        <h:form>
-            <p><h:commandLink action="cliente_pedido.xhtml">Cadastro pedido</h:commandLink><br/></p>
-            <p><h:commandLink action="alteracao_cliente.xhtml">altera cadastro</h:commandLink><br/></p>
-            <h:commandButton value="Logout" action="#{loginManbe.logout()}"/>
-        </h:form>
+        <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
+            <span class="navbar-brand mb-0 h1">Lavanderia LoL</span>
+            <div class="collapse navbar-collapse" id="navbarCliente">
+                <div class="navbar-nav">
+                    <h:outputLink value="cliente.xhtml" styleClass="nav-item nav-link active" style="font-weight: bold">Portal do Cliente</h:outputLink>
+                    <h:outputLink value="cliente_pedido.xhtml" styleClass="nav-item nav-link">Cadastrar Pedido</h:outputLink>
+                    <h:outputLink value="alteracao_cliente.xhtml" styleClass="nav-item nav-link">Alterar Cadastro</h:outputLink>
+                </div>
+                <div class="navbar-nav ml-auto">
+                    <h:form>
+                        <h:commandButton value="Logout" action="#{loginManbe.logout()}" style="center" styleClass="btn btn-primary m-3 nav-item"/>
+                    </h:form>
+                </div>
+            </div>
+        </nav>
         <hr></hr>
-
-        <h:form>
+        <!--<h:form>
             <h:commandButton value="Pedido em aberto">
                 <f:ajax listener="#{listaPedidoManbe.pedidosEmAberto()}" render=":form:pedido"/>
             </h:commandButton>
-        </h:form>
-        lista de pedidos do usuario #{loginManbe.usuario.nome}
+        </h:form>-->
+        <h3>Lista de pedidos de #{loginManbe.usuario.nome}</h3><br/>
         <h:form id="form">
-            Pesquisar por id <h:inputText id="id_pedido" value="#{listaPedidoManbe.idInput}"/>
-            <h:commandButton value="Pesquisar">
-                <f:ajax listener="#{listaPedidoManbe.buscaPedido()}" execute="id_pedido" render=":form:pedido"/>
-            </h:commandButton>
-            <h:dataTable id="pedido" value="#{listaPedidoManbe.listaPedidos}" var="pedido">
+            <div class="form-group row">
+                <h:commandButton value="Pedidos em aberto" style="center" styleClass="btn btn-primary nav-item">
+                    <f:ajax listener="#{listaPedidoManbe.pedidosEmAberto()}" render=":form:pedido"/>
+                </h:commandButton>
+            </div>
+            <div class="form-group row">
+                <h:outputLabel value="Pesquisar: " for="id_pedido" styleClass="col-sm-2" />
+                <h:inputText id="id_pedido" value="#{listaPedidoManbe.idInput}" styleClass="form-control col-sm-7"/>
+                <div class="col-sm-1"></div>
+                <h:commandButton value="Pesquisar" style="center" styleClass="btn btn-primary col-sm-1">
+                    <f:ajax listener="#{listaPedidoManbe.buscaPedido()}" execute="id_pedido" render=":form:pedido" />
+                </h:commandButton>
+                <div class="col-sm-1"></div>
+            </div>
+            <h:dataTable id="pedido" value="#{listaPedidoManbe.listaPedidos}" var="pedido" styleClass="table">
                 <h:column>
-                    <f:facet name="header">Pedido: </f:facet>
+                    <f:facet name="header">Pedido </f:facet>
                         #{pedido.id}
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Situacao </f:facet>
+                    <f:facet name="header">Situação </f:facet>
                         #{pedido.situacao}
                 </h:column>
                 <h:column>
@@ -44,11 +64,11 @@
                         #{pedido.total}
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Actions</f:facet>
+                    <f:facet name="header">Ações </f:facet>
                     <h:commandLink action="#{listaPedidoManbe.removeOrder(pedido)}" value="Delete"/>
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Details</f:facet>
+                    <f:facet name="header">Detalhes </f:facet>
                     <h:commandButton action="#{listaPedidoManbe.details(pedido.id)}" value="Details"/>
                 </h:column>
             </h:dataTable>

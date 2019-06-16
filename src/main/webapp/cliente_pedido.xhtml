@@ -6,57 +6,82 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-        <title>Facelet Title</title>
+        <title>Cadastro de Pedidos</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     </h:head>
 
     <h:body>
-        <h:form>
-            <h:commandButton value="Logout" action="#{loginManbe.logout()}"/><br></br>
-            <br></br>
-            <br></br>
-            <h:outputLink value="./cliente.xhtml">Home</h:outputLink>
-        </h:form>
-        lista de pedidos do usuario #{loginManbe.usuario.nome}
-        <h:form>
-            <p>#{loginManbe.usuario.nome} deseja realizar o pedido?</p>
-            <p><h:commandLink  action="#{Pedido.order(loginManbe.usuario.cliente)}" value="Realizar pedido"/></p>
-        </h:form>
-        <h:form>
-            <p>
-                Tipo: <h:selectOneMenu id="comboTipo" value="#{Pedido.tipoSelecionado}" converter="tipoConverter">
-                    <f:selectItems value="#{Pedido.listaTipos}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}"/>
-                </h:selectOneMenu>
-                Quantidade: <h:inputText id="quantidade" value="#{Pedido.quantidade}"/>
-                <h:commandButton  value="Adicionar">
-                    <f:ajax listener="#{Pedido.addRoupa()}" execute="comboTipo quantidade" render=":form:pedido"></f:ajax>
-                </h:commandButton> </p>
-        </h:form>
+        <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
+            <span class="navbar-brand mb-0 h1">Lavanderia LoL</span>
+            <div class="collapse navbar-collapse" id="navbarCliente">
+                <div class="navbar-nav">
+                    <h:outputLink value="cliente.xhtml" styleClass="nav-item nav-link">Portal do Cliente</h:outputLink>
+                    <h:outputLink value="cliente_pedido.xhtml" styleClass="nav-item nav-link active" style="font-weight: bold">Cadastrar Pedido</h:outputLink>
+                    <h:outputLink value="alteracao_cliente.xhtml" styleClass="nav-item nav-link">Alterar Cadastro</h:outputLink>
+                </div>
+                <div class="navbar-nav ml-auto">
+                    <h:form>
+                        <h:commandButton value="Logout" action="#{loginManbe.logout()}" style="center" styleClass="btn btn-primary m-3 nav-item"/>
+                    </h:form>
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid" style="margin: 0.5% 5% 15% 5%; font-size: 1.15em;">
+            <h3>Lista de pedidos de #{loginManbe.usuario.nome}</h3><br/>
+            <h:form>
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <h6>#{loginManbe.usuario.nome} deseja realizar o pedido?</h6>
+                    </div>
 
-        <h:form id="calculo">
-            <h:commandButton value="Calcular total">
-                <f:ajax listener="#{Pedido.calculate}" execute="calculo" render="total-prazo total-preco"></f:ajax>
-            </h:commandButton>
-            <p>Total : <h:outputText id="total-prazo" value="#{Pedido.pedido.total}"/>
-                Prazo : <h:outputText id="total-preco" value="#{Pedido.pedido.prazo}"/> Dias</p>
-        </h:form>
+                    <h:commandLink action="#{Pedido.order(loginManbe.usuario.cliente)}" value="Realizar pedido" styleClass="btn btn-primary col-sm-1"/>
+                </div>
+            </h:form><br/>
+            <h:form>
+                <div class="form-group row">
+                    <h:outputLabel value="Tipo: " for="comboTipo" styleClass="col-sm-2" />
+                    <h:selectOneMenu id="comboTipo" value="#{Pedido.tipoSelecionado}" converter="tipoConverter" styleClass="custom-select col-sm-2">
+                        <f:selectItems value="#{Pedido.listaTipos}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Quantidade: " for="quantidade" styleClass="col-sm-2" />
+                    <h:inputText id="quantidade" value="#{Pedido.quantidade}" styleClass="form-control col-sm-2"/>
+                    <h:commandButton  value="Adicionar" styleClass="col-sm-1 btn btn-primary">
+                        <f:ajax listener="#{Pedido.addRoupa()}" execute="comboTipo quantidade" render=":form:pedido"></f:ajax>
+                    </h:commandButton>
+                </div>
+            </h:form><br/>
+            <h:form id="calculo">
+                <div class="form-group row">
+                    <h:commandButton value="Calcular total" styleClass="btn btn-primary col-sm-1">
+                        <f:ajax listener="#{Pedido.calculate}" execute="calculo" render="total-prazo total-preco"></f:ajax>
+                    </h:commandButton>
+                    <div class="col-sm-3">
+                        <h6>Total: </h6><h:outputText id="total-prazo" value="#{Pedido.pedido.total}" />
+                    </div>
+                    <div class="col-sm-3">
+                        <h6>Prazo: </h6><h:outputText id="total-preco" value="#{Pedido.pedido.prazo}"/> Dias
+                    </div>
+                </div>
+            </h:form>
 
-        <h1>Pedidos</h1>
-        <h:form id="form">
-            <h:dataTable id="pedido" value="#{Pedido.listaRoupas}" var="roupa">
-                <h:column>
-                    <f:facet name="header">Tipo: </f:facet>
-                        #{roupa.tipo.nome}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Quantidade: </f:facet>
-                        #{roupa.quantidade}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Action</f:facet>
-                    <h:commandLink action="#{Pedido.deleteRow(roupa)}" value="Delete"/>
-                </h:column>
-            </h:dataTable>
-        </h:form>
+            <h2>Pedidos</h2>
+            <h:form id="form">
+                <h:dataTable id="pedido" value="#{Pedido.listaRoupas}" var="roupa" styleClass="table" style="width: 85%">
+                    <h:column>
+                        <f:facet name="header">Tipo </f:facet>
+                            #{roupa.tipo.nome}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Quantidade </f:facet>
+                            #{roupa.quantidade}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Ação </f:facet>
+                        <h:commandLink action="#{Pedido.deleteRow(roupa)}" value="Delete"/>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </div>
     </h:body>
 </html>
 

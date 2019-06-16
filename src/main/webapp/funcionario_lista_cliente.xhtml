@@ -2,29 +2,49 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Lista de Clientes</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     </h:head>
     <h:body>
-        <h:form>
-            <h:commandButton value="Logout" action="#{loginManbe.logout()}"/><br></br>
-            <br></br>
-            <br></br>
-            <h:outputLink value="./funcionario.xhtml">Home</h:outputLink>
-        </h:form>
+        <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
+            <span class="navbar-brand mb-0 h1">Lavanderia LoL</span>
+            <div class="collapse navbar-collapse" id="navbarCliente">
+                <div class="navbar-nav">
+                    <h:outputLink value="funcionario.xhtml" styleClass="nav-item nav-link">Portal do Funcionário</h:outputLink>
+                    <h:outputLink value="funcionario_cadastro.xhtml" styleClass="nav-item nav-link">Cadastrar Funcionário</h:outputLink>
+                    <h:outputLink value="alteracao_funcionario.xhtml" styleClass="nav-item nav-link">Alterar Funcionário</h:outputLink>
+                    <h:outputLink value="./funcionario_lista_tipo_roupa.xhtml" styleClass="nav-item nav-link">Tipos de Roupas</h:outputLink>
+                    <h:outputLink value="funcionario_cadastro_tipo_roupa.xhtml" styleClass="nav-item nav-link">Cadastrar Tipo de Roupa</h:outputLink>
+                    <h:outputLink value="./funcionario_lista_cliente.xhtml" styleClass="nav-item nav-link active" style="font-weight: bold">Lista de Clientes</h:outputLink>
+                </div>
+                <div class="navbar-nav nav ml-auto">
+                    <h:form>
+                        <h:commandButton value="Logout" action="#{loginManbe.logout()}" styleClass="btn btn-primary btn-nav"/>
+                    </h:form>
+                </div>
+            </div>
+        </nav>
+        <hr></hr>
         <h:form id="form">
-            Pesquisar por id <h:inputText id="id_usuario" value="#{cliente.idInput}"/>
-            <h:commandButton value="Pesquisar">
-                <f:ajax listener="#{cliente.buscaTipo()}" execute="id_usuario" render=":form:usuario"/>
-            </h:commandButton>
-            <h:dataTable id="usuario" value="#{cliente.listaUsuarios}" var="usuario">
+            <div class="form-group row">
+                <h:outputLabel value="Pesquisar: " for="id_usuario" styleClass="col-sm-2" />
+                <h:inputText id="id_usuario" value="#{cliente.idInput}" styleClass="form-control col-sm-7"/>
+                <div class="col-sm-1"></div>
+                <h:commandButton value="Pesquisar" style="center" styleClass="btn btn-primary col-sm-1">
+                    <f:ajax listener="#{cliente.buscaTipo()}" execute="id_usuario" render=":form:usuario"/>
+                </h:commandButton>
+            </div>
+           
+            <h:dataTable id="usuario" value="#{cliente.listaUsuarios}" var="usuario" styleClass="table table-striped">
                 <h:column>
-                    <f:facet name="header">Id </f:facet>
+                    <f:facet name="header">ID </f:facet>
                         #{usuario.id}
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Email </f:facet>
+                    <f:facet name="header">E-mail </f:facet>
                         #{usuario.email}
                 </h:column>
                 <h:column>
@@ -32,8 +52,8 @@
                         #{usuario.nome}
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Actions</f:facet>
-                    <h:commandLink action="#{cliente.details(usuario.id)}" value="Details"/>
+                    <f:facet name="header">Ações </f:facet>
+                    <h:commandLink action="#{cliente.details(usuario.id)}" value="Detalhes"/>
                 </h:column>
             </h:dataTable>
         </h:form>

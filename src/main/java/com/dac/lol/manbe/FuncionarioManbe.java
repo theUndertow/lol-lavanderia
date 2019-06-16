@@ -15,7 +15,7 @@ import javax.inject.Named;
  * @author marco
  */
 
-@Named(value = "funcionarioManbe")
+@Named(value = "funcionario")
 @RequestScoped
 public class FuncionarioManbe implements Serializable{
     public String logout() {
