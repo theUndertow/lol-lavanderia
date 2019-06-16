@@ -32,6 +32,8 @@ public class FuncionarioPortalManbe implements Serializable{
     private Long idInput;
     private String idCommand;
     private Usuario usuario;
+    
+    private String error;
 
     public String getNome() {
         return nome;
@@ -81,6 +83,14 @@ public class FuncionarioPortalManbe implements Serializable{
         this.pedidoDetails = pedidoDetails;
     }
 
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
     @Inject
     LoginManbe loginManbe;
 
@@ -125,7 +135,7 @@ public class FuncionarioPortalManbe implements Serializable{
     }
 
     public void changeSituation(Pedido pedido) {
-        PedidoFacade.updateOrder(pedido);
+        this.error = PedidoFacade.updateOrder(pedido);
     }
 
     public String details(Long id) {

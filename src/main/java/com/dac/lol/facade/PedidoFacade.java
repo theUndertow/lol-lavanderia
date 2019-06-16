@@ -91,10 +91,9 @@ public class PedidoFacade {
         }
     }
 
-    public static void updateOrder(Pedido pedido) {
+    public static String updateOrder(Pedido pedido) {
         PedidoDAO pedidoDAO = new PedidoDAO();
-        pedidoDAO.updatePedido(pedido);
-
+        
         if (pedido.getSituacao().equals("Pago")) {
             SaveOrder save = new SaveOrder();
             Cliente cliente = pedido.getCliente();
@@ -103,8 +102,14 @@ public class PedidoFacade {
             Cidade cidade = endereco.getCidade();
             Estado estado = endereco.getCidade().getEstado();
             Coisa coisa = new Coisa(pedido, cliente, usuario, endereco, cidade, estado);
-            save.saveOrder(coisa);
+            int erroOuAcertoKKJJ = save.saveOrder(coisa);
+            if(erroOuAcertoKKJJ == 200){
+                pedidoDAO.updatePedido(pedido);
+            }else{
+                return "Erro "+erroOuAcertoKKJJ+"Ocorreu brou";
+            }
         }
+        return null;
     }
 
     public static void updateOrderDelivery(StrangerCoisa strangerCoisa) {

@@ -26,7 +26,7 @@ import org.glassfish.jersey.jackson.JacksonFeature;
  */
 public class SaveOrder {
 
-    public static boolean saveOrder(Coisa coisa) {
+    public static int saveOrder(Coisa coisa) {
 
         //criação do cliente que realiza a requisição
         Client client = ClientBuilder.newClient()
@@ -40,12 +40,7 @@ public class SaveOrder {
         Response response = invocationBuilder.post(Entity.json(coisa));
 
         //tratamento da rola da resposta do marcurelio
-        response.getStatus();
-        String value = response.readEntity(String.class);
-
-        System.out.println(value);
-        return false;
-
+        return response.getStatus();
     }
     
 }
