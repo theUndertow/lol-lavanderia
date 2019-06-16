@@ -53,13 +53,17 @@ public class CadastroTipoRoupaManbe implements Serializable{
             handler.handleNavigation(FacesContext.getCurrentInstance(), null, "cliente?faces-redirect=true");
             // renderiza a tela
             FacesContext.getCurrentInstance().renderResponse();
+            return;
         }
     }
     
     
-    public void cadastroTipo(){
+    public String cadastroTipo(){
         if(!CadastroTipoRoupaFacade.registerType(tipo)){
             error = "Roupa ja cadastrada no sistema";
+            return "";
+        }else{
+            return "funcionario_lista_tipo_roupa";
         }
     }
 }

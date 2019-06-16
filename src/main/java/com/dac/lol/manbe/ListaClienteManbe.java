@@ -5,10 +5,8 @@
  */
 package com.dac.lol.manbe;
 
-import com.dac.lol.model.Tipo;
-import com.dac.lol.facade.CadastroTipoRoupaFacade;
-import com.dac.lol.facade.PedidoFacade;
-import com.dac.lol.model.Pedido;
+import com.dac.lol.facade.Clientefacade;
+import com.dac.lol.model.Usuario;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -22,11 +20,20 @@ import javax.inject.Named;
  *
  * @author marco
  */
-@Named(value = "tipoRoupaDetails")
+@Named (value = "listaClienteManbe")
 @ViewScoped
-public class TipoRoupaDetailsManbe implements Serializable{
-    private List<Tipo> listaTipos;
+public class ListaClienteManbe implements Serializable{
+    private List<Usuario> listaUsuarios;
+    private Usuario usuarioDetail;
     private Long idInput;
+
+    public List<Usuario> getListaUsuarios() {
+        return listaUsuarios;
+    }
+
+    public void setListaUsuarios(List<Usuario> listaUsuarios) {
+        this.listaUsuarios = listaUsuarios;
+    }
 
     public Long getIdInput() {
         return idInput;
@@ -35,18 +42,12 @@ public class TipoRoupaDetailsManbe implements Serializable{
     public void setIdInput(Long idInput) {
         this.idInput = idInput;
     }
-    public List<Tipo> getListaTipos() {
-        return listaTipos;
-    }
-
-    public void setListaTipos(List<Tipo> listaTipos) {
-        this.listaTipos = listaTipos;
-    }
+    
     @Inject
     LoginManbe loginManbe;
     
     @PostConstruct
-    public void init(){
+    public void init() {
         if (loginManbe.getUsuario().getTipo() != 'f') {
             NavigationHandler handler = FacesContext.getCurrentInstance().getApplication().
                     getNavigationHandler();
@@ -55,22 +56,23 @@ public class TipoRoupaDetailsManbe implements Serializable{
             FacesContext.getCurrentInstance().renderResponse();
             return;
         }
-        listaTipos = CadastroTipoRoupaFacade.listaAllTypes();
+        listaUsuarios = Clientefacade.listaAllClients();
     }
     
-    public void removeTipo(Tipo tipo){
-        CadastroTipoRoupaFacade.removeType(tipo);
-        listaTipos = CadastroTipoRoupaFacade.listaAllTypes();
+    public String details(Long id) {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().
+                put("usuarioDetail", Clientefacade.selectClient(id));
+        return "visualizacao_cliente";
     }
-    
+
     public void buscaTipo() {
-        Tipo temp = CadastroTipoRoupaFacade.selectType(idInput);
+        Usuario temp = Clientefacade.selectClient(idInput);
         if (temp != null) {
             int i = 0;
-            for (Tipo t : listaTipos) {
-                if (t.getId() == temp.getId()) {
-                    listaTipos.remove(i);
-                    listaTipos.add(0, temp);
+            for (Usuario u : listaUsuarios) {
+                if (u.getId() == temp.getId()) {
+                    listaUsuarios.remove(i);
+                    listaUsuarios.add(0, temp);
                     break;
                 }
                 i++;

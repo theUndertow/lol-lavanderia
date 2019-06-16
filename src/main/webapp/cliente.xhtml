@@ -28,7 +28,7 @@
         <div class="form-group row">
             <h:form>
                 <h:commandButton value="Pedidos em aberto" style="center" styleClass="btn btn-primary nav-item">
-                    <f:ajax listener="#{listaPedidoManbe.pedidosEmAberto()}" render=":form:pedido"/>
+                    <f:ajax listener="#{clientePortalManbe.pedidosEmAberto()}" render=":form:pedido"/>
                 </h:commandButton>
             </h:form>
         </div>
@@ -36,14 +36,14 @@
         <h:form id="form">
             <div class="form-group row">
                 <h:outputLabel value="Pesquisar: " for="id_pedido" styleClass="col-sm-2" />
-                <h:inputText id="id_pedido" value="#{listaPedidoManbe.idInput}" styleClass="form-control col-sm-7"/>
+                <h:inputText id="id_pedido" value="#{clientePortalManbe.idInput}" styleClass="form-control col-sm-7"/>
                 <div class="col-sm-1"></div>
                 <h:commandButton value="Pesquisar" style="center" styleClass="btn btn-primary col-sm-1">
-                    <f:ajax listener="#{listaPedidoManbe.buscaPedido()}" execute="id_pedido" render=":form:pedido" />
+                    <f:ajax listener="#{clientePortalManbe.buscaPedido()}" execute="id_pedido" render=":form:pedido" />
                 </h:commandButton>
                 <div class="col-sm-1"></div>
             </div>
-            <h:dataTable id="pedido" value="#{listaPedidoManbe.listaPedidos}" var="pedido" styleClass="table">
+            <h:dataTable id="pedido" value="#{clientePortalManbe.listaPedidos}" var="pedido" styleClass="table">
                 <h:column>
                     <f:facet name="header">Pedido </f:facet>
                         #{pedido.id}
@@ -62,11 +62,11 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">Ações </f:facet>
-                    <h:commandLink action="#{listaPedidoManbe.removeOrder(pedido)}" value="Delete"/>
+                    <h:commandLink action="#{clientePortalManbe.removeOrder(pedido)}" value="Delete"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Detalhes </f:facet>
-                    <h:commandButton action="#{listaPedidoManbe.details(pedido.id)}" value="Details"/>
+                    <h:commandButton action="#{clientePortalManbe.details(pedido.id)}" value="Details"/>
                 </h:column>
             </h:dataTable>
         </h:form>

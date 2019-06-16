@@ -26,7 +26,7 @@
             </div>
         </nav>
         <hr></hr>
-        <h:outputText value="#{alteracaoManbe.error}" style="color:red"/>
+        <h:outputText value="#{alteracaoManbeCliente.error}" style="color:red"/>
         <div class="container-fluid mt-5" style="width: 50%">
             <div class="card text-center">
                 <div class="card-header">
@@ -36,28 +36,28 @@
                     <h:form class="form-horizontal">
                         <div class="form-group row">
                             <h:outputLabel value="Nome: " for="cliente-nome" styleClass="col-sm-2 col-label col"/>
-                            <h:inputText id="cliente-nome" value="#{alteracaoManbe.usuario.nome}" styleClass="form-control col-sm-10"/>
+                            <h:inputText id="cliente-nome" value="#{alteracaoManbeCliente.usuario.nome}" styleClass="form-control col-sm-10"/>
                         </div>
                         <div class="form-group row">
                             <h:outputLabel value="E-mail: " for="cliente-email" styleClass="col-sm-2"/>
-                            <h:inputText id="cliente-email" value="#{alteracaoManbe.usuario.email}" styleClass="form-control col-sm-10"/>
+                            <h:inputText id="cliente-email" value="#{alteracaoManbeCliente.usuario.email}" styleClass="form-control col-sm-10"/>
                         </div>
                         <div class="form-group row">
                             <h:outputLabel value="Senha: " for="cliente-senha" styleClass="col-sm-2" />
-                            <h:inputSecret id="cliente-senha" value="#{alteracaoManbe.usuario.senha}" styleClass="form-control col-sm-10"/>
+                            <h:inputSecret id="cliente-senha" value="#{alteracaoManbeCliente.usuario.senha}" styleClass="form-control col-sm-10"/>
                         </div>
                         <div class="dropdown-divider"></div>
                         <div class="form-group row">
                             <h:outputLabel value="CPF:  " for="cliente-cpf" styleClass="col-sm-2" />
-                            <h:inputText id="cliente-cpf" value="#{alteracaoManbe.cliente.cpf}" styleClass="form-control col-sm-10"/>
+                            <h:inputText id="cliente-cpf" value="#{alteracaoManbeCliente.cliente.cpf}" styleClass="form-control col-sm-10"/>
                         </div>
                         <div class="form-group row">
                             <h:outputLabel value="Telefone: " for="cliente-telefone" styleClass="col-sm-2" />
-                            <h:inputText id="cliente-telefone" value="#{alteracaoManbe.cliente.telefone}" styleClass="form-control col-sm-10"/>
+                            <h:inputText id="cliente-telefone" value="#{alteracaoManbeCliente.cliente.telefone}" styleClass="form-control col-sm-10"/>
                         </div>
                         <div class="form-group row">
                             <h:outputLabel value="Sexo: " for="cliente-sexo" styleClass="col-sm-2" />
-                            <h:selectOneRadio id="cliente-sexo" value="#{alteracaoManbe.cliente.sexo}" styleClass="col-sm-10">
+                            <h:selectOneRadio id="cliente-sexo" value="#{alteracaoManbeCliente.cliente.sexo}" styleClass="col-sm-10">
                                 <f:selectItem itemLabel="Masculino" itemValue="M"/>
                                 <f:selectItem itemLabel="Feminino" itemValue="F"/>
                             </h:selectOneRadio>
@@ -66,34 +66,34 @@
                         <h3>Endereço Cliente</h3>
                         <div class="form-group row">
                             <h:outputLabel value="Rua: " for="cliente-rua" styleClass="col-sm-2" />
-                            <h:inputText id="cliente-rua" value="#{alteracaoManbe.endereco.rua}" styleClass="form-control col-sm-10"/>
+                            <h:inputText id="cliente-rua" value="#{alteracaoManbeCliente.endereco.rua}" styleClass="form-control col-sm-10"/>
                         </div>
                         <div class="form-group row">
                             <h:outputLabel value="Número: " for="cliente-numero" styleClass="col-sm-2" />
-                            <h:inputText id="cliente-numero" value="#{alteracaoManbe.endereco.numero}" styleClass="form-control col-sm-10"/>
+                            <h:inputText id="cliente-numero" value="#{alteracaoManbeCliente.endereco.numero}" styleClass="form-control col-sm-10"/>
                         </div>
                         <div class="form-group row">
                             <h:outputLabel value="Complemento: " for="cliente-complemento" styleClass="col-sm-2" />
-                            <h:inputText id="cliente-complemento" value="#{alteracaoManbe.endereco.complemento}" styleClass="form-control col-sm-10"/>
+                            <h:inputText id="cliente-complemento" value="#{alteracaoManbeCliente.endereco.complemento}" styleClass="form-control col-sm-10"/>
                         </div>
                         <div class="form-group row">
                             <h:outputLabel value="Bairro: " for="cliente-bairro" styleClass="col-sm-2" />
-                            <h:inputText id="cliente-bairro" value="#{alteracaoManbe.endereco.bairro}" styleClass="form-control col-sm-10"/>
+                            <h:inputText id="cliente-bairro" value="#{alteracaoManbeCliente.endereco.bairro}" styleClass="form-control col-sm-10"/>
                         </div>
                         <div class="form-group row">
                             <h:outputLabel value="Estado: " for="comboEstado" styleClass="col-sm-2" />
-                            <h:selectOneMenu id="comboEstado" value="#{alteracaoManbe.estadoSelecionado}" converter="estadoConverter" styleClass="custom-select col-sm-10">
-                                <f:selectItems value="#{alteracaoManbe.listaEstados}" var="estado" itemLabel="#{estado.nome}" itemValue="#{estado}"/>
-                                <f:ajax event="change" execute="comboEstado" render="comboCidade" listener="#{alteracaoManbe.buscarCidades}" />
+                            <h:selectOneMenu id="comboEstado" value="#{alteracaoManbeCliente.estadoSelecionado}" converter="estadoConverter" styleClass="custom-select col-sm-10">
+                                <f:selectItems value="#{alteracaoManbeCliente.listaEstados}" var="estado" itemLabel="#{estado.nome}" itemValue="#{estado}"/>
+                                <f:ajax event="change" execute="comboEstado" render="comboCidade" listener="#{alteracaoManbeCliente.buscarCidades}" />
                             </h:selectOneMenu>
                         </div>
                         <div class="form-group row">
                             <h:outputLabel value="Cidade: " for="comboCidade" styleClass="col-sm-2" />
-                            <h:selectOneMenu id="comboCidade" value="#{alteracaoManbe.cidadeSelecionada}" converter="cidadeConverter" styleClass="custom-select col-sm-10">
-                                <f:selectItems value="#{alteracaoManbe.listaCidades}" var="cidade" itemLabel="#{cidade.nome}" itemValue="#{cidade}"/>
+                            <h:selectOneMenu id="comboCidade" value="#{alteracaoManbeCliente.cidadeSelecionada}" converter="cidadeConverter" styleClass="custom-select col-sm-10">
+                                <f:selectItems value="#{alteracaoManbeCliente.listaCidades}" var="cidade" itemLabel="#{cidade.nome}" itemValue="#{cidade}"/>
                             </h:selectOneMenu>
                         </div>
-                        <h:commandButton action="#{alteracaoManbe.cadastroCliente()}" value="Cadastrar" style="center" styleClass="btn btn-primary m-3"/>
+                        <h:commandButton action="#{alteracaoManbeCliente.alterarCliente()}" value="Alterar" style="center" styleClass="btn btn-primary m-3"/>
                         <h:outputLink value="cliente.xhtml" style="center" styleClass="btn btn-primary m-3">Voltar</h:outputLink>
                     </h:form>
 

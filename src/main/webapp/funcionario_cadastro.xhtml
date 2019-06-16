@@ -28,7 +28,7 @@
             </div>
         </nav>
         <hr></hr>
-        <h:outputText value="#{cadastroManbe.error}" style="color:red"/>
+        <h:outputText value="#{cadastroManbeFuncionario.error}" style="color:red"/>
         <div class="container-fluid mt-5" style="width: 50%">
             <div class="card text-center">
                 <div class="card-header">
@@ -39,30 +39,30 @@
                         <h2>Cadastro Geral</h2>
                         <div class="form-group row">
                             <h:outputLabel value="Nome: " for="cliente-nome" styleClass="col-sm-2 col-label col"/>
-                            <h:inputText id="cliente-nome" value="#{cadastroManbe.usuario.nome}" styleClass="form-control col-sm-10"/>
+                            <h:inputText id="cliente-nome" value="#{cadastroManbeFuncionario.usuario.nome}" styleClass="form-control col-sm-10"/>
                         </div>
                         <div class="form-group row">
                             <h:outputLabel value="E-mail: " for="cliente-email" styleClass="col-sm-2 col-label col"/>
-                            <h:inputText id="cliente-email" value="#{cadastroManbe.usuario.email}" styleClass="form-control col-sm-10"/>
+                            <h:inputText id="cliente-email" value="#{cadastroManbeFuncionario.usuario.email}" styleClass="form-control col-sm-10"/>
                         </div>
                         <div class="form-group row">
                             <h:outputLabel value="Senha: " for="cliente-senha" styleClass="col-sm-2 col-label col"/>
-                            <h:inputSecret id="cliente-senha" value="#{cadastroManbe.usuario.senha}" styleClass="form-control col-sm-10"/>
+                            <h:inputSecret id="cliente-senha" value="#{cadastroManbeFuncionario.usuario.senha}" styleClass="form-control col-sm-10"/>
                         </div>
                         <div class="dropdown-divider"></div>
                         <h2>Dados do Funcionário</h2>
                         <div class="form-group row">
                             <h:outputLabel value="Matricula: " for="funcionario-matricula" styleClass="col-sm-2 col-label col"/>
-                            <h:inputText id="funcionario-matricula" value="#{cadastroManbe.funcionario.matricula}" styleClass="form-control col-sm-10"/>
+                            <h:inputText id="funcionario-matricula" value="#{cadastroManbeFuncionario.funcionario.matricula}" styleClass="form-control col-sm-10"/>
                         </div>
                         <div class="form-group row">
                             <h:outputLabel value="Data de Nascimento: " for="dob" styleClass="col-sm-2 col-label col"/>
-                            <p:inputMask id="dob" mask="99/99/9999" value="#{cadastroManbe.funcionario.nascimento}" styleClass="form-control col-sm-10" >
+                            <p:inputMask id="dob" mask="99/99/9999" value="#{cadastroManbeFuncionario.funcionario.nascimento}" styleClass="form-control col-sm-10" >
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </p:inputMask>
                         </div>
                         <div class="mx-auto">
-                            <h:commandButton  action="#{cadastroManbe.cadastroFuncionario()}" value="Cadastrar" styleClass="btn btn-primary m-3"/>
+                            <h:commandButton  action="#{cadastroManbeFuncionario.cadastroFuncionario()}" value="Cadastrar" styleClass="btn btn-primary m-3"/>
                             <h:outputLink value="funcionario.xhtml" styleClass="btn btn-primary m-3">Voltar</h:outputLink>
                         </div>
                     </h:form>

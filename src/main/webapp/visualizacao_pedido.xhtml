@@ -13,12 +13,16 @@
             <span class="navbar-brand mb-0 h1">Lavanderia LoL</span>
             <div class="collapse navbar-collapse" id="navbarCliente">
                 <div class="navbar-nav">
-                    <h:outputLink value="funcionario.xhtml" styleClass="nav-item nav-link">Portal do Funcionário</h:outputLink>
-                    <h:outputLink value="funcionario_cadastro.xhtml" styleClass="nav-item nav-link">Cadastrar Funcionário</h:outputLink>
-                    <h:outputLink value="alteracao_funcionario.xhtml" styleClass="nav-item nav-link">Alterar Funcionário</h:outputLink>
-                    <h:outputLink value="./funcionario_lista_tipo_roupa.xhtml" styleClass="nav-item nav-link">Tipos de Roupas</h:outputLink>
-                    <h:outputLink value="funcionario_cadastro_tipo_roupa.xhtml" styleClass="nav-item nav-link">Cadastrar Tipo de Roupa</h:outputLink>
-                    <h:outputLink value="./funcionario_lista_cliente.xhtml" styleClass="nav-item nav-link">Lista de Clientes</h:outputLink>
+                    <h:outputLink rendered="#{loginManbe.usuario.tipo == 'f'}" value="funcionario.xhtml" styleClass="nav-item nav-link">Portal do Funcionário</h:outputLink>
+                    <h:outputLink rendered="#{loginManbe.usuario.tipo == 'f'}" value="funcionario_cadastro.xhtml" styleClass="nav-item nav-link">Cadastrar Funcionário</h:outputLink>
+                    <h:outputLink rendered="#{loginManbe.usuario.tipo == 'f'}" value="alteracao_funcionario.xhtml" styleClass="nav-item nav-link">Alterar Funcionário</h:outputLink>
+                    <h:outputLink rendered="#{loginManbe.usuario.tipo == 'f'}" value="./funcionario_lista_tipo_roupa.xhtml" styleClass="nav-item nav-link">Tipos de Roupas</h:outputLink>
+                    <h:outputLink rendered="#{loginManbe.usuario.tipo == 'f'}" value="funcionario_cadastro_tipo_roupa.xhtml" styleClass="nav-item nav-link">Cadastrar Tipo de Roupa</h:outputLink>
+                    <h:outputLink rendered="#{loginManbe.usuario.tipo == 'f'}" value="./funcionario_lista_cliente.xhtml" styleClass="nav-item nav-link">Lista de Clientes</h:outputLink>
+                    
+                    <h:outputLink rendered="#{loginManbe.usuario.tipo == 'c'}" value="cliente.xhtml" styleClass="nav-item nav-link active" style="font-weight: bold">Portal do Cliente</h:outputLink>
+                    <h:outputLink rendered="#{loginManbe.usuario.tipo == 'c'}" value="cliente_pedido.xhtml" styleClass="nav-item nav-link">Cadastrar Pedido</h:outputLink>
+                    <h:outputLink rendered="#{loginManbe.usuario.tipo == 'c'}" value="alteracao_cliente.xhtml" styleClass="nav-item nav-link">Alterar Cadastro</h:outputLink>
                 </div>
                 <div class="navbar-nav nav ml-auto">
                     <h:form>

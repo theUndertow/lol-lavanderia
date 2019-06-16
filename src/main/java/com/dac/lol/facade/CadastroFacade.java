@@ -67,7 +67,7 @@ public class CadastroFacade {
         usuarioDAO.insertUsuario(user);
         clienteDAO.insertCliente(client);
         
-        return "";
+        return null;
     }
     
     public static String registerFuncionario(Usuario user, Funcionario employee){
@@ -85,7 +85,7 @@ public class CadastroFacade {
         usuarioDAO.insertUsuario(user);
         funcionarioDAO.insertFuncionario(employee);
         
-        return "";
+        return null;
     }
     
     public static String updateClient(Usuario user, Cliente client, String email, String cpf) {
@@ -109,7 +109,7 @@ public class CadastroFacade {
         usuarioDAO.updateUsuario(user);
         clienteDAO.updateCliente(client);
 
-        return "";
+        return null;
     }
     
     public static String updateEmployee(Usuario user, Funcionario employee, String email, int matricula) {
@@ -134,6 +134,6 @@ public class CadastroFacade {
         usuarioDAO.updateUsuario(user);
         funcionarioDAO.updateFuncionario(employee);
 
-        return "";
+        return null;
     }
 }
