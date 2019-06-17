@@ -93,7 +93,11 @@ public class PedidoFacade {
         CadastroPedidoDAO cadastroPedidoDAO = new CadastroPedidoDAO();
         return cadastroPedidoDAO.allDeliveriesCanceled(client);
     }
-
+    
+    public static List<Pedido> allOrdersNotPay(){
+        PedidoDAO pedidoDAO = new PedidoDAO();
+        return pedidoDAO.allOrdersNotPay();
+    }
     public static Pedido selectOrder(long id) {
         CadastroPedidoDAO cadastroPedidoDAO = new CadastroPedidoDAO();
         return cadastroPedidoDAO.selectOrder(id);
@@ -115,8 +119,10 @@ public class PedidoFacade {
 
     public static String updateOrder(Pedido pedido) {
         PedidoDAO pedidoDAO = new PedidoDAO();
-
-        if (pedido.getSituacao().equals("Pago")) {
+        if(pedido.getSituacao().equals("Lavado") 
+                || pedido.getSituacao().equals("Em aberto1")){
+            pedidoDAO.updatePedido(pedido);
+        }else if (pedido.getSituacao().equals("Pago")) {
             SaveOrder save = new SaveOrder();
             Cliente cliente = pedido.getCliente();
             Usuario usuario = cliente.getUsuario();

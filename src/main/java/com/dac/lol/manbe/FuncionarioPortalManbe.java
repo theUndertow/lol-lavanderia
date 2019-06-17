@@ -150,7 +150,7 @@ public class FuncionarioPortalManbe implements Serializable{
     }
     
     public void pedidosNaoPagos(){
-        listaPedidos = PedidoFacade.allOrders();
+        listaPedidos = PedidoFacade.allOrdersNotPay();
     }
     
     public void todosOsPedidos(){

@@ -86,6 +86,24 @@ public class PedidoDAO {
         return pedidos;
     }
     
+    public List<Pedido> allOrdersNotPay() {
+        List<Pedido> pedidos;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Pedido where pedido_situacao = :coisa1 "
+                    + "or pedido_situacao = :coisa2")
+                    .setParameter("coisa1", "Em aberto")
+                    .setParameter("coisa2", "Lavado");
+            pedidos = query.list();
+            session.getTransaction().commit();
+            session.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return pedidos;
+    }
     // Retorna um boolean em relação ao resultado do update
     public boolean updatePedido(Pedido pedido) {
         try {

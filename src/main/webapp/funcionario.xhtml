@@ -38,6 +38,9 @@
                 <h:commandButton value="Pedidos não Pagos" style="center" styleClass="btn btn-success nav-item coisas">
                     <f:ajax listener="#{funcionarioPortalManbe.pedidosNaoPagos()}" render=":form:pedido"/>
                 </h:commandButton>
+                <h:commandButton value="Todos os pedidos" style="center" styleClass="btn btn-info nav-item coisas">
+                    <f:ajax listener="#{funcionarioPortalManbe.todosOsPedidos()}" render=":form:pedido"/>
+                </h:commandButton>
             </h:form>
             <h3>#{funcionarioPortalManbe.error}</h3>
             <h:form id="form">
