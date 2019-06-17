@@ -24,13 +24,25 @@
                     <h:outputLink rendered="#{loginManbe.usuario.tipo == 'c'}" value="cliente_pedido.xhtml" styleClass="nav-item nav-link">Cadastrar Pedido</h:outputLink>
                     <h:outputLink rendered="#{loginManbe.usuario.tipo == 'c'}" value="alteracao_cliente.xhtml" styleClass="nav-item nav-link">Alterar Cadastro</h:outputLink>
                 </div>
-                <div class="navbar-nav nav ml-auto">
-                    <h:form>
-                        <h:commandButton value="Logout" action="#{loginManbe.logout()}" styleClass="btn btn-primary btn-nav"/>
-                    </h:form>
+            </nav>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{loginManbe.usuario.tipo == 'c'}">
+            <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
+                <span class="navbar-brand mb-0 h1">Lavanderia LoL</span>
+                <div class="collapse navbar-collapse" id="navbarCliente">
+                    <div class="navbar-nav">
+                        <h:outputLink value="cliente.xhtml" styleClass="nav-item nav-link">Portal do Cliente</h:outputLink>
+                        <h:outputLink value="cliente_pedido.xhtml" styleClass="nav-item nav-link">Cadastrar Pedido</h:outputLink>
+                        <h:outputLink value="alteracao_cliente.xhtml" styleClass="nav-item nav-link">Alterar Cadastro</h:outputLink>
+                    </div>
+                    <div class="navbar-nav ml-auto">
+                        <h:form>
+                            <h:commandButton value="Logout" action="#{loginManbe.logout()}" style="center" styleClass="btn btn-primary m-3 nav-item"/>
+                        </h:form>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </h:panelGroup>
         <hr></hr>
         <h:form>
             <h:commandButton action="#{pedidoDetails.home}" styleClass="btn btn-primary m-3" value="Voltar"/>
