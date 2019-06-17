@@ -7,6 +7,7 @@ package com.dac.lol.dao;
 
 import com.dac.lol.model.Usuario;
 import com.dac.lol.util.HibernateUtil;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -103,7 +104,7 @@ public class UsuarioDAO {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery("from Usuario where usuario_tipo = :tipo").setParameter("tipo", "c");
-            usuarios = query.list();
+            usuarios = (List<Usuario>) query.list();
             session.getTransaction().commit();
             session.close();
         } catch (HibernateException e) {

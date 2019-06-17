@@ -6,31 +6,24 @@
 package com.dac.lol.manbe;
 
 import com.dac.lol.facade.PedidoFacade;
-import com.dac.lol.model.Cliente;
-import com.dac.lol.model.Endereco;
 import com.dac.lol.model.Pedido;
 import com.dac.lol.model.Usuario;
-import com.dac.lol.util.Coisa;
-import com.dac.lol.ws.SaveOrder;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.context.ExternalContext;
+import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.inject.Named;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author marco
  */
-@Named(value = "listaPedidoManbe")
+@Named(value = "funcionarioPortalManbe")
 @ViewScoped
-public class ListaPedidoManbe implements Serializable {
+public class FuncionarioPortalManbe implements Serializable{
 
     private String nome;
     private List<Pedido> listaPedidos;
@@ -39,6 +32,8 @@ public class ListaPedidoManbe implements Serializable {
     private Long idInput;
     private String idCommand;
     private Usuario usuario;
+    
+    private String error;
 
     public String getNome() {
         return nome;
@@ -88,34 +83,40 @@ public class ListaPedidoManbe implements Serializable {
         this.pedidoDetails = pedidoDetails;
     }
 
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
     @Inject
     LoginManbe loginManbe;
 
     @PostConstruct
     public void init() {
-        usuario = loginManbe.getUsuario();
-
-        if (usuario.getTipo() == 'c') {
-            listaPedidos = PedidoFacade.allOrdersByClients(usuario.getCliente());
-        } else if (usuario.getTipo() == 'f') {
-            listaPedidos = PedidoFacade.allOrders();
+        
+        if (loginManbe.getUsuario().getTipo() != 'f') {
+            NavigationHandler handler = FacesContext.getCurrentInstance().getApplication().
+                    getNavigationHandler();
+            handler.handleNavigation(FacesContext.getCurrentInstance(), null, "cliente?faces-redirect=true");
+            // renderiza a tela
+            FacesContext.getCurrentInstance().renderResponse();
+            return;
         }
+        
+        usuario = loginManbe.getUsuario();
+        listaPedidos = PedidoFacade.allOrders();
+
     }
 
     public String removeOrder(Pedido order) {
         if (order.getSituacao().equals("Em aberto")) {
             PedidoFacade.removeOrder(order.getId());
-            if (usuario.getTipo() == 'c') {
-                listaPedidos = PedidoFacade.allOrdersByClients(usuario.getCliente());
-            } else if (usuario.getTipo() == 'f') {
-                listaPedidos = PedidoFacade.allOrders();
-            }
+            listaPedidos = PedidoFacade.allOrders();
         }
         return null;
-    }
-
-    public void pedidosEmAberto() {
-        listaPedidos = PedidoFacade.allOpenOrders(usuario.getCliente());
     }
 
     public void buscaPedido() {
@@ -134,7 +135,7 @@ public class ListaPedidoManbe implements Serializable {
     }
 
     public void changeSituation(Pedido pedido) {
-        PedidoFacade.updateOrder(pedido);
+        this.error = PedidoFacade.updateOrder(pedido);
     }
 
     public String details(Long id) {
@@ -142,5 +143,17 @@ public class ListaPedidoManbe implements Serializable {
         pedidoDetails = PedidoFacade.selectOrder(id);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("pedidoDetails", pedidoDetails);
         return "visualizacao_pedido";
+    }
+    
+    public void pedidosHoje(){
+        listaPedidos = PedidoFacade.allOrdersToday();
+    }
+    
+    public void pedidosNaoPagos(){
+        listaPedidos = PedidoFacade.allOrders();
+    }
+    
+    public void todosOsPedidos(){
+        listaPedidos = PedidoFacade.allOrders();
     }
 }

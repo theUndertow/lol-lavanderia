@@ -15,7 +15,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.NavigationHandler;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -33,7 +36,7 @@ public class PedidoManbe implements Serializable {
     private Pedido pedido;
     private Tipo tipoSelecionado;
     private int quantidade;
-    
+
     private String error;
 
     public Pedido getPedido() {
@@ -67,7 +70,7 @@ public class PedidoManbe implements Serializable {
     public void setTipoSelecionado(Tipo tipoSelecionado) {
         this.tipoSelecionado = tipoSelecionado;
     }
-    
+
     public List<Roupa> getListaRoupas() {
         return listaRoupas;
     }
@@ -92,10 +95,19 @@ public class PedidoManbe implements Serializable {
         this.quantidade = quantidade;
     }
     
-    
+    @Inject
+    LoginManbe loginManbe;
     
     @PostConstruct
     public void init() {
+        if (loginManbe.getUsuario().getTipo() != 'c') {
+            NavigationHandler handler = FacesContext.getCurrentInstance().getApplication().
+                    getNavigationHandler();
+            handler.handleNavigation(FacesContext.getCurrentInstance(), null, "funcionario?faces-redirect=true");
+            // renderiza a tela
+            FacesContext.getCurrentInstance().renderResponse();
+            return;
+        }
         pedido = new Pedido();
         listaRoupas = new ArrayList<>();
         roupas = new ArrayList<>();
@@ -105,10 +117,12 @@ public class PedidoManbe implements Serializable {
     }
 
     public void addRoupa() {
-        Roupa roupa = new Roupa();
-        roupa.setTipo(tipoSelecionado);
-        roupa.setQuantidade(quantidade);
-        listaRoupas.add(roupa);
+        if (quantidade != 0 && tipoSelecionado!= null) {
+            Roupa roupa = new Roupa();
+            roupa.setTipo(tipoSelecionado);
+            roupa.setQuantidade(quantidade);
+            listaRoupas.add(roupa);
+        }
     }
 
     public void deleteRow(Roupa r) {

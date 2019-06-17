@@ -11,8 +11,10 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -42,15 +44,26 @@ public class ClienteManbe implements Serializable {
     public void setIdInput(Long idInput) {
         this.idInput = idInput;
     }
-
+    
+    @Inject
+    LoginManbe loginManbe;
+    
     @PostConstruct
     public void init() {
+        if (loginManbe.getUsuario().getTipo() != 'f') {
+            NavigationHandler handler = FacesContext.getCurrentInstance().getApplication().
+                    getNavigationHandler();
+            handler.handleNavigation(FacesContext.getCurrentInstance(), null, "cliente?faces-redirect=true");
+            // renderiza a tela
+            FacesContext.getCurrentInstance().renderResponse();
+            return;
+        }
         listaUsuarios = Clientefacade.listaAllClients();
     }
-
+    
     public String details(Long id) {
-        usuarioDetail = Clientefacade.selectClient(id);
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuarioDetail", usuarioDetail);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().
+                put("usuarioDetail", Clientefacade.selectClient(id));
         return "visualizacao_cliente";
     }
 

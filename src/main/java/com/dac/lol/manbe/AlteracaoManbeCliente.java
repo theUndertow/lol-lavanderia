@@ -7,31 +7,42 @@ package com.dac.lol.manbe;
 
 import com.dac.lol.criptografia.MDFive;
 import com.dac.lol.facade.CadastroFacade;
-import com.dac.lol.model.*;
+import com.dac.lol.model.Cidade;
+import com.dac.lol.model.Cliente;
+import com.dac.lol.model.Endereco;
+import com.dac.lol.model.Estado;
+import com.dac.lol.model.Funcionario;
+import com.dac.lol.model.Usuario;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.application.NavigationHandler;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
  *
  * @author marco
  */
-@Named(value = "cadastroManbe")
+@Named(value = "alteracaoManbeCliente")
 @ViewScoped
-public class CadastroManbe implements Serializable{
+public class AlteracaoManbeCliente implements Serializable {
 
+    /**
+     * Creates a new instance of AlteracaoManbe
+     */
     private List<Estado> listaEstados;
     private List<Cidade> listaCidades;
     private Estado estadoSelecionado;
     private Cidade cidadeSelecionada;
     private Usuario usuario;
     private Cliente cliente;
-    private Funcionario funcionario;
+    private String email;
+    private String cpf;
     private Endereco endereco;
-    private String error; // Quem for fazer front end arrumar isso corretamente
+    private String error;
 
     public List<Estado> getListaEstados() {
         return listaEstados;
@@ -81,14 +92,6 @@ public class CadastroManbe implements Serializable{
         this.cliente = cliente;
     }
 
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
-    }
-
     public Endereco getEndereco() {
         return endereco;
     }
@@ -105,17 +108,51 @@ public class CadastroManbe implements Serializable{
         this.error = error;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    @Inject
+    LoginManbe loginManbe;
+
     @PostConstruct
     public void init() {
-        //initiate objects
+
+        if (loginManbe.getUsuario().getTipo() != 'c') {
+            NavigationHandler handler = FacesContext.getCurrentInstance().getApplication().
+                    getNavigationHandler();
+            handler.handleNavigation(FacesContext.getCurrentInstance(), null, "funcionario?faces-redirect=true");
+            // renderiza a tela
+            FacesContext.getCurrentInstance().renderResponse();
+            return;
+        }
+
         usuario = new Usuario();
-        cliente = new Cliente();
-        funcionario = new Funcionario();
         endereco = new Endereco();
 
+        usuario = loginManbe.getUsuario();
+        email = usuario.getEmail();
+
         listaEstados = CadastroFacade.selectAllState();
-        estadoSelecionado = CadastroFacade.selectStateId(Long.parseLong("10"));
-        listaCidades = CadastroFacade.selectAllCityById(estadoSelecionado.getId());
+        listaCidades = CadastroFacade.selectAllCity();
+        cpf = usuario.getCliente().getCpf();
+        cliente = usuario.getCliente();
+        endereco = cliente.getEndereco();
+        cidadeSelecionada = endereco.getCidade();
+        estadoSelecionado = cidadeSelecionada.getEstado();
+
     }
 
     public void buscarCidades() {
@@ -124,49 +161,19 @@ public class CadastroManbe implements Serializable{
         }
     }
 
-    public void cadastroCliente() {
-        // Check the type of a user to add a database
-        // encrypt the actual pass 
-        
-        
+    public String alterarCliente() {
         String newPass = MDFive.encripta(usuario.getSenha());
         usuario.setSenha(newPass);
-        
-        usuario.setTipo('c');
-        
-        // set the state for the selected city
-        
-        
-        // Set the city to address
+
+        cidadeSelecionada.setEstado(estadoSelecionado);
         endereco.setCidade(cidadeSelecionada);
-
-        // set address to the cliente
         cliente.setEndereco(endereco);
-
-        // Set client to the user
-        usuario.setCliente(cliente);
-
-        // Set user to the client
-        cliente.setUsuario(usuario);
-
-        // Pass the user and client to facade to make the register
-        this.error = CadastroFacade.registerCliente(usuario, cliente);
-
-    }
-
-    public void cadastroFuncionario() {
-        // Check the type of a user to add a database
-        // encrypt the actual pass 
-        String newPass = MDFive.encripta(usuario.getSenha());
-        usuario.setSenha(newPass);
-
-        usuario.setTipo('f');
-        // Set user to a employee 
-        usuario.setFuncionario(funcionario);
-
-        // Set employee to a user
-        funcionario.setUsuario(usuario);
-        // Pass the user and employee to facade to make the register
-        this.error = CadastroFacade.registerFuncionario(usuario, funcionario);
+        this.error = CadastroFacade.updateClient(usuario, cliente, email, cpf);
+        
+        if (this.error == null) {
+            return "cliente";
+        } else {
+            return "";
+        }
     }
 }
