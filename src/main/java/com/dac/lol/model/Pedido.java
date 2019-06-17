@@ -5,6 +5,7 @@
  */
 package com.dac.lol.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -34,6 +35,7 @@ public class Pedido implements Serializable{
     private Date tempo;
     private int prazo;
     private String situacao;
+    private String motivo;
     private float total;
     private Cliente cliente;
     private Collection<Roupa> roupas;
@@ -79,6 +81,15 @@ public class Pedido implements Serializable{
     public void setSituacao(String situacao) {
         this.situacao = situacao;
     }
+    @Column(name = "pedido_motivo")
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
+    
 
     @Column(name = "pedido_total")
     public float getTotal() {
@@ -91,6 +102,7 @@ public class Pedido implements Serializable{
 
     @ManyToOne
     @JoinColumn(name="pedido_cliente", updatable=true, nullable = false)
+    @JsonIgnore
     public Cliente getCliente() {
         return cliente;
     }
@@ -106,6 +118,7 @@ public class Pedido implements Serializable{
             joinColumns={@JoinColumn(name="pedido")},
             inverseJoinColumns={@JoinColumn(name="roupa")})
 
+    @JsonIgnore
     public Collection<Roupa> getRoupas() {
         return roupas;
     }

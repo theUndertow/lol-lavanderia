@@ -5,6 +5,7 @@
  */
 package com.dac.lol.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -77,6 +78,7 @@ public class Cliente implements Serializable{
 
     @OneToOne
     @JoinColumn(name="cliente_usuario", updatable=true, nullable = false)
+    @JsonIgnore
     public Usuario getUsuario() {
         return usuario;
     }
@@ -87,6 +89,7 @@ public class Cliente implements Serializable{
 
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="cliente_endereco", updatable=true, nullable = false)
+    @JsonIgnore
     public Endereco getEndereco() {
         return endereco;
     }
@@ -96,6 +99,7 @@ public class Cliente implements Serializable{
     }
 
     @OneToMany(mappedBy = "cliente", cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     public List<Pedido> getPedidos() {
         return pedidos;
     }

@@ -10,11 +10,14 @@ import com.dac.lol.dao.FuncionarioDAO;
 import com.dac.lol.dao.PedidoDAO;
 import com.dac.lol.dao.RoupaDAO;
 import com.dac.lol.dao.UsuarioDAO;
+import com.dac.lol.facade.PedidoFacade;
 import com.dac.lol.model.Cliente;
+import com.dac.lol.model.Endereco;
 import com.dac.lol.model.Funcionario;
 import com.dac.lol.model.Pedido;
 import com.dac.lol.model.Roupa;
 import com.dac.lol.model.Usuario;
+import com.dac.lol.ws.SaveOrder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -28,6 +31,11 @@ import org.hibernate.Session;
  */
 public class teste {
     public static void main(String args[]){
-
+//        SaveOrder save = new SaveOrder();
+//        Pedido pedido = PedidoFacade.selectOrder(Long.parseLong("1"));
+//        Cliente cliente = pedido.getCliente();
+//        Endereco endereco = cliente.getEndereco();
+//        Coisa coisa = new Coisa(pedido, cliente, endereco);
+//        save.saveOrder(coisa);
     }
 }

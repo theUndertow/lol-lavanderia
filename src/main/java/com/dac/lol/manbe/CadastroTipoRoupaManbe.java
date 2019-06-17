@@ -10,6 +10,9 @@ import com.dac.lol.model.Tipo;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.NavigationHandler;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -38,16 +41,29 @@ public class CadastroTipoRoupaManbe implements Serializable{
         this.error = error;
     }
     
+    @Inject
+    LoginManbe loginManbe;
     
     @PostConstruct
     public void init(){
         tipo = new Tipo();
+        if(loginManbe.getUsuario().getTipo()!= 'f'){
+            NavigationHandler handler = FacesContext.getCurrentInstance().getApplication().
+                    getNavigationHandler();
+            handler.handleNavigation(FacesContext.getCurrentInstance(), null, "cliente?faces-redirect=true");
+            // renderiza a tela
+            FacesContext.getCurrentInstance().renderResponse();
+            return;
+        }
     }
     
     
-    public void cadastroTipo(){
+    public String cadastroTipo(){
         if(!CadastroTipoRoupaFacade.registerType(tipo)){
             error = "Roupa ja cadastrada no sistema";
+            return "";
+        }else{
+            return "funcionario_lista_tipo_roupa";
         }
     }
 }

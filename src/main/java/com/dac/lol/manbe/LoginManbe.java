@@ -11,16 +11,19 @@ import com.dac.lol.model.Usuario;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
+
 /**
  *
  * @author marco
  */
-
 @SessionScoped
 @Named(value = "loginManbe")
-public class LoginManbe implements Serializable{
+public class LoginManbe implements Serializable {
+
     private String login;
     private String password;
     private Usuario usuario;
@@ -31,7 +34,6 @@ public class LoginManbe implements Serializable{
     public LoginManbe() {
     }
 
-    
     public String getLogin() {
         return login;
     }
@@ -47,7 +49,7 @@ public class LoginManbe implements Serializable{
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     public Usuario getUsuario() {
         return usuario;
     }
@@ -55,30 +57,30 @@ public class LoginManbe implements Serializable{
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
-    public boolean isLogado(){
+
+    public boolean isLogado() {
         return this.getLogin() != null;
     }
-    
-    
-    public String verifyLogin(){
+
+    public String verifyLogin() {
         String pass = MDFive.encripta(this.getPassword());
         usuario = LoginFacade.FazerLogin(this.getLogin(), pass);
-        if(usuario != null){
-            if(usuario.getTipo() == 'c')
-                return "cliente";   
-            else if(usuario.getTipo() == 'f')
+        if (usuario != null) {
+            if (usuario.getTipo() == 'c') {
+                return "cliente";
+            } else if (usuario.getTipo() == 'f') {
                 return "funcionario";
+            }
         }
-        
-        return "index";       
+
+        return "index";
     }
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         usuario = new Usuario();
     }
-    
+
     public String logout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "index?faces-redirect=true";

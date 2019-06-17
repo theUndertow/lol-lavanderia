@@ -38,47 +38,95 @@ public class CadastroPedidoDAO {
             e.printStackTrace();
         }
     }
-    
-    public List<Pedido> listaAllOrders(Cliente client){
+
+    public List<Pedido> listaAllOrders(Cliente client) {
         List<Pedido> orders = new ArrayList<>();
         String HQL = "from Pedido where pedido_cliente = :id_client";
-        try{
+        try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(HQL).setParameter("id_client", client.getId());
             orders = query.list();
-        }catch(HibernateException e){
+        } catch (HibernateException e) {
             e.printStackTrace();
         }
         return orders;
     }
-    
-    public List<Pedido> listaAllOpenOrders(Cliente client){
+
+    public List<Pedido> listaAllOpenOrders(Cliente client) {
         List<Pedido> orders = new ArrayList<>();
         String HQL = "from Pedido where pedido_situacao = :situation and pedido_cliente = :id_client";
-        try{
+        try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(HQL).
                     setParameter("situation", "Em aberto").
                     setParameter("id_client", client.getId());
             orders = query.list();
-        }catch(HibernateException e){
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    public List<Pedido> allDeliveries(Cliente client) {
+        List<Pedido> orders = new ArrayList<>();
+        String HQL = "from Pedido where pedido_situacao = :situation and pedido_cliente = :id_client";
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery(HQL).
+                    setParameter("situation", "Entregue").
+                    setParameter("id_client", client.getId());
+            orders = query.list();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    public List<Pedido> allDeliveriesNotMade(Cliente client) {
+        List<Pedido> orders = new ArrayList<>();
+        String HQL = "from Pedido where pedido_situacao = :situation and pedido_cliente = :id_client";
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery(HQL).
+                    setParameter("situation", "Não Entregue").
+                    setParameter("id_client", client.getId());
+            orders = query.list();
+        } catch (HibernateException e) {
             e.printStackTrace();
         }
         return orders;
     }
     
-    public Pedido selectOrder(long id){
+    public List<Pedido> allDeliveriesCanceled(Cliente client) {
+        List<Pedido> orders = new ArrayList<>();
+        String HQL = "from Pedido where pedido_situacao = :situation and pedido_cliente = :id_client";
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery(HQL).
+                    setParameter("situation", "Cancelado").
+                    setParameter("id_client", client.getId());
+            orders = query.list();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+    
+    public Pedido selectOrder(long id) {
         Pedido order = null;
         String HQL = "from Pedido where pedido_id = :id";
-        try{
+        try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery(HQL).
                     setParameter("id", id);
             order = (Pedido) query.uniqueResult();
-        }catch(HibernateException e){
+        } catch (HibernateException e) {
             e.printStackTrace();
         }
         return order;

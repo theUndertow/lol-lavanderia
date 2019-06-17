@@ -2,67 +2,94 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+
+        <title>Portal do Funcionário</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     </h:head>
     <h:body>
-        Portal do Funcionario
-
-        <h:form>
-            <h:commandLink action="funcionario_cadastro.xhtml">Cadastro Funcionario</h:commandLink><br/>
-            <h:commandLink action="alteracao_funcionario.xhtml">Alteração funcionario</h:commandLink><br/>
-            <h:outputLink value="./funcionario_lista_tipo_roupa.xhtml">Listagem tipos de roupa</h:outputLink><br/>
-            <h:outputLink value="./funcionario_lista_cliente.xhtml">Listagem Clientes</h:outputLink><br/>
-            <h:commandLink action="funcionario_cadastro_tipo_roupa.xhtml">Cadastro Tipo de Roupas</h:commandLink><br/>
-            <h:commandLink action="funcionario_lista_cliente.xhtml">Listagem cliente</h:commandLink><br/>
-            <h:commandButton value="Logout" action="#{funcionarioManbe.logout()}"/>
-        </h:form>
-
-        <h:form id="form">
-            Pesquisar por id <h:inputText id="id_pedido" value="#{listaPedidoManbe.idInput}"/>
-            <h:commandButton value="Pesquisar">
-                <f:ajax listener="#{listaPedidoManbe.buscaPedido()}" execute="id_pedido" render=":form:pedido"/>
-            </h:commandButton>
-            <h:dataTable id="pedido" value="#{listaPedidoManbe.listaPedidos}" var="pedido">
-                <h:column>
-                    <f:facet name="header">Pedido: </f:facet>
-                        #{pedido.id}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Nome Cliente: </f:facet>
-                        #{pedido.cliente.usuario.nome}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Situacao </f:facet>
-                        #{pedido.situacao}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Tempo </f:facet>
-                        #{pedido.tempo}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Total </f:facet>
-                        #{pedido.total}
-                </h:column>
-                <h:column>
-                    <h:selectOneRadio id="cliente-sexo" value="#{pedido.situacao}" >
-                        <p><f:selectItem itemLabel="Em aberto" itemValue="Em aberto"/></p>
-                        <p><f:selectItem itemLabel="Lavado" itemValue="Lavado"/></p>
-                        <p><f:selectItem itemLabel="Pago" itemValue="Pago"/></p>
-                        <f:ajax listener="#{listaPedidoManbe.changeSituation(pedido)}" />
-                    </h:selectOneRadio>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Action</f:facet>
-                    <h:commandLink action="#{listaPedidoManbe.removeOrder(pedido)}" value="Delete"/>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Details</f:facet>
-                    <h:commandButton action="#{listaPedidoManbe.details(pedido.id)}" value="Details"/>
-                </h:column>
-            </h:dataTable>
-        </h:form>
+        <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
+            <span class="navbar-brand mb-0 h1">Lavanderia LoL</span>
+            <div class="collapse navbar-collapse" id="navbarCliente">
+                <div class="navbar-nav">
+                    <h:outputLink value="funcionario.xhtml" styleClass="nav-item nav-link active" style="font-weight: bold">Portal do Funcionário</h:outputLink>
+                    <h:outputLink value="funcionario_cadastro.xhtml" styleClass="nav-item nav-link">Cadastrar Funcionário</h:outputLink>
+                    <h:outputLink value="alteracao_funcionario.xhtml" styleClass="nav-item nav-link">Alterar Funcionário</h:outputLink>
+                    <h:outputLink value="./funcionario_lista_tipo_roupa.xhtml" styleClass="nav-item nav-link">Tipos de Roupas</h:outputLink>
+                    <h:outputLink value="funcionario_cadastro_tipo_roupa.xhtml" styleClass="nav-item nav-link">Cadastrar Tipo de Roupa</h:outputLink>
+                    <h:outputLink value="./funcionario_lista_cliente.xhtml" styleClass="nav-item nav-link">Lista de Clientes</h:outputLink>
+                    <h:outputLink value="funcionario_relatorios.xhtml" styleClass="nav-item nav-link">Relatórios</h:outputLink>
+                </div>
+                <div class="navbar-nav nav ml-auto">
+                    <h:form>
+                        <h:commandButton value="Logout" action="#{loginManbe.logout()}" styleClass="btn btn-primary btn-nav"/>
+                    </h:form>
+                </div>
+            </div>
+        </nav>
+        <hr></hr>
+        <div id="fasdf" class="container-fluid">
+            <h:form class="form-group row ">
+                <h:commandButton value="Pedidos para hoje" style="center" styleClass="btn btn-primary nav-item coisas">
+                    <f:ajax listener="#{funcionarioPortalManbe.pedidosHoje()}" render=":form:pedido"/>
+                </h:commandButton>
+                <h:commandButton value="Pedidos não Pagos" style="center" styleClass="btn btn-success nav-item coisas">
+                    <f:ajax listener="#{funcionarioPortalManbe.pedidosNaoPagos()}" render=":form:pedido"/>
+                </h:commandButton>
+            </h:form>
+            <h3>#{funcionarioPortalManbe.error}</h3>
+            <h:form id="form">
+                <div class="form-group row">
+                    <h:outputLabel value="Pesquisar: " for="id_pedido" styleClass="col-sm-2" />
+                    <h:inputText id="id_pedido" value="#{funcionarioPortalManbe.idInput}" styleClass="form-control col-sm-7"/>
+                    <div class="col-sm-1"></div>
+                    <h:commandButton value="Pesquisar" style="center" styleClass="btn btn-primary col-sm-1">
+                        <f:ajax listener="#{funcionarioPortalManbe.buscaPedido()}" execute="id_pedido" render=":form:pedido"/>
+                    </h:commandButton>
+                    <div class="col-sm-1"></div>
+                </div>
+                <h:dataTable id="pedido" value="#{funcionarioPortalManbe.listaPedidos}" var="pedido" styleClass="table">
+                    <h:column>
+                        <f:facet name="header">Pedido </f:facet>
+                            #{pedido.id}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Cliente </f:facet>
+                            #{pedido.cliente.usuario.nome}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Situação </f:facet>
+                            #{pedido.situacao}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Tempo </f:facet>
+                            #{pedido.tempo}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Total </f:facet>
+                            #{pedido.total}
+                    </h:column>
+                    <h:column>
+                        <h:selectOneRadio id="cliente-pagamento" value="#{pedido.situacao}" rendered="#{pedido.situacao=='Em aberto' or pedido.situacao=='Lavado'}" >
+                            <p><f:selectItem itemLabel="Em aberto" itemValue="Em aberto"/></p>
+                            <p><f:selectItem itemLabel="Lavado" itemValue="Lavado"/></p>
+                            <p><f:selectItem itemLabel="Pago" itemValue="Pago"/></p>
+                            <f:ajax listener="#{funcionarioPortalManbe.changeSituation(pedido)}" execute="cliente-pagamento" render="form"/>
+                        </h:selectOneRadio> 
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Ação </f:facet>
+                        <h:commandLink action="#{funcionarioPortalManbe.removeOrder(pedido)}" value="Delete"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Detalhes </f:facet>
+                        <h:commandButton action="#{funcionarioPortalManbe.details(pedido.id)}" value="Detalhes"/>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </div>
     </h:body>
 </html>
 

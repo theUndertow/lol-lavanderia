@@ -16,36 +16,28 @@ import com.dac.lol.model.Usuario;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.inject.Named;
+import javax.faces.application.NavigationHandler;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author marco
  */
-@Named(value = "alteracaoManbe")
+@Named(value = "cadastroManbePortal")
 @ViewScoped
-public class AlteracaoManbe implements Serializable {
+public class CadastroManbePortal implements Serializable {
 
-    /**
-     * Creates a new instance of AlteracaoManbe
-     */
     private List<Estado> listaEstados;
     private List<Cidade> listaCidades;
     private Estado estadoSelecionado;
     private Cidade cidadeSelecionada;
     private Usuario usuario;
     private Cliente cliente;
-    private String email;
-    private String cpf;
-    private int matricula;
-    private Funcionario funcionario;
     private Endereco endereco;
-    private String error;
-
-    public AlteracaoManbe() {
-    }
+    private String error; // Quem for fazer front end arrumar isso corretamente
 
     public List<Estado> getListaEstados() {
         return listaEstados;
@@ -95,14 +87,6 @@ public class AlteracaoManbe implements Serializable {
         this.cliente = cliente;
     }
 
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
-    }
-
     public Endereco getEndereco() {
         return endereco;
     }
@@ -119,52 +103,33 @@ public class AlteracaoManbe implements Serializable {
         this.error = error;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public int getMatricula() {
-        return matricula;
-    }
-
-    public void setMatricula(int matricula) {
-        this.matricula = matricula;
-    }
-
     @Inject
     LoginManbe loginManbe;
 
     @PostConstruct
     public void init() {
+        //initiate objects
         usuario = new Usuario();
+        cliente = new Cliente();
         endereco = new Endereco();
 
-        usuario = loginManbe.getUsuario();
-        email = usuario.getEmail();
-        if (usuario.getTipo() == 'c') {
-            listaEstados = CadastroFacade.selectAllState();
-            listaCidades = CadastroFacade.selectAllCity();
-            cpf = usuario.getCliente().getCpf();
-            cliente = usuario.getCliente();
-            endereco = cliente.getEndereco();
-            cidadeSelecionada = endereco.getCidade();
-            estadoSelecionado = cidadeSelecionada.getEstado();
-        } else if (usuario.getTipo() == 'f') {
-            funcionario = usuario.getFuncionario();
-            matricula = funcionario.getMatricula();
+        listaEstados = CadastroFacade.selectAllState();
+        estadoSelecionado = CadastroFacade.selectStateId(Long.parseLong("10"));
+        listaCidades = CadastroFacade.selectAllCityById(estadoSelecionado.getId());
+        if (loginManbe.getUsuario().getTipo() == 'c') {
+            NavigationHandler handler = FacesContext.getCurrentInstance().getApplication().
+                    getNavigationHandler();
+            handler.handleNavigation(FacesContext.getCurrentInstance(), null, "cliente?faces-redirect=true");
+            // renderiza a tela
+            FacesContext.getCurrentInstance().renderResponse();
+        } else if (loginManbe.getUsuario().getTipo() == 'f') {
+            NavigationHandler handler = FacesContext.getCurrentInstance().getApplication().
+                    getNavigationHandler();
+            handler.handleNavigation(FacesContext.getCurrentInstance(), null, "funcionario?faces-redirect=true");
+            // renderiza a tela
+            FacesContext.getCurrentInstance().renderResponse();
         }
+
     }
 
     public void buscarCidades() {
@@ -173,18 +138,33 @@ public class AlteracaoManbe implements Serializable {
         }
     }
 
-    public void atualizarDados() {
+    public String cadastroCliente() {
+        // Check the type of a user to add a database
+        // encrypt the actual pass 
 
         String newPass = MDFive.encripta(usuario.getSenha());
         usuario.setSenha(newPass);
 
-        if (usuario.getTipo() == 'c') {
-            cidadeSelecionada.setEstado(estadoSelecionado);
-            endereco.setCidade(cidadeSelecionada);
-            cliente.setEndereco(endereco);
-            this.error = CadastroFacade.updateClient(usuario, cliente, email, cpf);
-        } else if (usuario.getTipo() == 'f') {
-            this.error = CadastroFacade.updateEmployee(usuario, funcionario, email, matricula);
+        usuario.setTipo('c');
+
+        // set the state for the selected city
+        // Set the city to address
+        endereco.setCidade(cidadeSelecionada);
+
+        // set address to the cliente
+        cliente.setEndereco(endereco);
+
+        // Set client to the user
+        usuario.setCliente(cliente);
+
+        // Set user to the client
+        cliente.setUsuario(usuario);
+
+        // Pass the user and client to facade to make the register
+        this.error = CadastroFacade.registerCliente(usuario, cliente);
+        if (error != null) {
+            return "";
         }
+        return "index";
     }
 }

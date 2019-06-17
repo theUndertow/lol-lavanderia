@@ -2,32 +2,82 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Detalhes Pedido #{pedidoDetails.pedido.id}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     </h:head>
     <h:body>
+        <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
+            <span class="navbar-brand mb-0 h1">Lavanderia LoL</span>
+            <div class="collapse navbar-collapse" id="navbarCliente">
+                <div class="navbar-nav">
+                    <h:outputLink rendered="#{loginManbe.usuario.tipo == 'f'}" value="funcionario.xhtml" styleClass="nav-item nav-link">Portal do Funcionário</h:outputLink>
+                    <h:outputLink rendered="#{loginManbe.usuario.tipo == 'f'}" value="funcionario_cadastro.xhtml" styleClass="nav-item nav-link">Cadastrar Funcionário</h:outputLink>
+                    <h:outputLink rendered="#{loginManbe.usuario.tipo == 'f'}" value="alteracao_funcionario.xhtml" styleClass="nav-item nav-link">Alterar Funcionário</h:outputLink>
+                    <h:outputLink rendered="#{loginManbe.usuario.tipo == 'f'}" value="./funcionario_lista_tipo_roupa.xhtml" styleClass="nav-item nav-link">Tipos de Roupas</h:outputLink>
+                    <h:outputLink rendered="#{loginManbe.usuario.tipo == 'f'}" value="funcionario_cadastro_tipo_roupa.xhtml" styleClass="nav-item nav-link">Cadastrar Tipo de Roupa</h:outputLink>
+                    <h:outputLink rendered="#{loginManbe.usuario.tipo == 'f'}" value="./funcionario_lista_cliente.xhtml" styleClass="nav-item nav-link">Lista de Clientes</h:outputLink>
+                    
+                    <h:outputLink rendered="#{loginManbe.usuario.tipo == 'c'}" value="cliente.xhtml" styleClass="nav-item nav-link active" style="font-weight: bold">Portal do Cliente</h:outputLink>
+                    <h:outputLink rendered="#{loginManbe.usuario.tipo == 'c'}" value="cliente_pedido.xhtml" styleClass="nav-item nav-link">Cadastrar Pedido</h:outputLink>
+                    <h:outputLink rendered="#{loginManbe.usuario.tipo == 'c'}" value="alteracao_cliente.xhtml" styleClass="nav-item nav-link">Alterar Cadastro</h:outputLink>
+                </div>
+            </nav>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{loginManbe.usuario.tipo == 'c'}">
+            <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
+                <span class="navbar-brand mb-0 h1">Lavanderia LoL</span>
+                <div class="collapse navbar-collapse" id="navbarCliente">
+                    <div class="navbar-nav">
+                        <h:outputLink value="cliente.xhtml" styleClass="nav-item nav-link">Portal do Cliente</h:outputLink>
+                        <h:outputLink value="cliente_pedido.xhtml" styleClass="nav-item nav-link">Cadastrar Pedido</h:outputLink>
+                        <h:outputLink value="alteracao_cliente.xhtml" styleClass="nav-item nav-link">Alterar Cadastro</h:outputLink>
+                    </div>
+                    <div class="navbar-nav ml-auto">
+                        <h:form>
+                            <h:commandButton value="Logout" action="#{loginManbe.logout()}" style="center" styleClass="btn btn-primary m-3 nav-item"/>
+                        </h:form>
+                    </div>
+                </div>
+            </nav>
+        </h:panelGroup>
+        <hr></hr>
         <h:form>
-            <h:commandButton value="Logout" action="#{loginManbe.logout()}"/><br></br>
-            <br></br>
-            <br></br>
-            <h:commandButton value="Home" action="#{pedidoDetails.home()}"/>
+            <h:commandButton action="#{pedidoDetails.home}" styleClass="btn btn-primary m-3" value="Voltar"/>
         </h:form>
-        Número do pedido: <h:outputText value="#{pedidoDetails.pedido.id}" /><br></br>
-        Nome do cliente: <h:outputText value="#{pedidoDetails.pedido.cliente.usuario.nome}" /><br></br>
-        Prazo para entrega : <h:outputText value="#{pedidoDetails.pedido.tempo}" /><br></br>
-        Situação da entrega: <h:outputText value="#{pedidoDetails.pedido.situacao}" /><br></br>
-        Total a pagar: <h:outputText value="#{pedidoDetails.pedido.total}" /><br></br>
-               
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text">Número do pedido: <h:outputText value="#{pedidoDetails.pedido.id}" /></p>
+                <p class="card-text">Situação do pedido: <h:outputText value="#{pedidoDetails.pedido.situacao}" /></p>
+                <p class="card-text">Nome do cliente: <h:outputText value="#{pedidoDetails.pedido.cliente.usuario.nome}" /></p>
+                <p class="card-text">Prazo para entrega : 
+                    <h:outputText value="#{pedidoDetails.pedido.tempo}" >
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText></p>
+                <p class="card-text">Total a pagar: R$ <h:outputText value="#{pedidoDetails.pedido.total}" /></p>
+                <f:view>
+                    <h:form rendered="#{pedidoDetails.pedido.situacao eq 'Não Entregue'}">
+                        Motivo da não entrega <h:outputText value="#{pedidoDetails.pedido.motivo}" />
+                        <br></br>
+                    </h:form>
+                    <h:form rendered="#{pedidoDetails.pedido.situacao eq 'Cancelado'}">
+                        Motivo do cancelamento <h:outputText value="#{pedidoDetails.pedido.motivo}" />
+                        <br></br>
+                    </h:form>
+                </f:view>
+            </div>
+        </div>  
         <hr></hr> 
         <h3>Listagem das roupas</h3>
-        <h:dataTable id="pedido" value="#{pedidoDetails.pedido.roupas}" var="roupa">
+        <h:dataTable id="pedido" value="#{pedidoDetails.pedido.roupas}" var="roupa" styleClass="table table-striped">
             <h:column>
-                <f:facet name="header">Tipo: </f:facet>
+                <f:facet name="header">Tipo </f:facet>
                     #{roupa.tipo.nome}
             </h:column>
             <h:column>
-                <f:facet name="header">Quantidade: </f:facet>
+                <f:facet name="header">Quantidade </f:facet>
                     #{roupa.quantidade}
             </h:column>
         </h:dataTable>
