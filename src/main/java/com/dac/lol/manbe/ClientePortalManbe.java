@@ -113,6 +113,22 @@ public class ClientePortalManbe implements Serializable {
         listaPedidos = PedidoFacade.allOpenOrders(usuario.getCliente());
     }
 
+    public void pedidosEntregues() {
+        listaPedidos = PedidoFacade.allDeliveries(usuario.getCliente());
+    }
+
+    public void pedidosNaoEntregues() {
+        listaPedidos = PedidoFacade.allDeliveriesNotMade(usuario.getCliente());
+    }
+
+    public void pedidosCancelados() {
+        listaPedidos = PedidoFacade.allDeliveriesCanceled(usuario.getCliente());
+    }
+
+    public void todosOsPedidos() {
+        listaPedidos = PedidoFacade.allOrdersByClients(usuario.getCliente());
+    }
+
     public void buscaPedido() {
         Pedido temp = PedidoFacade.selectOrder(idInput);
         if (temp != null) {

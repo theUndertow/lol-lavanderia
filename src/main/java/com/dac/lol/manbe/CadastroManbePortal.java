@@ -108,23 +108,6 @@ public class CadastroManbePortal implements Serializable {
 
     @PostConstruct
     public void init() {
-        if (loginManbe != null) {
-            if (loginManbe.getUsuario().getTipo() == 'c') {
-                NavigationHandler handler = FacesContext.getCurrentInstance().getApplication().
-                        getNavigationHandler();
-                handler.handleNavigation(FacesContext.getCurrentInstance(), null, "cliente?faces-redirect=true");
-                // renderiza a tela
-                FacesContext.getCurrentInstance().renderResponse();
-            }else if (loginManbe.getUsuario().getTipo() == 'f') {
-                NavigationHandler handler = FacesContext.getCurrentInstance().getApplication().
-                        getNavigationHandler();
-                handler.handleNavigation(FacesContext.getCurrentInstance(), null, "funcionario?faces-redirect=true");
-                // renderiza a tela
-                FacesContext.getCurrentInstance().renderResponse();
-            }
-            return;
-        }
-
         //initiate objects
         usuario = new Usuario();
         cliente = new Cliente();
@@ -133,6 +116,20 @@ public class CadastroManbePortal implements Serializable {
         listaEstados = CadastroFacade.selectAllState();
         estadoSelecionado = CadastroFacade.selectStateId(Long.parseLong("10"));
         listaCidades = CadastroFacade.selectAllCityById(estadoSelecionado.getId());
+        if (loginManbe.getUsuario().getTipo() == 'c') {
+            NavigationHandler handler = FacesContext.getCurrentInstance().getApplication().
+                    getNavigationHandler();
+            handler.handleNavigation(FacesContext.getCurrentInstance(), null, "cliente?faces-redirect=true");
+            // renderiza a tela
+            FacesContext.getCurrentInstance().renderResponse();
+        } else if (loginManbe.getUsuario().getTipo() == 'f') {
+            NavigationHandler handler = FacesContext.getCurrentInstance().getApplication().
+                    getNavigationHandler();
+            handler.handleNavigation(FacesContext.getCurrentInstance(), null, "funcionario?faces-redirect=true");
+            // renderiza a tela
+            FacesContext.getCurrentInstance().renderResponse();
+        }
+
     }
 
     public void buscarCidades() {
@@ -165,7 +162,7 @@ public class CadastroManbePortal implements Serializable {
 
         // Pass the user and client to facade to make the register
         this.error = CadastroFacade.registerCliente(usuario, cliente);
-        if(error!=null){
+        if (error != null) {
             return "";
         }
         return "index";

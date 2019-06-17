@@ -144,4 +144,16 @@ public class FuncionarioPortalManbe implements Serializable{
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("pedidoDetails", pedidoDetails);
         return "visualizacao_pedido";
     }
+    
+    public void pedidosHoje(){
+        listaPedidos = PedidoFacade.allOrdersToday();
+    }
+    
+    public void pedidosNaoPagos(){
+        listaPedidos = PedidoFacade.allOrders();
+    }
+    
+    public void todosOsPedidos(){
+        listaPedidos = PedidoFacade.allOrders();
+    }
 }

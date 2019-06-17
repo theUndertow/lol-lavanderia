@@ -8,6 +8,8 @@ package com.dac.lol.dao;
 import com.dac.lol.model.Cliente;
 import com.dac.lol.model.Pedido;
 import com.dac.lol.util.HibernateUtil;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -57,6 +59,23 @@ public class PedidoDAO {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery("from Pedido");
+            pedidos = query.list();
+            session.getTransaction().commit();
+            session.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return pedidos;
+    }
+    
+    public List<Pedido> selectListPedidoToday(Calendar date) {
+        List<Pedido> pedidos;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Pedido where pedido_tempo = :date");
+            query.setDate("date", date.getTime());
             pedidos = query.list();
             session.getTransaction().commit();
             session.close();

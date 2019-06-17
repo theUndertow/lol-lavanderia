@@ -21,6 +21,7 @@ import com.dac.lol.model.Usuario;
 import com.dac.lol.util.Coisa;
 import com.dac.lol.util.StrangerCoisa;
 import com.dac.lol.ws.SaveOrder;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -67,9 +68,30 @@ public class PedidoFacade {
         return pedidoDAO.selectListPedido();
     }
 
+    public static List<Pedido> allOrdersToday() {
+        PedidoDAO pedidoDAO = new PedidoDAO();
+        Calendar c = Calendar.getInstance();
+        return pedidoDAO.selectListPedidoToday(c);
+    }
+
     public static List<Pedido> allOpenOrders(Cliente client) {
         CadastroPedidoDAO cadastroPedidoDAO = new CadastroPedidoDAO();
         return cadastroPedidoDAO.listaAllOpenOrders(client);
+    }
+
+    public static List<Pedido> allDeliveries(Cliente client) {
+        CadastroPedidoDAO cadastroPedidoDAO = new CadastroPedidoDAO();
+        return cadastroPedidoDAO.allDeliveries(client);
+    }
+
+    public static List<Pedido> allDeliveriesNotMade(Cliente client) {
+        CadastroPedidoDAO cadastroPedidoDAO = new CadastroPedidoDAO();
+        return cadastroPedidoDAO.allDeliveriesNotMade(client);
+    }
+
+    public static List<Pedido> allDeliveriesCanceled(Cliente client) {
+        CadastroPedidoDAO cadastroPedidoDAO = new CadastroPedidoDAO();
+        return cadastroPedidoDAO.allDeliveriesCanceled(client);
     }
 
     public static Pedido selectOrder(long id) {
@@ -93,7 +115,7 @@ public class PedidoFacade {
 
     public static String updateOrder(Pedido pedido) {
         PedidoDAO pedidoDAO = new PedidoDAO();
-        
+
         if (pedido.getSituacao().equals("Pago")) {
             SaveOrder save = new SaveOrder();
             Cliente cliente = pedido.getCliente();
@@ -103,10 +125,10 @@ public class PedidoFacade {
             Estado estado = endereco.getCidade().getEstado();
             Coisa coisa = new Coisa(pedido, cliente, usuario, endereco, cidade, estado);
             int erroOuAcertoKKJJ = save.saveOrder(coisa);
-            if(erroOuAcertoKKJJ == 200){
+            if (erroOuAcertoKKJJ == 200) {
                 pedidoDAO.updatePedido(pedido);
-            }else{
-                return "Erro "+erroOuAcertoKKJJ+"Ocorreu brou";
+            } else {
+                return "Erro " + erroOuAcertoKKJJ + "Ocorreu brou";
             }
         }
         return null;
@@ -114,11 +136,11 @@ public class PedidoFacade {
 
     public static void updateOrderDelivery(StrangerCoisa strangerCoisa) {
         PedidoDAO pedidoDAO = new PedidoDAO();
-        
+
         Pedido pedido = pedidoDAO.selectPedido(strangerCoisa.getId_pedido());
         pedido.setSituacao(strangerCoisa.getEstado());
         pedido.setMotivo(strangerCoisa.getMotivo());
-        
+
         pedidoDAO.updatePedido(pedido);
     }
 
