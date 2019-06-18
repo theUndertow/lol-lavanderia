@@ -1,21 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-
-    <head>
-        <title>Relatórios</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <p><h:outputLink value="RelatorioReceita">Receita</h:outputLink></p>
-        <p><h:outputLink value="RelatorioClientes">Clientes</h:outputLink></p>
-        <p><h:outputLink value="RelatorioFieis">Fieis</h:outputLink></p>
-        <p><h:outputLink value="RelatorioPedidos">Pedidos</h:outputLink></p>
-    </body>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Lista de Clientes</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+        <link rel="StyleSheet" type="text/css" href="css/estilos.css" media="screen" />
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
+            <span class="navbar-brand mb-0 h1">Lavanderia LoL</span>
+            <div class="collapse navbar-collapse" id="navbarCliente">
+                <div class="navbar-nav">
+                    <h:outputLink value="funcionario.xhtml" styleClass="nav-item nav-link">Portal do Funcionário</h:outputLink>
+                    <h:outputLink value="funcionario_cadastro.xhtml" styleClass="nav-item nav-link">Cadastrar Funcionário</h:outputLink>
+                    <h:outputLink value="alteracao_funcionario.xhtml" styleClass="nav-item nav-link">Alterar Funcionário</h:outputLink>
+                    <h:outputLink value="./funcionario_lista_tipo_roupa.xhtml" styleClass="nav-item nav-link">Tipos de Roupas</h:outputLink>
+                    <h:outputLink value="funcionario_cadastro_tipo_roupa.xhtml" styleClass="nav-item nav-link">Cadastrar Tipo de Roupa</h:outputLink>
+                    <h:outputLink value="./funcionario_lista_cliente.xhtml" styleClass="nav-item nav-link">Lista de Clientes</h:outputLink>
+                    <h:outputLink value="funcionario_relatorios.xhtml" styleClass="nav-item nav-link active" style="font-weight: bold">Relatórios</h:outputLink>
+                </div>
+                <div class="navbar-nav nav ml-auto">
+                    <h:form>
+                        <h:commandButton value="Logout" action="#{loginManbe.logout()}" styleClass="btn btn-primary btn-nav"/>
+                    </h:form>
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid" id="fasdf" >
+            <h:form>
+                <div class="form-group row" >
+                    <h:outputLink value="RelatorioReceita" style="center" styleClass="btn btn-primary nav-item coisas">Receita</h:outputLink>
+                    <h:outputLink value="RelatorioClientes" style="center" styleClass="btn btn-success nav-item coisas">Clientes</h:outputLink>
+                    <h:outputLink value="RelatorioFieis" style="center" styleClass="btn btn-warning nav-item coisas">Clientes Fiéis</h:outputLink>
+                    <h:outputLink value="RelatorioPedidos" style="center" styleClass="btn btn-info nav-item coisas">Pedidos</h:outputLink>
+                </div>
+            </h:form>
+        </div>
+    </h:body>
 </html>

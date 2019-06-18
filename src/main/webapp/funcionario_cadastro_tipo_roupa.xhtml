@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Cadastro Tipo de Roupas</title>
+        <title>Cadastro Tipo de Roupa</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     </h:head>
     <h:body>
@@ -19,6 +19,7 @@
                     <h:outputLink value="./funcionario_lista_tipo_roupa.xhtml" styleClass="nav-item nav-link">Tipos de Roupas</h:outputLink>
                     <h:outputLink value="funcionario_cadastro_tipo_roupa.xhtml" styleClass="nav-item nav-link active" style="font-weight: bold">Cadastrar Tipo de Roupa</h:outputLink>
                     <h:outputLink value="./funcionario_lista_cliente.xhtml" styleClass="nav-item nav-link">Lista de Clientes</h:outputLink>
+                    <h:outputLink value="funcionario_relatorios.xhtml" styleClass="nav-item nav-link">Relatórios</h:outputLink>
                 </div>
                 <div class="navbar-nav nav ml-auto">
                     <h:form>
@@ -27,7 +28,6 @@
                 </div>
             </div>
         </nav>
-        <hr></hr>
         <h:outputText value="#{cadastroTipoRoupa.error}" style="color:red"/>
         <div class="container-fluid mt-5" style="width: 50%">
             <div class="card text-center">

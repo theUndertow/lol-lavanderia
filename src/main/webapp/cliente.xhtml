@@ -25,26 +25,24 @@
                 </div>
             </div>
         </nav>
-        <hr></hr>
         <div id="fasdf" class="container-fluid">
             <h:form class="form-group row ">
-                <h:commandButton value="Pedidos em aberto" style="center" styleClass="btn btn-primary nav-item coisas">
+                <h:commandButton value="Pedidos em aberto" style="center" styleClass="btn btn-primary coisas">
                     <f:ajax listener="#{clientePortalManbe.pedidosEmAberto()}" render=":form:pedido"/>
                 </h:commandButton>
-                <h:commandButton value="Pedidos Entregues" style="center" styleClass="btn btn-success nav-item coisas">
+                <h:commandButton value="Pedidos Entregues" style="center" styleClass="btn btn-success coisas">
                     <f:ajax listener="#{clientePortalManbe.pedidosEntregues()}" render=":form:pedido"/>
                 </h:commandButton>
-                <h:commandButton value="Pedidos Não Entregues" style="center" styleClass="btn btn-warning nav-item coisas">
+                <h:commandButton value="Pedidos Não Entregues" style="center" styleClass="btn btn-warning coisas">
                     <f:ajax listener="#{clientePortalManbe.pedidosNaoEntregues()}" render=":form:pedido"/>
                 </h:commandButton>
-                <h:commandButton value="Pedidos Cancelados" style="center" styleClass="btn btn-danger nav-item coisas">
+                <h:commandButton value="Pedidos Cancelados" style="center" styleClass="btn btn-danger coisas">
                     <f:ajax listener="#{clientePortalManbe.pedidosCancelados()}" render=":form:pedido"/>
                 </h:commandButton>
-                <h:commandButton value="Todos os pedidos" style="center" styleClass="btn btn-info nav-item coisas">
+                <h:commandButton value="Todos os pedidos" style="center" styleClass="btn btn-info coisas">
                     <f:ajax listener="#{clientePortalManbe.todosOsPedidos()}" render=":form:pedido"/>
                 </h:commandButton>
             </h:form>
-
             <h3>Lista de pedidos de #{loginManbe.usuario.nome}</h3><br/>
             <h:form id="form">
                 <div class="form-group row">
