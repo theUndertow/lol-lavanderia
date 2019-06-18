@@ -7,6 +7,7 @@
     <h:head>
         <title>Tipos de Roupas</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+        <link rel="StyleSheet" type="text/css" href="css/estilos.css" media="screen" />
     </h:head>
     <h:body>
         <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
@@ -19,6 +20,7 @@
                     <h:outputLink value="./funcionario_lista_tipo_roupa.xhtml" styleClass="nav-item nav-link active" style="font-weight: bold">Tipos de Roupas</h:outputLink>
                     <h:outputLink value="funcionario_cadastro_tipo_roupa.xhtml" styleClass="nav-item nav-link">Cadastrar Tipo de Roupa</h:outputLink>
                     <h:outputLink value="./funcionario_lista_cliente.xhtml" styleClass="nav-item nav-link">Lista de Clientes</h:outputLink>
+                    <h:outputLink value="funcionario_relatorios.xhtml" styleClass="nav-item nav-link">Relatórios</h:outputLink>
                 </div>
                 <div class="navbar-nav nav ml-auto">
                     <h:form>
@@ -27,39 +29,40 @@
                 </div>
             </div>
         </nav>
-        <hr></hr>
-        <h:form id="form">
-            <div class="form-group row">
-                <h:outputLabel value="Pesquisar: " for="id_pedido" styleClass="col-sm-2" />
-                <h:inputText id="id_tipo" value="#{tipoRoupaDetails.idInput}" styleClass="form-control col-sm-7"/>
-                <div class="col-sm-1"></div>
-                <h:commandButton value="Pesquisar" style="center" styleClass="btn btn-primary col-sm-1">
-                    <f:ajax listener="#{tipoRoupaDetails.buscaTipo()}" execute="id_tipo" render=":form:tipo"/>
-                </h:commandButton>
-            </div>
-            <h:dataTable id="tipo" value="#{tipoRoupaDetails.listaTipos}" var="tipo" styleClass="table">
-                <h:column>
-                    <f:facet name="header">ID </f:facet>
-                        #{tipo.id}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Nome </f:facet>
-                        #{tipo.nome}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Prazo </f:facet>
-                        #{tipo.prazo}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Preço </f:facet>
-                        #{tipo.preco}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Ações </f:facet>
-                    <h:commandLink action="#{tipoRoupaDetails.removeTipo(tipo)}" value="Delete"/>
-                </h:column>
-            </h:dataTable>
-        </h:form>
+        <div class="container-fluid" id="fasdf">
+            <h:form id="form">
+                <div class="form-group row">
+                    <h:outputLabel value="Pesquisar: " for="id_pedido" styleClass="col-sm-2" />
+                    <h:inputText id="id_tipo" value="#{tipoRoupaDetails.idInput}" styleClass="form-control col-sm-7"/>
+                    <div class="col-sm-1"></div>
+                    <h:commandButton value="Pesquisar" style="center" styleClass="btn btn-primary col-sm-1">
+                        <f:ajax listener="#{tipoRoupaDetails.buscaTipo()}" execute="id_tipo" render=":form:tipo"/>
+                    </h:commandButton>
+                </div>
+                <h:dataTable id="tipo" value="#{tipoRoupaDetails.listaTipos}" var="tipo" styleClass="table" style="width: 95%">
+                    <h:column>
+                        <f:facet name="header">ID </f:facet>
+                            #{tipo.id}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Nome </f:facet>
+                            #{tipo.nome}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Prazo </f:facet>
+                        <h:outputText value="#{tipo.prazo} dias" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Preço </f:facet>
+                        <h:outputText value="R$ #{tipo.preco}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Ações </f:facet>
+                        <h:commandLink action="#{tipoRoupaDetails.removeTipo(tipo)}" value="Delete"/>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </div>
     </h:body>
 </html>
 

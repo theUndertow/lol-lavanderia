@@ -8,6 +8,7 @@
 
         <title>Portal do Funcionário</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+        <link rel="StyleSheet" type="text/css" href="css/estilos.css" media="screen" />
     </h:head>
     <h:body>
         <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
@@ -29,7 +30,6 @@
                 </div>
             </div>
         </nav>
-        <hr></hr>
         <div id="fasdf" class="container-fluid">
             <h:form class="form-group row ">
                 <h:commandButton value="Pedidos para hoje" style="center" styleClass="btn btn-primary nav-item coisas">
@@ -37,6 +37,9 @@
                 </h:commandButton>
                 <h:commandButton value="Pedidos não Pagos" style="center" styleClass="btn btn-success nav-item coisas">
                     <f:ajax listener="#{funcionarioPortalManbe.pedidosNaoPagos()}" render=":form:pedido"/>
+                </h:commandButton>
+                <h:commandButton value="Todos os pedidos" style="center" styleClass="btn btn-info nav-item coisas">
+                    <f:ajax listener="#{funcionarioPortalManbe.todosOsPedidos()}" render=":form:pedido"/>
                 </h:commandButton>
             </h:form>
             <h3>#{funcionarioPortalManbe.error}</h3>
@@ -50,7 +53,7 @@
                     </h:commandButton>
                     <div class="col-sm-1"></div>
                 </div>
-                <h:dataTable id="pedido" value="#{funcionarioPortalManbe.listaPedidos}" var="pedido" styleClass="table">
+                <h:dataTable id="pedido" value="#{funcionarioPortalManbe.listaPedidos}" var="pedido" styleClass="table" style="width: 95%">
                     <h:column>
                         <f:facet name="header">Pedido </f:facet>
                             #{pedido.id}
@@ -64,8 +67,10 @@
                             #{pedido.situacao}
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Tempo </f:facet>
-                            #{pedido.tempo}
+                        <f:facet name="header">Prazo </f:facet>
+                        <h:outputText value="#{pedido.tempo}" id="prazo-table">
+                            <f:convertDateTime for="prazo-table" pattern="dd/MM/yyyy" />
+                        </h:outputText>
                     </h:column>
                     <h:column>
                         <f:facet name="header">Total </f:facet>
@@ -85,7 +90,7 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header">Detalhes </f:facet>
-                        <h:commandButton action="#{funcionarioPortalManbe.details(pedido.id)}" value="Detalhes"/>
+                        <h:commandButton action="#{funcionarioPortalManbe.details(pedido.id)}" value="Detalhes" styleClass="btn btn-primary"/>
                     </h:column>
                 </h:dataTable>
             </h:form>
