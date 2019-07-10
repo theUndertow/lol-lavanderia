@@ -19,8 +19,7 @@ public class CidadeConverter implements Converter {
     public Object getAsObject(FacesContext context, UIComponent component,
             String value) {
         System.out.println("\n\n\n\n\n\n"+value);
-        CadastroFacade cadastroFacade = new CadastroFacade();
-        return cadastroFacade.selectCityById(Long.parseLong(value));
+        return CadastroFacade.selectCityById(Long.parseLong(value));
     }
 
     @Override
